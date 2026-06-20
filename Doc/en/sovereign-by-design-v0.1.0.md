@@ -321,7 +321,7 @@ SCS is the most strategically important infrastructure choice for European munic
 +-------------------------------------------------------------+
 ```
 
-All layers communicate via open APIs. Data exchange uses XÖV standards (Germany) [46] or eCH standards (Switzerland). Security is governed by BSI IT-Grundschutz (Germany) [26] or the Swiss ISDS framework.
+All layers communicate via open APIs. Container orchestration across the stack is handled by Kubernetes [39], and relational persistence by PostgreSQL [41], both running on the Sovereign Cloud Stack. Data exchange uses XÖV standards (Germany) [46] or eCH standards (Switzerland). Security is governed by BSI IT-Grundschutz (Germany) [26] or the Swiss ISDS framework.
 
 ---
 

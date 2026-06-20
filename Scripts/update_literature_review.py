@@ -70,8 +70,10 @@ def unverified_sources(registry: str) -> list[str]:
         m = re.match(r"^###\s*(\[\d+\].*)$", line)
         if m:
             current_id = m.group(1).strip()
-        if "Verification status:" in line and "unverified" in line.lower():
-            out.append(current_id or "(unknown)")
+        # Match a real status line ("**Verification status:** unverified"), not the
+        # template placeholder ("[unverified | verified | archived]").
+        if re.search(r"Verification status:\*\*\s*unverified\b", line) and current_id:
+            out.append(current_id)
     return out
 
 

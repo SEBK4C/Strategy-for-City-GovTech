@@ -252,7 +252,7 @@ SCS ist die strategisch wichtigste Infrastrukturentscheidung für europäische K
 +-------------------------------------------------------------+
 ```
 
-Alle Schichten kommunizieren über offene APIs. Datenaustausch erfolgt über XÖV-Standards (Deutschland) [46] oder eCH-Standards (Schweiz). Sicherheit richtet sich nach BSI IT-Grundschutz [26] oder dem Schweizer ISDS-Framework.
+Alle Schichten kommunizieren über offene APIs. Die Container-Orchestrierung im gesamten Stack übernimmt Kubernetes [39], die relationale Datenhaltung PostgreSQL [41] — beide laufen auf dem Sovereign Cloud Stack. Datenaustausch erfolgt über XÖV-Standards (Deutschland) [46] oder eCH-Standards (Schweiz). Sicherheit richtet sich nach BSI IT-Grundschutz [26] oder dem Schweizer ISDS-Framework.
 
 ---
 
