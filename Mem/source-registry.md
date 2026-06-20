@@ -3,7 +3,7 @@
 **Project:** Open-Source Municipal Government Technology Strategy
 **Maintainer:** Sebastian Graf, Autonomous Office of Civil Digital Infrastructure
 **Last updated:** 2026-06-20
-**Version:** 0.1.0
+**Version:** 0.1.1
 
 This registry is the canonical source of truth for all citations used in the strategy
 papers. Each entry carries the metadata required for proper attribution, archival, and
@@ -92,7 +92,7 @@ publication date, document title, source URL, and licence/reuse status.
 - **Document title:** Regulation (EU) 2024/903 — Interoperable Europe Act
 - **Source URL:** https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202400903
 - **License/reuse status:** EU legislation (public domain)
-- **Verification status:** unverified — confirm final OJ reference and CELEX number
+- **Verification status:** partially verified — CELEX: 32024R0903, OJ L 2024/903 confirmed
 - **Notes:** Creates binding cross-border interoperability obligations. Establishes Interoperable Europe Board.
 
 ### [7] Wirtz & Weyerer E-Government Maturity Model
@@ -421,24 +421,115 @@ publication date, document title, source URL, and licence/reuse status.
 - **Verification status:** verified
 - **Notes:** Family of XML standards for German public-administration data exchange (XPersonenstand, XMeld, XKfz, XBildung, XGesundheit). Mandatory for OZG implementations.
 
+### [47] CONSUL Democracy
+- **Original language:** Spanish / English
+- **Region/Jurisdiction:** International (origin: Madrid, Spain)
+- **Issuing organization:** CONSUL Project / Ayuntamiento de Madrid
+- **Publication date:** 2015 (ongoing)
+- **Document title:** CONSUL Democracy: Open Government and Citizen Participation Tool
+- **Source URL:** https://consulproject.org/
+- **License/reuse status:** AGPL-3.0
+- **Verification status:** verified
+- **Notes:** Used in 40+ countries. Covers citizen proposals, participatory budgeting, polls, debates. Alternative to Decidim for municipalities preferring simpler deployment.
+
+### [48] eCH Standards
+- **Original language:** German / French
+- **Region/Jurisdiction:** Switzerland
+- **Issuing organization:** eCH — Verein E-Government Standards
+- **Publication date:** 2003 (ongoing; standards updated continuously)
+- **Document title:** eCH-Standards: Interoperabilitätsstandards für E-Government in der Schweiz
+- **Source URL:** https://www.ech.ch/
+- **License/reuse status:** Open access (standards available free of charge)
+- **Verification status:** verified
+- **Notes:** Swiss equivalent of German XÖV family. Covers data exchange standards for civil registry, GIS, messaging, document formats. Mandatory reference for Swiss e-government implementations.
+
+### [49] ZenDiS Annual Report 2024
+- **Original language:** German
+- **Region/Jurisdiction:** Germany (federal)
+- **Issuing organization:** Zentrum für Digitale Souveränität der öffentlichen Verwaltung (ZenDiS GmbH)
+- **Publication date:** 2024
+- **Document title:** ZenDiS Jahresbericht 2024 / Tätigkeitsbericht
+- **Source URL:** https://zendis.de/
+- **License/reuse status:** Open access
+- **Verification status:** unverified — locate direct report URL on zendis.de
+- **Notes:** ZenDiS manages OpenDesk and coordinates open-source sovereignty strategy for German federal administration. Established 2022 by BMI.
+
+### [50] OSOR Annual Report 2023
+- **Original language:** English
+- **Region/Jurisdiction:** European Union
+- **Issuing organization:** EU Open Source Observatory (OSOR) / European Commission, DG DIGIT
+- **Publication date:** 2023
+- **Document title:** OSOR Annual Report 2023: Open Source in European Public Administration
+- **Source URL:** https://joinup.ec.europa.eu/collection/open-source-observatory-osor
+- **License/reuse status:** CC-BY-4.0
+- **Verification status:** unverified — confirm direct PDF link on Joinup
+- **Notes:** Annual survey of open-source adoption in European public administrations. Key evidence base for policy claims about EU government open-source use.
+
+### [51] Swiss E-ID (E-ID-Gesetz)
+- **Original language:** German / French / Italian
+- **Region/Jurisdiction:** Switzerland (federal)
+- **Issuing organization:** Schweizerische Bundeskanzlei / Eidgenössisches Justiz- und Polizeidepartement (EJPD)
+- **Publication date:** 2023 (law passed); implementation 2024–2026
+- **Document title:** Bundesgesetz über den elektronischen Ausweis und andere elektronische Nachweise (BGEID)
+- **Source URL:** https://www.eid.admin.ch/
+- **License/reuse status:** CC0 (Swiss federal legislation)
+- **Verification status:** verified
+- **Notes:** After the 2021 referendum rejection of state-backed E-ID, the new BGEID takes a decentralized, privacy-preserving approach based on self-sovereign identity (SSI) / W3C Verifiable Credentials. Interoperable with EU digital identity wallet (eIDAS 2.0).
+
+### [52] Lathrop & Ruma — Open Government
+- **Original language:** English
+- **Region/Jurisdiction:** International (academic/policy)
+- **Issuing organization:** O'Reilly Media
+- **Publication date:** 2010
+- **Document title:** Open Government: Collaboration, Transparency, and Participation in Practice
+- **Source URL:** https://www.oreilly.com/library/view/open-government/9781449381936/
+- **License/reuse status:** © O'Reilly (paywalled; cite only)
+- **Verification status:** verified
+- **Notes:** Lathrop, D. & Ruma, L. (Eds.). Foundational text establishing the open government movement. Essays by O'Reilly, Noveck, and others. Establishes the theoretical basis for public-code and open-data mandates.
+
+### [53] GovStack Initiative
+- **Original language:** English
+- **Region/Jurisdiction:** International
+- **Issuing organization:** ITU (International Telecommunication Union) / Digital Impact Alliance (DIAL)
+- **Publication date:** 2021 (ongoing)
+- **Document title:** GovStack: Digital Building Blocks for Sustainable Development
+- **Source URL:** https://www.govstack.global/
+- **License/reuse status:** Open access; specifications under CC-BY-SA-4.0
+- **Verification status:** verified
+- **Notes:** Technology-neutral "building block" framework for government digital services. Nine core building blocks: Identity, Consent, Information Mediator, Payments, Registration, Scheduler, Messaging, Workflow, GIS. Adopted by 10+ countries. Complements European sovereignty initiatives with a global perspective.
+
+### [54] EU Data Act 2023
+- **Original language:** English / all EU official languages
+- **Region/Jurisdiction:** European Union
+- **Issuing organization:** European Parliament and Council
+- **Publication date:** 2023-12-13 (in force 2024-01-11; most provisions apply from 2025-09-12)
+- **Document title:** Regulation (EU) 2023/2854 — Data Act
+- **Source URL:** https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202302854
+- **License/reuse status:** EU legislation (public domain)
+- **Verification status:** verified
+- **Notes:** Creates data access and portability rights for IoT/connected devices and cloud services. Directly relevant to municipal data governance: prevents vendor lock-in for cloud-stored public-sector data; mandates switching assistance. Applies to smart city infrastructure.
+
 ---
 
 ## Sources requiring verification (v0.2.0 milestone)
 
 | ID | Issue |
 |---|---|
-| [6] | Confirm exact Interoperable Europe Act OJ reference and CELEX number |
+| [6] | Partially verified — CELEX: 32024R0903, OJ L 2024/903 confirmed; full text cross-check pending |
 | [9] | Verify FITKO annual report URL and direct PDF link |
 | [16] | Confirm E-Government Strategy 2024–2027 publication date and final URL |
 | [43] | Verify GEVER BAR page URL |
+| [49] | Locate direct ZenDiS Jahresbericht 2024 URL on zendis.de |
+| [50] | Confirm direct OSOR Annual Report 2023 PDF link on Joinup |
 
 ## Sources to add (literature-review gap)
 
-- CONSUL Democracy platform (Madrid) — participatory alternative to Decidim
-- eCH standards (Switzerland) — equivalent of XÖV for Swiss e-government
+- ~~CONSUL Democracy platform (Madrid) — participatory alternative to Decidim~~ **Added as [47]**
+- ~~eCH standards (Switzerland) — equivalent of XÖV for Swiss e-government~~ **Added as [48]**
 - OKD (Origin Kubernetes Distribution) — open alternative to OpenShift
-- ZenDiS annual report 2023/2024
-- OSOR Annual Report 2023 (EU Open Source Observatory)
-- Swiss E-ID implementation details (post-2021 referendum)
-- Lathrop & Ruma (2010) Open Government — foundational text
-- GovStack (ITU/DIAL) building-blocks initiative
+- ~~ZenDiS annual report 2023/2024~~ **Added as [49]**
+- ~~OSOR Annual Report 2023 (EU Open Source Observatory)~~ **Added as [50]**
+- ~~Swiss E-ID implementation details (post-2021 referendum)~~ **Added as [51]**
+- ~~Lathrop & Ruma (2010) Open Government — foundational text~~ **Added as [52]**
+- ~~GovStack (ITU/DIAL) building-blocks initiative~~ **Added as [53]**
+- EU Data Act 2023 (cloud switching, municipal data governance) **Added as [54]**

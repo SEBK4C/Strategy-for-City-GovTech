@@ -1,6 +1,6 @@
 # Literature Review State — City GovTech Strategy
 
-**Version:** 0.1.0
+**Version:** 0.1.1
 **Last reviewed:** 2026-06-20
 **Next review due:** 2026-09-20 (quarterly cadence)
 
@@ -12,7 +12,7 @@ missing, and what needs updating. It is the primary input to
 
 ## Coverage map
 
-### Covered (v0.1.0)
+### Covered (v0.1.0–0.1.1)
 
 | Domain | Depth | Key gaps |
 |---|---|---|
@@ -20,9 +20,9 @@ missing, and what needs updating. It is the primary input to
 | Swiss EMBAG and federal digital strategy | High | Cantonal implementation data lacking |
 | German OZG / OZG 2.0 | High | Municipal uptake statistics missing |
 | Sovereign Cloud Stack | High | Production metrics not yet available |
-| Open Source in EU public administration | Medium | OSOR annual report not yet integrated |
-| Identity management (Keycloak, BundID, eID) | Medium | BundID uptake data missing |
-| Decidim / participatory platforms | Medium | Schaffhausen canton case study needed |
+| Open Source in EU public administration | Medium | OSOR annual report [50] listed; verification pending |
+| Identity management (Keycloak, BundID, eID) | Medium | Swiss E-ID [51] now added |
+| Decidim / participatory platforms | High | CONSUL Democracy [47] now added |
 | Matrix/Element for government | Medium | BundesMessenger adoption data needed |
 | Nextcloud for government | Medium | Swiss federal deployment details |
 | Open data portals (CKAN) | Medium | opendata.swiss technical details |
@@ -32,20 +32,24 @@ missing, and what needs updating. It is the primary input to
 | User experience / satisfaction research | Absent | CRITICAL GAP — see below |
 | Small municipality case studies | Low | CRITICAL GAP — see below |
 | Change management in IT transitions | Low | Munich LiMux referenced but not deep |
+| eCH standards (Switzerland) | Medium | [48] added; detailed eCH profiles needed |
+| GovStack building blocks | Medium | [53] added; EU alignment analysis needed |
+| EU Data Act implications | Low | [54] added; municipal impact analysis needed |
+| ZenDiS / OpenDesk governance | Medium | [49] listed; annual report unverified |
+| Foundational open-government theory | Medium | Lathrop & Ruma [52] added |
 
 ### Not yet covered
 
-- **eCH standards** (Swiss XML interoperability, equivalent to German XÖV)
-- **CONSUL Democracy platform** (Madrid; alternative/complement to Decidim)
-- **GovStack** (ITU/DIAL initiative for government digital building blocks)
-- **EU Data Act 2023** (implications for municipal data governance)
+- **EU Data Governance Act 2022** (data sharing framework; interaction with municipal open data)
 - **Digital Services Act / Digital Markets Act** — interaction with municipal procurement
 - **OpenDesk v2.x** (2025/2026 updates)
-- **ZenDiS** (German Centre for Digital Sovereignty — key actor, under-covered)
-- **Lathrop & Ruma (2010)** — Open Government foundational text
-- **OSOR Annual Report 2023** (EU Open Source Observatory)
-- **Swiss OGD Strategy 2024–2027**
-- **GAIA-X implementation status** (2025 state of play)
+- **Swiss OGD Strategy 2024–2027** (distinct from E-Government Strategy)
+- **GAIA-X implementation status** (2025 state of play; relevance to municipal cloud)
+- **Limesurvey / open-source survey tools** for citizen feedback
+- **Nextcloud Hub 8 / Hub 9** (latest major releases; new features for government)
+- **LibreOffice in public administration** (document format sovereignty)
+- **Academic literature on participatory budgeting outcomes** (to support Decidim claims)
+- **eIDAS 2.0 / EU Digital Identity Wallet** (interoperability with Swiss E-ID and BundID)
 
 ---
 
@@ -74,6 +78,9 @@ of municipalities <50,000 that completed open-source transitions. Target: v0.2.0
 | Date | Action | By | Result |
 |---|---|---|---|
 | 2026-06-20 | Initial literature review, v0.1.0 draft | SG | 30 primary sources identified; 46 citation slots in papers |
+| 2026-06-20 | Sources [47]–[54] added to registry | SG/AI | CONSUL, eCH, ZenDiS, OSOR, Swiss E-ID, Lathrop & Ruma, GovStack, EU Data Act |
+| 2026-06-20 | German translation v0.1.0 completed | SG/AI | Full translation added at Doc/de/souveraen-von-grund-auf-v0.1.0.md |
+| 2026-06-20 | Literature review state updated to v0.1.1 | SG/AI | Coverage map expanded; 10 new "not yet covered" items identified |
 
 ---
 
@@ -83,7 +90,7 @@ When running `Scripts/update_literature_review.py`, check for:
 
 - [ ] New Swiss e-government legislation or strategy updates
 - [ ] New German OZG implementation reports or FITKO publications
-- [ ] New EU legislation (Data Act, AI Act implementation, etc.)
+- [ ] New EU legislation (Data Act, AI Act implementation, eIDAS 2.0, etc.)
 - [ ] New Sovereign Cloud Stack releases or governance updates
 - [ ] New openCode.de statistics or case studies
 - [ ] New academic papers on e-government maturity (GIQ, ISM, EJEG)
@@ -91,3 +98,7 @@ When running `Scripts/update_literature_review.py`, check for:
 - [ ] New security advisories affecting stack components
 - [ ] OSOR annual report (EU Open Source Observatory, annual)
 - [ ] UN E-Government Survey (biannual)
+- [ ] ZenDiS annual report / OpenDesk release notes
+- [ ] GovStack building block updates
+- [ ] Swiss E-ID / BGEID implementation milestones
+- [ ] Decidim and CONSUL Democracy new deployments
