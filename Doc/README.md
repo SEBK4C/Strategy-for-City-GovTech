@@ -12,17 +12,38 @@ truth**; DOCX, PDF, and HTML are generated from them by `Scripts/build_govtech_d
 ```
 Doc/
 ├─ en/                 English (single source of truth)
-│  └─ sovereign-by-design-v0.1.0.md
+│  ├─ sovereign-by-design-v0.1.0.md     # source of truth
+│  └─ sovereign-by-design-v0.1.0.html   # committed HTML rendering
 ├─ de/                 Deutsch (full translation)
-│  └─ sovereign-by-design-v0.1.0.de.md
-└─ build/              Generated artefacts (DOCX/PDF/HTML) — git-ignored
+│  ├─ sovereign-by-design-v0.1.0.de.md
+│  └─ sovereign-by-design-v0.1.0.de.html
+└─ build/              DOCX + PDF + HTML, regenerated locally (git-ignored)
 ```
 
-## Documents
+## Documents & formats
 
-| Title | Version | EN | DE | Status |
-|---|---|---|---|---|
-| Sovereign by Design | v0.1.0 | [md](en/sovereign-by-design-v0.1.0.md) | [md](de/sovereign-by-design-v0.1.0.de.md) | First structured draft |
+| Title | Version | Markdown | HTML | DOCX | PDF |
+|---|---|---|---|---|---|
+| Sovereign by Design (EN) | v0.1.0 | [md](en/sovereign-by-design-v0.1.0.md) | [html](en/sovereign-by-design-v0.1.0.html) | build / CI | build / CI |
+| Sovereign by Design (DE) | v0.1.0 | [md](de/sovereign-by-design-v0.1.0.de.md) | [html](de/sovereign-by-design-v0.1.0.de.html) | build / CI | build / CI |
+
+### Where each format lives
+
+- **Markdown** — committed here, the source of truth, in `en/` and `de/`.
+- **HTML** — committed here next to the Markdown (a generated rendering).
+- **DOCX & PDF** — binary artefacts. They are **not committed** (the automation that
+  authors this repo can only write text through the GitHub API, and binary blobs cannot
+  be carried that way). Get them in any of three equivalent ways:
+  1. **Build locally:** `python3 Scripts/build_govtech_docs.py` writes all four formats
+     into `Doc/build/<lang>/`.
+  2. **CI artefacts:** the *Build & Publish Documents* GitHub Actions workflow
+     (`.github/workflows/build-docs.yml`) builds every format on each push and uploads
+     them as a downloadable artefact.
+  3. **Release assets:** pushing a `vX.Y.Z` tag attaches the DOCX/PDF/HTML to a GitHub
+     Release.
+
+  All three regenerate byte-for-byte from the committed Markdown, so the binaries are
+  fully reproducible and never drift from the source.
 
 ## Version scheme (semantic versioning)
 
@@ -43,21 +64,21 @@ python3 Scripts/build_govtech_docs.py                    # build everything
 python3 Scripts/build_govtech_docs.py Doc/en/sovereign-by-design-v0.1.0.md   # one file
 ```
 
+The script prefers `pandoc` (highest fidelity for all four formats) and falls back to
+pure-Python renderers (`markdown`, `python-docx`, `weasyprint`) when pandoc is absent.
+
 ## Adding a language
 
 The English version under `en/` is the single source of truth. To add a language:
 
-1. Create `Doc/<lang-code>/` (ISO 639-1, e.g. `fr`, `it`).
-2. Copy the English source into it, renaming with the language suffix:
-   `cp en/sovereign-by-design-v0.1.0.md <lang>/sovereign-by-design-v0.1.0.<lang>.md`
-3. Translate the copy; keep the YAML front-matter keys identical, set `language:` and
-   `translated-from:`.
-4. Register the language in `Scripts/translate_document.py` (`LANGUAGES`).
-5. Add a column/row to the table above.
+1. `python3 Scripts/translate_document.py --scaffold <lang>` creates a skeleton copy.
+2. Translate the prose; keep all headings, section numbers, tables, and `[N]` citation
+   markers intact.
+3. Register the language in `Scripts/translate_document.py` (`LANGUAGES`).
+4. `python3 Scripts/translate_document.py --check` verifies structural parity with the
+   English source.
 
-Structural changes (new sections, reference renumbering) are made to the **English source
-first**, then propagated to translations. `Scripts/translate_document.py --check` reports
-sections that have drifted out of parity.
+Structural changes are made to the **English source first**, then propagated.
 
 ## Licence
 
