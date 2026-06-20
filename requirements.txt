@@ -1,0 +1,11 @@
+# Document generation and validation tooling for the City GovTech Strategy.
+# All Scripts/ tools degrade gracefully if optional deps are missing; install these
+# for the full Markdown -> DOCX/PDF/HTML build pipeline.
+
+markdown>=3.5         # Markdown -> HTML (pure-Python fallback renderer)
+python-docx>=1.1.0    # Markdown -> DOCX (pure-Python fallback renderer)
+weasyprint>=60.0      # HTML -> PDF (no LaTeX dependency)
+PyYAML>=6.0           # front-matter parsing (optional; scripts have a regex fallback)
+
+# Recommended (not pip-installable): `pandoc` provides the highest-fidelity
+# Markdown -> DOCX/PDF/HTML conversion. Install via your OS package manager.
