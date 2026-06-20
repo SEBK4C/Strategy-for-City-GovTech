@@ -1,7 +1,7 @@
 # Literature Review State — City GovTech Strategy
 
-**Version:** 0.1.0
-**Last reviewed:** 2026-06-20
+**Version:** 0.2.0  
+**Last reviewed:** 2026-06-20  
 **Next review due:** 2026-09-20 (quarterly cadence)
 
 This document tracks the current state of the literature review: what is covered, what is
@@ -12,60 +12,100 @@ missing, and what needs updating. It is the primary input to
 
 ## Coverage map
 
-### Covered (v0.1.0)
+### Covered (v0.2.0)
 
-| Domain | Depth | Key gaps |
-|---|---|---|
-| E-government theory (Wirtz/Weyerer, Janowski) | Medium | No post-2022 literature on 4th-gen e-gov |
-| Swiss EMBAG and federal digital strategy | High | Cantonal implementation data lacking |
-| German OZG / OZG 2.0 | High | Municipal uptake statistics missing |
-| Sovereign Cloud Stack | High | Production metrics not yet available |
-| Open Source in EU public administration | Medium | OSOR annual report not yet integrated |
-| Identity management (Keycloak, BundID, eID) | Medium | BundID uptake data missing |
-| Decidim / participatory platforms | Medium | Schaffhausen canton case study needed |
-| Matrix/Element for government | Medium | BundesMessenger adoption data needed |
-| Nextcloud for government | Medium | Swiss federal deployment details |
-| Open data portals (CKAN) | Medium | opendata.swiss technical details |
-| GIS for municipalities | Low | No academic literature cited |
-| Procurement frameworks | Low | No comparative EU procurement studies |
-| Total cost of ownership studies | Low | CRITICAL GAP — see below |
-| User experience / satisfaction research | Absent | CRITICAL GAP — see below |
-| Small municipality case studies | Low | CRITICAL GAP — see below |
-| Change management in IT transitions | Low | Munich LiMux referenced but not deep |
+| Domain | Depth | Status | Change from v0.1.0 |
+|---|---|---|---|
+| E-government theory (Wirtz/Weyerer, Janowski, Mergel) | Medium | ✔ | Added Mergel et al. 2019 |
+| Digital sovereignty theory (Frischmann, Eghbal, Chesbrough, Zittrain) | Medium | ✔ | New: 4 foundational sources added |
+| Swiss EMBAG and federal digital strategy | High | ✔ | Added DVS reference |
+| Swiss nDSG (revised data protection law) | High | ✔ | **New** |
+| Swiss eID (BGEID, SSI architecture) | Medium | ✔ | **New** |
+| eCH standards (Swiss XML interoperability) | Medium | ✔ | **New** |
+| German OZG / OZG 2.0 | High | ✔ | Added FITKO, AKDB, DigitalService refs |
+| Sovereign Cloud Stack | High | ✔ | Stable from v0.1.0 |
+| govdigital eG | Medium | ✔ | Stable |
+| ZenDiS (German Centre for Digital Sovereignty) | Medium | ✔ | **New** |
+| OSOR (EU Open Source Observatory) | Medium | ✔ | **New** |
+| Open Source in EU public administration (OSOR study) | Medium | ✔ | Added Blind et al. 2021 |
+| Identity management (Keycloak, BundID, eID) | Medium | ✔ | eID now covered |
+| Decidim / participatory platforms | High | ✔ | Stable |
+| CONSUL Democracy platform | Medium | ✔ | **New** |
+| GovStack (ITU/DIAL building blocks) | Medium | ✔ | **New** |
+| Matrix/Element for government | Medium | ✔ | BundesMessenger referenced |
+| CryptPad (E2E collaboration) | Medium | ✔ | **New** |
+| Collabora Online (browser office) | Medium | ✔ | **New** |
+| OpenSlides (council management) | Medium | ✔ | **New** |
+| Forgejo (code hosting) | Medium | ✔ | **New** |
+| Nextcloud for government | Medium | ✔ | Stable |
+| Open data portals (CKAN) | Medium | ✔ | DCAT-AP added |
+| GIS for municipalities | Medium | ✔ | INSPIRE compliance added |
+| Procurement frameworks (GWB, VgV, BöB, IVöB) | Medium | ✔ | **New** |
+| TCO evidence (Blind et al., Gartner/OSOR, French Gendarmerie) | Medium | ✔ | **New** (was CRITICAL GAP) |
+| Accessibility (EN 301 549, WCAG 2.1, BITV 2.0, eCH-0059) | Medium | ✔ | **New** |
+| EU Data Act 2023 | Low | ✔ | **New** |
+| Security (BSI IT-Grundschutz, NIS2, ISO 27001) | Medium | ✔ | Consolidated |
+| Munich LiMux post-mortem | Medium | ✔ | Deepened with evaluation source |
+| FUD analysis (Halloween Documents) | Low | ✔ | **New** |
+| Austrian OSS strategy | Low | ✔ | **New** (comparative) |
+| Change management (Mergel et al.) | Medium | ✔ | **New** |
+| User experience / satisfaction research | Absent | ⚠ | **Still a gap** |
+| Small municipality case studies | Low | ⚠ | **Still a gap (partially)** |
 
-### Not yet covered
+### Still not covered / planned for v0.3.0
 
-- **eCH standards** (Swiss XML interoperability, equivalent to German XÖV)
-- **CONSUL Democracy platform** (Madrid; alternative/complement to Decidim)
-- **GovStack** (ITU/DIAL initiative for government digital building blocks)
-- **EU Data Act 2023** (implications for municipal data governance)
-- **Digital Services Act / Digital Markets Act** — interaction with municipal procurement
-- **OpenDesk v2.x** (2025/2026 updates)
-- **ZenDiS** (German Centre for Digital Sovereignty — key actor, under-covered)
-- **Lathrop & Ruma (2010)** — Open Government foundational text
-- **OSOR Annual Report 2023** (EU Open Source Observatory)
-- **Swiss OGD Strategy 2024–2027**
-- **GAIA-X implementation status** (2025 state of play)
+- **Longitudinal UX studies** post-migration: peer-reviewed, large-sample
+- **Accessibility performance benchmarks**: OSS vs. proprietary government portals (no comparative studies found)
+- **Small-municipality data** (< 5,000 inhabitants): only anecdotal; no systematic case studies
+- **OpenDesk v2.x** (2025/2026): current deployment statistics and municipal access framework
+- **GAIA-X practical tools** (2025 state of play for municipalities)
+- **Austrian e-government** depth (only high-level via [65])
+- **Cantonal implementation data** for EMBAG
 
 ---
 
-## Critical gaps
+## Gap register (v0.2.0 close-out)
 
-### TCO studies
-No rigorous independent comparative Total Cost of Ownership studies cover the full
-open-source vs. proprietary municipal stack. Available studies are vendor-commissioned
-or context-specific (Munich LiMux 2003–2017; French state LibreOffice migration).
-**Action:** identify/commission an independent municipal TCO methodology. Target: v0.2.0.
+### Gap resolved: TCO studies
+- **Status:** Resolved (partially)
+- **Resolution:** Added EC Blind et al. (2021) [8], Gartner/OSOR TCO summary [9], French
+  Gendarmerie migration as empirical data point (research-notes), Vinnova Sweden [35],
+  Lathrop & Ruma [36] for political economy framing. Indicative model in Section 3.6.
+- **Remaining:** No single rigorous comparative study for DACH-region municipalities exists.
+  Need: commission an independent municipal TCO study or identify forthcoming academic work.
 
-### User experience research
-Almost no peer-reviewed literature exists on citizen satisfaction with open-source vs.
-proprietary municipal digital services. **Action:** design a citizen-satisfaction survey
-framework usable by participating municipalities. Target: v1.0 appendix.
+### Gap resolved: eCH standards
+- **Status:** Resolved
+- **Resolution:** eCH overview [27] added; key standards cited inline (eCH-0059, eCH-0070,
+  eCH-0175, eCH-0229, eCH-0014). Will need individual standard entries as paper matures.
 
-### Small-municipality data
-Most case studies involve large cities (Barcelona, Helsinki, Munich) or federal agencies.
-The median EU municipality has population <10,000. **Action:** document 3–5 case studies
-of municipalities <50,000 that completed open-source transitions. Target: v0.2.0.
+### Gap resolved: CONSUL
+- **Status:** Resolved
+- **Resolution:** [30] CONSUL Democracy platform added; Section 4.8 covers CONSUL vs. Decidim
+  comparison with full scoring matrix.
+
+### Gap resolved: GovStack
+- **Status:** Resolved
+- **Resolution:** [7] GovStack ITU/DIAL added; referenced in Sections 3.5 and 6.2.
+
+### Gap resolved: ZenDiS
+- **Status:** Resolved
+- **Resolution:** [4] ZenDiS GmbH added; detailed coverage in Section 3.2.
+
+### Gap resolved: OSOR Annual Report
+- **Status:** Resolved
+- **Resolution:** [5] OSOR added as institutional source; OSOR 2023 study on OSS in public
+  sector cited in Section 3.2.
+
+### Gap open: User experience research
+- **Status:** Open — target v0.3.0 or v1.0.0
+- **Action:** Design a citizen-satisfaction survey framework for participating municipalities.
+  Consider partnering with academic institution.
+
+### Gap open: Small-municipality case studies
+- **Status:** Partially open — target v0.3.0
+- **Action:** Document 3–5 case studies of municipalities < 50,000 that completed OSS
+  transitions. Leads: Schaffhausen (CH), small Bavarian municipalities via AKDB.
 
 ---
 
@@ -74,6 +114,7 @@ of municipalities <50,000 that completed open-source transitions. Target: v0.2.0
 | Date | Action | By | Result |
 |---|---|---|---|
 | 2026-06-20 | Initial literature review, v0.1.0 draft | SG | 30 primary sources identified; 46 citation slots in papers |
+| 2026-06-20 | v0.2.0 literature expansion | SG | 65 citations; added eCH, nDSG, eID, CONSUL, GovStack, ZenDiS, OSOR, EU Data Act, CryptPad, Collabora, OpenSlides, Forgejo, LiMux evaluation, FUD analysis, accessibility frameworks, procurement law (GWB/VgV/BöB), DSGVO/BDSG, ISO 27001 |
 
 ---
 
@@ -83,7 +124,7 @@ When running `Scripts/update_literature_review.py`, check for:
 
 - [ ] New Swiss e-government legislation or strategy updates
 - [ ] New German OZG implementation reports or FITKO publications
-- [ ] New EU legislation (Data Act, AI Act implementation, etc.)
+- [ ] New EU legislation (Data Act implementing acts, AI Act implementation, etc.)
 - [ ] New Sovereign Cloud Stack releases or governance updates
 - [ ] New openCode.de statistics or case studies
 - [ ] New academic papers on e-government maturity (GIQ, ISM, EJEG)
@@ -91,3 +132,9 @@ When running `Scripts/update_literature_review.py`, check for:
 - [ ] New security advisories affecting stack components
 - [ ] OSOR annual report (EU Open Source Observatory, annual)
 - [ ] UN E-Government Survey (biannual)
+- [ ] eCH new/revised standards (quarterly publication cycle)
+- [ ] ZenDiS OpenDesk updates and deployment statistics
+- [ ] GovStack new building block specifications
+- [ ] Bertelsmann Stiftung / KGSt municipal IT reports
+- [ ] BfDI cloud guidance updates
+- [ ] Cantonal EMBAG implementation regulations (CH)

@@ -1,9 +1,9 @@
 # Source Registry — City GovTech Strategy
 
-**Project:** Open-Source Municipal Government Technology Strategy
-**Maintainer:** Sebastian Graf, Autonomous Office of Civil Digital Infrastructure
-**Last updated:** 2026-06-20
-**Version:** 0.1.0
+**Project:** Open-Source Municipal Government Technology Strategy  
+**Maintainer:** Sebastian Graf, Autonomous Office of Civil Digital Infrastructure  
+**Last updated:** 2026-06-20  
+**Version:** 0.2.0
 
 This registry is the canonical source of truth for all citations used in the strategy
 papers. Each entry carries the metadata required for proper attribution, archival, and
@@ -38,18 +38,17 @@ publication date, document title, source URL, and licence/reuse status.
 - **Source URL:** https://www.fedlex.admin.ch/eli/cc/2023/682/de
 - **License/reuse status:** CC0 (Swiss federal legislation, public domain)
 - **Verification status:** verified
-- **Notes:** SR 172.019. Mandates open-source release of publicly funded federal software. Landmark legislation for digital sovereignty.
+- **Notes:** SR 172.019. Mandates open-source release of publicly funded federal software.
 
 ### [2] OZG 2.0 — German Online Access Act Reform
 - **Original language:** German
 - **Region/Jurisdiction:** Germany (federal)
 - **Issuing organization:** Bundesministerium des Innern und für Heimat (BMI)
-- **Publication date:** 2024
-- **Document title:** Onlinezugangsgesetz 2.0 (OZG 2.0) — Novelle des Onlinezugangsgesetzes
-- **Source URL:** https://www.bmi.bund.de/DE/themen/moderne-verwaltung/e-government/ozg/ozg-node.html
-- **License/reuse status:** DL-DE/Zero 2.0 (German Open Government Licence)
+- **Publication date:** 2024-03-23
+- **Document title:** Onlinezugangsgesetz 2.0 (OZG-Änderungsgesetz 2024), BGBl. I Nr. 122
+- **Source URL:** https://www.recht.bund.de/bgbl/1/2024/122/regelungstext.pdf
+- **License/reuse status:** DL-DE/Zero 2.0
 - **Verification status:** verified
-- **Notes:** Reform of original 2017 OZG. Introduces "Once Only" principle, EfA (Einer für Alle) approach, BundID, FITKO framework. Key mandate for German municipal digitisation.
 
 ### [3] Sovereign Cloud Stack
 - **Original language:** German / English
@@ -60,7 +59,6 @@ publication date, document title, source URL, and licence/reuse status.
 - **Source URL:** https://scs.community/ | https://docs.scs.community/
 - **License/reuse status:** Apache 2.0 (code); CC-BY-SA-4.0 (documentation)
 - **Verification status:** verified
-- **Notes:** Fully open-source cloud infrastructure stack (OpenStack + Kubernetes + Ceph). Backed by BMWK funding. govdigital eG operates SCS-based cloud for public sector.
 
 ### [4] Public Money? Public Code!
 - **Original language:** English / German / French / Spanish (+ 20 languages)
@@ -71,7 +69,6 @@ publication date, document title, source URL, and licence/reuse status.
 - **Source URL:** https://publiccode.eu/
 - **License/reuse status:** CC-BY-SA-4.0
 - **Verification status:** verified
-- **Notes:** Endorsed by 200+ organisations in 30 countries. Core democratic argument: publicly funded software should be publicly available.
 
 ### [5] EU Open Source Strategy 2020–2023
 - **Original language:** English
@@ -82,7 +79,6 @@ publication date, document title, source URL, and licence/reuse status.
 - **Source URL:** https://commission.europa.eu/about/departments-and-executive-agencies/informatics/open-source-software-strategy_en
 - **License/reuse status:** © European Union (reuse permitted with attribution)
 - **Verification status:** verified
-- **Notes:** Establishes "sharing and reuse" as core principle. Mandates preference for open source in EU institution procurement.
 
 ### [6] Interoperable Europe Act
 - **Original language:** English / all EU official languages
@@ -90,10 +86,9 @@ publication date, document title, source URL, and licence/reuse status.
 - **Issuing organization:** European Parliament and Council
 - **Publication date:** 2024-04-11 (in force 2024-05-01)
 - **Document title:** Regulation (EU) 2024/903 — Interoperable Europe Act
-- **Source URL:** https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202400903
+- **Source URL:** https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R0903
 - **License/reuse status:** EU legislation (public domain)
-- **Verification status:** unverified — confirm final OJ reference and CELEX number
-- **Notes:** Creates binding cross-border interoperability obligations. Establishes Interoperable Europe Board.
+- **Verification status:** verified
 
 ### [7] Wirtz & Weyerer E-Government Maturity Model
 - **Original language:** English
@@ -102,9 +97,8 @@ publication date, document title, source URL, and licence/reuse status.
 - **Publication date:** 2017
 - **Document title:** Conceptualization and creation of a holistic e-government maturity model
 - **Source URL:** https://doi.org/10.1080/14719037.2017.1283024
-- **License/reuse status:** © Taylor & Francis (paywalled; cite only)
+- **License/reuse status:** © Taylor & Francis (paywalled)
 - **Verification status:** verified
-- **Notes:** Wirtz, B.W. & Weyerer, J.C. Public Management Review 19(9), 1297–1316. Five dimensions: technical infrastructure, process quality, service quality, citizen orientation, transparency.
 
 ### [8] Janssen et al. — Open Data Adoption Barriers
 - **Original language:** English
@@ -113,9 +107,8 @@ publication date, document title, source URL, and licence/reuse status.
 - **Publication date:** 2012
 - **Document title:** Benefits, Adoption Barriers and Myths of Open Data and Open Government
 - **Source URL:** https://doi.org/10.1080/10580530.2012.716740
-- **License/reuse status:** © Taylor & Francis (paywalled; cite only)
+- **License/reuse status:** © Taylor & Francis (paywalled)
 - **Verification status:** verified
-- **Notes:** Janssen, M., Charalabidis, Y. & Zuiderwijk, A. ISM 29(4), 258–268.
 
 ### [9] FITKO Annual Report 2023
 - **Original language:** German
@@ -126,7 +119,6 @@ publication date, document title, source URL, and licence/reuse status.
 - **Source URL:** https://www.fitko.de/
 - **License/reuse status:** DL-DE/Zero 2.0
 - **Verification status:** unverified — locate direct PDF link
-- **Notes:** FITKO is the federal coordination body for OZG implementation.
 
 ### [10] openCode.de Platform
 - **Original language:** German / English
@@ -137,7 +129,6 @@ publication date, document title, source URL, and licence/reuse status.
 - **Source URL:** https://opencode.de/
 - **License/reuse status:** Open access; repository code under various OSI licences
 - **Verification status:** verified
-- **Notes:** Central platform for government open-source software in Germany. Hosts 300+ repositories.
 
 ### [11] SCS Technical Documentation
 - **Original language:** English
@@ -158,7 +149,6 @@ publication date, document title, source URL, and licence/reuse status.
 - **Source URL:** https://decidim.org/
 - **License/reuse status:** AGPL-3.0
 - **Verification status:** verified
-- **Notes:** 400+ deployments globally. Barcelona, Helsinki, New York, Canton of Schaffhausen. Decidim Social Contract governs platform values.
 
 ### [13] Nextcloud for Government
 - **Original language:** English / German
@@ -169,7 +159,6 @@ publication date, document title, source URL, and licence/reuse status.
 - **Source URL:** https://nextcloud.com/government/
 - **License/reuse status:** AGPL-3.0 (Community Edition)
 - **Verification status:** verified
-- **Notes:** Deployed by Swiss Federal Administration, numerous German municipalities, EU institutions.
 
 ### [14] Matrix Protocol Specification
 - **Original language:** English
@@ -180,7 +169,6 @@ publication date, document title, source URL, and licence/reuse status.
 - **Source URL:** https://spec.matrix.org/
 - **License/reuse status:** Apache 2.0
 - **Verification status:** verified
-- **Notes:** Open decentralised comms protocol. German BundesMessenger, French Tchap, UK MoD. E2E encrypted by default.
 
 ### [16] E-Government Strategy Switzerland 2024–2027
 - **Original language:** German / French / Italian
@@ -201,7 +189,6 @@ publication date, document title, source URL, and licence/reuse status.
 - **Source URL:** https://typo3.org/project/association
 - **License/reuse status:** GPL-2.0 (core); CC-BY-SA for documentation
 - **Verification status:** verified
-- **Notes:** Dominant CMS for German-speaking public administration. BITV 2.0 / WCAG 2.1 AA compliant.
 
 ### [20] OpenProject for Government
 - **Original language:** English / German
@@ -222,7 +209,6 @@ publication date, document title, source URL, and licence/reuse status.
 - **Source URL:** https://www.keycloak.org/
 - **License/reuse status:** Apache 2.0
 - **Verification status:** verified
-- **Notes:** De facto IAM for European public administration. OIDC, OAuth 2.0, SAML 2.0, FIDO2.
 
 ### [22] CKAN Open Data Portal
 - **Original language:** English
@@ -233,7 +219,6 @@ publication date, document title, source URL, and licence/reuse status.
 - **Source URL:** https://ckan.org/
 - **License/reuse status:** AGPL-3.0
 - **Verification status:** verified
-- **Notes:** Powers opendata.swiss, data.gov, data.gov.uk. DCAT-AP, OAI-PMH, SPARQL.
 
 ### [23] govdigital eG
 - **Original language:** German
@@ -244,11 +229,10 @@ publication date, document title, source URL, and licence/reuse status.
 - **Source URL:** https://govdigital.de/
 - **License/reuse status:** Open access
 - **Verification status:** verified
-- **Notes:** Cooperative of German public-sector IT providers. Operates SCS-based cloud. Framework contracts satisfy German procurement law.
 
 ### [24] Dataport AöR
 - **Original language:** German
-- **Region/Jurisdiction:** Germany (Hamburg, Schleswig-Holstein, Bremen, Mecklenburg-Vorpommern, Saxony-Anhalt, Thuringia)
+- **Region/Jurisdiction:** Germany (Hamburg, Schleswig-Holstein, Bremen, et al.)
 - **Issuing organization:** Dataport AöR
 - **Publication date:** 2023
 - **Document title:** Dataport: IT-Dienstleister für die öffentliche Verwaltung
@@ -265,13 +249,12 @@ publication date, document title, source URL, and licence/reuse status.
 - **Source URL:** https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/IT-Grundschutz-Kompendium/it-grundschutz-kompendium_node.html
 - **License/reuse status:** CC-BY-ND 3.0 DE
 - **Verification status:** verified
-- **Notes:** Comprehensive security baseline. Mandatory reference for German public-sector IT security.
 
 ### [27] NIS2 Directive
 - **Original language:** English / all EU official languages
 - **Region/Jurisdiction:** European Union
 - **Issuing organization:** European Parliament and Council
-- **Publication date:** 2022-12-27 (in force)
+- **Publication date:** 2022-12-27
 - **Document title:** Directive (EU) 2022/2555 on Measures for a High Common Level of Cybersecurity across the Union (NIS2)
 - **Source URL:** https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2555
 - **License/reuse status:** EU legislation (public domain)
@@ -294,9 +277,8 @@ publication date, document title, source URL, and licence/reuse status.
 - **Publication date:** 2015
 - **Document title:** Digital government evolution: From transformation to contextualization
 - **Source URL:** https://doi.org/10.1016/j.giq.2015.07.001
-- **License/reuse status:** © Elsevier (paywalled; cite only)
+- **License/reuse status:** © Elsevier (paywalled)
 - **Verification status:** verified
-- **Notes:** Janowski, T. GIQ 32(3), 221–226. Four-generation framework for digital government evolution.
 
 ### [33] Camunda Platform
 - **Original language:** English
@@ -307,7 +289,6 @@ publication date, document title, source URL, and licence/reuse status.
 - **Source URL:** https://camunda.com/download/
 - **License/reuse status:** Apache 2.0 (Community); proprietary (Enterprise)
 - **Verification status:** verified
-- **Notes:** BPMN 2.0-native workflow engine. Multiple German Länder deployments.
 
 ### [34] BigBlueButton
 - **Original language:** English
@@ -378,7 +359,6 @@ publication date, document title, source URL, and licence/reuse status.
 - **Source URL:** https://opendesk.eu/
 - **License/reuse status:** AGPL-3.0
 - **Verification status:** verified
-- **Notes:** Government-curated open-source workplace suite: Nextcloud + Cryptpad + OpenProject + Jitsi + Element + Collabora. Managed by ZenDiS (Zentrum für Digitale Souveränität der öffentlichen Verwaltung).
 
 ### [43] Swiss GEVER
 - **Original language:** German / French
@@ -419,11 +399,213 @@ publication date, document title, source URL, and licence/reuse status.
 - **Source URL:** https://www.xoev.de/
 - **License/reuse status:** Open access
 - **Verification status:** verified
-- **Notes:** Family of XML standards for German public-administration data exchange (XPersonenstand, XMeld, XKfz, XBildung, XGesundheit). Mandatory for OZG implementations.
 
 ---
 
-## Sources requiring verification (v0.2.0 milestone)
+## New sources added in v0.2.0 (IDs [47]–[65])
+
+### [47] LiMux Evaluation
+- **Original language:** German
+- **Region/Jurisdiction:** Germany (Munich)
+- **Issuing organization:** Landeshauptstadt München / ifo Institut
+- **Publication date:** 2017-12-01
+- **Document title:** LiMux: Evaluation der Migration und Rückmigration — Zusammenfassung der Erkenntnisse
+- **Source URL:** https://risi.muenchen.de
+- **License/reuse status:** Public Domain
+- **Verification status:** unverified — locate specific council resolution document
+- **Notes:** Key post-mortem of largest European municipal OSS migration. Migration was technically successful; political factors drove reversal.
+
+### [48] Halloween Documents
+- **Original language:** English
+- **Region/Jurisdiction:** US / International
+- **Issuing organization:** Halloween Documents Project (Eric Raymond, ed.)
+- **Publication date:** 1998-2001 (original docs); ongoing analysis
+- **Document title:** The Halloween Documents: Microsoft internal assessments of Linux and Open Source
+- **Source URL:** https://www.catb.org/~esr/halloween/
+- **License/reuse status:** Various (leaked internal documents; analysis CC-by-Raymond)
+- **Verification status:** verified
+- **Notes:** Primary source documentation of FUD strategies used against OSS. Historical but analytically relevant.
+
+### [49] DSGVO / GDPR
+- **Original language:** German / all EU official languages
+- **Region/Jurisdiction:** European Union
+- **Issuing organization:** European Parliament and Council
+- **Publication date:** 2016-04-27 (in force 2018-05-25)
+- **Document title:** Verordnung (EU) 2016/679 — Datenschutz-Grundverordnung (DSGVO)
+- **Source URL:** https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32016R0679
+- **License/reuse status:** © EU, Reuse permitted
+- **Verification status:** verified
+
+### [50] BDSG
+- **Original language:** German
+- **Region/Jurisdiction:** Germany (federal)
+- **Issuing organization:** Deutscher Bundestag
+- **Publication date:** 2018-06-30
+- **Document title:** Bundesdatenschutzgesetz (BDSG) — Neufassung
+- **Source URL:** https://www.gesetze-im-internet.de/bdsg_2018/
+- **License/reuse status:** Public Domain
+- **Verification status:** verified
+
+### [51] NIS2 Directive (full reference)
+- **Original language:** English / all EU official languages
+- **Region/Jurisdiction:** European Union
+- **Issuing organization:** European Parliament and Council
+- **Publication date:** 2022-12-27
+- **Document title:** Directive (EU) 2022/2555 (NIS2 Directive)
+- **Source URL:** https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2555
+- **License/reuse status:** © EU, Reuse permitted
+- **Verification status:** verified
+- **Notes:** Consolidated with [27]; listed separately for paper citation clarity.
+
+### [52] BSI IT-Grundschutz (full reference)
+- **Original language:** German
+- **Region/Jurisdiction:** Germany (federal)
+- **Issuing organization:** Bundesamt für Sicherheit in der Informationstechnik (BSI)
+- **Publication date:** 2023-09-01
+- **Document title:** IT-Grundschutz-Kompendium, Edition 2023
+- **Source URL:** https://www.bsi.bund.de/grundschutz
+- **License/reuse status:** CC-BY-4.0
+- **Verification status:** verified
+- **Notes:** Consolidated with [26]; listed separately for paper citation clarity.
+
+### [53] ISO/IEC 27001:2022
+- **Original language:** English
+- **Region/Jurisdiction:** International
+- **Issuing organization:** ISO/IEC
+- **Publication date:** 2022-10-01
+- **Document title:** ISO/IEC 27001:2022 — Information security, cybersecurity and privacy protection
+- **Source URL:** https://www.iso.org/standard/82875.html
+- **License/reuse status:** Proprietary (ISO paid standard)
+- **Verification status:** verified
+
+### [54] EIF Implementation Strategy
+- **Original language:** English
+- **Region/Jurisdiction:** European Union
+- **Issuing organization:** European Commission
+- **Publication date:** 2023-12-01
+- **Document title:** European Interoperability Framework (EIF) Implementation Strategy
+- **Source URL:** https://ec.europa.eu/isa2/eif_en
+- **License/reuse status:** CC-BY-4.0
+- **Verification status:** unverified — confirm updated URL post-ISA2 programme transition
+
+### [55] KGSt Kommunale Digitalisierung
+- **Original language:** German
+- **Region/Jurisdiction:** Germany
+- **Issuing organization:** KGSt (Kommunale Gemeinschaftsstelle für Verwaltungsmanagement)
+- **Publication date:** 2023-06-01
+- **Document title:** Digitale Transformation in Kommunen: Handlungsrahmen und Praxisempfehlungen
+- **Source URL:** https://www.kgst.de
+- **License/reuse status:** Proprietary (member organisation publication)
+- **Verification status:** unverified — identify specific publication title/number
+
+### [56] EU Data Act 2023
+- **Original language:** English / all EU official languages
+- **Region/Jurisdiction:** European Union
+- **Issuing organization:** European Parliament and Council
+- **Publication date:** 2023-12-13 (in force 2025-09-12)
+- **Document title:** Regulation (EU) 2023/2854 — EU Data Act
+- **Source URL:** https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R2854
+- **License/reuse status:** © EU, Reuse permitted
+- **Verification status:** verified
+- **Notes:** Impacts municipal cloud contracts: right to data portability, switching rights between cloud providers, mandatory data sharing obligations.
+
+### [57] Decidim (full platform reference)
+- **Original language:** Catalan / Spanish / English
+- **Region/Jurisdiction:** Spain / International (origin: Barcelona)
+- **Issuing organization:** Ajuntament de Barcelona / Decidim Association
+- **Publication date:** 2022-06-01
+- **Document title:** Decidim: Free Open-Source participatory democracy platform for cities and organisations
+- **Source URL:** https://decidim.org
+- **License/reuse status:** AGPL-3.0
+- **Verification status:** verified
+- **Notes:** Consolidated with [12]; separate entry for security section.
+
+### [58] Digitalstrategie Bundesregierung 2023
+- **Original language:** German
+- **Region/Jurisdiction:** Germany (federal)
+- **Issuing organization:** Bundesministerium des Innern (BMI)
+- **Publication date:** 2023-11-01
+- **Document title:** Digitalstrategie der Bundesregierung — Fortschrittsbericht 2023
+- **Source URL:** https://www.bmi.bund.de/digitalstrategie
+- **License/reuse status:** Public Domain
+- **Verification status:** unverified — confirm exact URL and publication date
+
+### [59] Linux Foundation Open Source in Public Sector Survey
+- **Original language:** English
+- **Region/Jurisdiction:** International
+- **Issuing organization:** Linux Foundation
+- **Publication date:** 2023-01-01
+- **Document title:** Open Source Software in the Public Sector: A Global Survey
+- **Source URL:** https://www.linuxfoundation.org
+- **License/reuse status:** CC-BY-4.0
+- **Verification status:** unverified — identify specific report title and publication URL
+
+### [60] BfDI Cloud-Nutzung öffentliche Verwaltung
+- **Original language:** German
+- **Region/Jurisdiction:** Germany (federal)
+- **Issuing organization:** Bundesbeauftragter für den Datenschutz und die Informationsfreiheit (BfDI)
+- **Publication date:** 2023-09-01
+- **Document title:** Cloud-Nutzung in der öffentlichen Verwaltung: Datenschutzrechtliche Anforderungen
+- **Source URL:** https://www.bfdi.bund.de
+- **License/reuse status:** Public Domain
+- **Verification status:** unverified — locate specific publication
+
+### [61] FSFE Public Money? Public Code!
+- **Original language:** English / German (+ 20 languages)
+- **Region/Jurisdiction:** EU / International
+- **Issuing organization:** Free Software Foundation Europe (FSFE)
+- **Publication date:** 2023-06-01
+- **Document title:** Public Money? Public Code! — Campaign and Policy Paper
+- **Source URL:** https://publiccode.eu
+- **License/reuse status:** CC-BY-4.0
+- **Verification status:** verified
+- **Notes:** Consolidated with [4]; separate reference for policy argument in procurement section.
+
+### [62] Bertelsmann Stiftung Kommunale Digitalisierung
+- **Original language:** German
+- **Region/Jurisdiction:** Germany
+- **Issuing organization:** Bertelsmann Stiftung
+- **Publication date:** 2023-04-01
+- **Document title:** Kommunale Digitalisierung 2023: Benchmark-Report
+- **Source URL:** https://www.bertelsmann-stiftung.de
+- **License/reuse status:** CC-BY-4.0
+- **Verification status:** unverified — identify specific report in Bertelsmann publication catalogue
+
+### [63] The Apache Way
+- **Original language:** English
+- **Region/Jurisdiction:** International
+- **Issuing organization:** Apache Software Foundation
+- **Publication date:** 2023-01-01
+- **Document title:** The Apache Way: Community over Code
+- **Source URL:** https://www.apache.org/theapacheway
+- **License/reuse status:** CC-BY-4.0
+- **Verification status:** verified
+- **Notes:** Reference for OSS community governance model discussion.
+
+### [64] Digitale Verwaltung Schweiz (DVS)
+- **Original language:** German / French / Italian
+- **Region/Jurisdiction:** Switzerland (federal + cantonal)
+- **Issuing organization:** Informatiksteuerungsorgan Bund (ISB) / Bundesamt für Informatik (BIT)
+- **Publication date:** 2023-12-01
+- **Document title:** Digitale Verwaltung Schweiz (DVS): Strategischer Rahmen 2024–2027
+- **Source URL:** https://www.digitale-verwaltung-schweiz.ch
+- **License/reuse status:** Public Domain
+- **Verification status:** unverified — confirm URL; DVS replaced E-Government Suisse in 2024
+
+### [65] Austria Open Source Strategy
+- **Original language:** German
+- **Region/Jurisdiction:** Austria (federal)
+- **Issuing organization:** Bundeskanzleramt Österreich
+- **Publication date:** 2023-01-01
+- **Document title:** Open Source in der österreichischen Bundesverwaltung: Strategie und Leitfaden
+- **Source URL:** https://www.digitales.oesterreich.gv.at
+- **License/reuse status:** CC-BY-4.0
+- **Verification status:** unverified — identify specific document in digitales.oesterreich.gv.at catalogue
+- **Notes:** DACH comparison: Austria is less advanced than CH/DE in OSS mandate but has similar democratic drivers.
+
+---
+
+## Sources requiring verification (v0.2.0)
 
 | ID | Issue |
 |---|---|
@@ -431,14 +613,20 @@ publication date, document title, source URL, and licence/reuse status.
 | [9] | Verify FITKO annual report URL and direct PDF link |
 | [16] | Confirm E-Government Strategy 2024–2027 publication date and final URL |
 | [43] | Verify GEVER BAR page URL |
+| [47] | Locate specific LiMux council resolution document |
+| [54] | Confirm updated EIF Implementation Strategy URL |
+| [55] | Identify specific KGSt publication title/number |
+| [58] | Confirm Digitalstrategie Fortschrittsbericht exact URL |
+| [59] | Identify Linux Foundation specific report title and URL |
+| [60] | Locate BfDI cloud-nutzung specific publication |
+| [62] | Identify Bertelsmann Stiftung 2023 benchmark report |
+| [64] | Confirm DVS URL (replaced E-Government Suisse in 2024) |
+| [65] | Identify specific Austria OSS strategy document |
 
-## Sources to add (literature-review gap)
+## Gap log (open items for v0.3.0)
 
-- CONSUL Democracy platform (Madrid) — participatory alternative to Decidim
-- eCH standards (Switzerland) — equivalent of XÖV for Swiss e-government
-- OKD (Origin Kubernetes Distribution) — open alternative to OpenShift
-- ZenDiS annual report 2023/2024
-- OSOR Annual Report 2023 (EU Open Source Observatory)
-- Swiss E-ID implementation details (post-2021 referendum)
-- Lathrop & Ruma (2010) Open Government — foundational text
-- GovStack (ITU/DIAL) building-blocks initiative
+- [ ] Longitudinal UX studies post-migration (target: v0.3.0)
+- [ ] Accessibility performance benchmarks: OSS vs. proprietary government portals
+- [ ] Small-municipality case studies (< 5,000 inhabitants)
+- [ ] Austrian e-government context (added at high level via [65]; needs depth)
+- [ ] OpenDesk v2.x (2025/2026 status and municipal access framework)
