@@ -28,9 +28,24 @@ civil-society groups, open-source communities, and sovereign technology provider
 
 | Path | Purpose |
 |---|---|
-| [`Doc/`](Doc/) | Published documents (Markdown source of truth + generated DOCX, PDF, HTML) |
+| [`Doc/`](Doc/) | Published documents (Markdown source of truth + committed HTML; DOCX/PDF via build) |
 | [`Mem/`](Mem/) | Memory: source registry, literature-review state, research notes |
 | [`Scripts/`](Scripts/) | Automation: document generation, translation, citation management, validation |
+| [`.github/workflows/`](.github/workflows/) | CI that builds & publishes DOCX/PDF/HTML on every push |
+
+## Branching & loop workflow
+
+**This project uses a single branch — `main` — for all work, including recurring
+automated (“loop”) runs.** Earlier runs created a new per-session branch each time
+(`claude/<name>-<id>`), which fragmented the work across many parallel branches. That is
+no longer done:
+
+- `main` is the **single source of truth** and the only long-lived branch.
+- Recurring/automated runs commit their work to `main` (via short-lived PRs or directly).
+- Historical per-session `claude/*` branches are **superseded by `main`** and may be
+  deleted; they were parallel attempts at the same deliverable, now consolidated here.
+
+See [`AGENTS.md`](AGENTS.md) for the convention automated runs follow.
 
 ## Papers
 
@@ -41,6 +56,14 @@ civil-society groups, open-source communities, and sovereign technology provider
 Each paper follows a scientific structure: Abstract · Introduction · Methodology ·
 Literature Review · Technology Stack Analysis · Implementation Roadmap · Stakeholder &
 Procurement Strategy · Risk Analysis · Conclusion · References.
+
+## Formats
+
+| Format | Where |
+|---|---|
+| Markdown | committed under `Doc/<lang>/` (source of truth) |
+| HTML | committed under `Doc/<lang>/` (generated rendering) |
+| DOCX, PDF | built by `Scripts/build_govtech_docs.py` into `Doc/build/`; published as CI artifacts on every push and as release assets on `vX.Y.Z` tags |
 
 ## Versioning
 
@@ -56,7 +79,7 @@ Documents use semantic versioning:
 
 English is the **single source of truth**. German is a full translation derived from it.
 The system is designed so additional languages can be added without rewriting the source
-material — see [`Doc/README.md`](Doc/README.md) for the "add a language" procedure.
+material — see [`Doc/README.md`](Doc/README.md) for the “add a language” procedure.
 
 ## Reproduce
 
