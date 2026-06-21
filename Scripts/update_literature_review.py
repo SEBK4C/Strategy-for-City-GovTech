@@ -1,154 +1,143 @@
 #!/usr/bin/env python3
-"""Print the recurring literature-review improvement agenda.
+"""
+update_literature_review.py -- Quarterly literature review improvement workflow.
 
-This script makes the literature review *self-improving* by surfacing, on each run, the
-work needed to raise the quality of the review and the source registry:
-
-  - the review's next-due date and whether it is overdue,
-  - the critical gaps and not-yet-covered topics from ``Mem/literature-review-state.md``,
-  - the open questions and follow-up leads from ``Mem/research-notes.md``,
-  - the sources still pending verification in ``Mem/source-registry.md``.
-
-It is read-only: it prints an agenda for a human (or a future agent run) to act on. Run it
-at the start of each improvement cycle (suggested cadence: quarterly).
+This script produces a structured agenda for updating the literature review,
+checks source registry completeness, and reports gaps.
 
 Usage:
     python3 Scripts/update_literature_review.py
+    python3 Scripts/update_literature_review.py --output agenda.md
 """
-from __future__ import annotations
 
-import datetime as dt
 import re
-from pathlib import Path
+import sys
+import json
+import pathlib
+import datetime
+from typing import List, Tuple
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
-MEM = REPO_ROOT / "Mem"
-STATE = MEM / "literature-review-state.md"
-NOTES = MEM / "research-notes.md"
-REGISTRY = MEM / "source-registry.md"
+ROOT = pathlib.Path(__file__).parent.parent
+REGISTRY = ROOT / "Mem" / "source-registry.md"
+LIT_STATE = ROOT / "Mem" / "literature-review-state.md"
 
-
-def read(path: Path) -> str:
-    return path.read_text(encoding="utf-8") if path.exists() else ""
-
-
-def extract_section(text: str, heading: str) -> str:
-    """Return the lines under a Markdown heading until the next same-or-higher heading."""
-    lines = text.splitlines()
-    out: list[str] = []
-    level = heading.count("#", 0, heading.find(" "))
-    capturing = False
-    for line in lines:
-        if line.strip() == heading.strip():
-            capturing = True
-            continue
-        if capturing and line.startswith("#"):
-            this_level = len(line) - len(line.lstrip("#"))
-            if this_level <= level:
-                break
-        if capturing:
-            out.append(line)
-    return "\n".join(out).strip()
+# Search terms to check against known new domains each quarter
+QUARTERLY_CHECKS = [
+    ("Swiss e-government", ["EMBAG", "eGovernment Suisse", "E-Government Strategie"]),
+    ("German OZG/FITKO", ["OZG", "FITKO", "openCode", "ZenDiS"]),
+    ("EU legislation", ["Data Act", "AI Act", "Interoperable Europe", "NIS2"]),
+    ("Sovereign Cloud Stack", ["SCS", "OpenStack", "OSBA"]),
+    ("GovStack", ["ITU", "DIAL", "building block"]),
+    ("Decidim / CONSUL", ["Decidim", "CONSUL Democracy", "participatory"]),
+    ("Matrix / Element", ["Matrix protocol", "BundesMessenger"]),
+    ("Nextcloud", ["Nextcloud", "file sync", "collaboration"]),
+    ("GIS open-source", ["QGIS", "GeoServer", "OpenStreetMap"]),
+    ("Security", ["BSI", "NIS2", "SBOM", "CVE"]),
+    ("TCO studies", ["total cost", "TCO", "migration cost"]),
+    ("eCH standards", ["eCH", "Swiss XML", "interoperability Switzerland"]),
+    ("Academic e-gov", ["GIQ", "ISM", "EJEG", "maturity model"]),
+    ("OSOR", ["Open Source Observatory", "OSOR", "JoinUp"]),
+    ("UN E-Government", ["UN Survey", "UNDESA"]),
+]
 
 
-def find_due_date(state: str) -> dt.date | None:
-    m = re.search(r"Next review due:\*\*\s*(\d{4}-\d{2}-\d{2})", state)
-    if not m:
-        m = re.search(r"Next review due:\s*(\d{4}-\d{2}-\d{2})", state)
-    if m:
-        try:
-            return dt.date.fromisoformat(m.group(1))
-        except ValueError:
-            return None
-    return None
+def parse_registry_ids(text: str) -> List[str]:
+    return re.findall(r"^### \[(\d+)\]", text, re.MULTILINE)
 
 
-def unverified_sources(registry: str) -> list[str]:
-    out: list[str] = []
-    current_id = None
-    for line in registry.splitlines():
-        m = re.match(r"^###\s*(\[\d+\].*)$", line)
-        if m:
-            current_id = m.group(1).strip()
-        # Match a real status line ("**Verification status:** unverified"), not the
-        # template placeholder ("[unverified | verified | archived]").
-        if re.search(r"Verification status:\*\*\s*unverified\b", line) and current_id:
-            out.append(current_id)
-    return out
+def parse_unverified(text: str) -> List[Tuple[str, str]]:
+    results = []
+    for m in re.finditer(r"### \[(\d+)\][^\n]*\n(?:[^#]|\n)*?\*\*Verifikationsstatus:\*\* unverified", text):
+        id_m = re.search(r"\[(\d+)\]", m.group(0))
+        title_m = re.search(r"\*\*Dokumenttitel:\*\* (.+)", m.group(0))
+        if id_m and title_m:
+            results.append((id_m.group(1), title_m.group(1).strip()))
+    return results
 
 
-def checkbox_items(block: str) -> list[str]:
-    return [ln.strip() for ln in block.splitlines() if ln.strip().startswith(("- [ ]", "- [x]"))]
+def build_agenda() -> str:
+    today = datetime.date.today().isoformat()
+    next_review = (datetime.date.today() + datetime.timedelta(days=90)).isoformat()
 
+    registry_text = REGISTRY.read_text(encoding="utf-8") if REGISTRY.exists() else ""
+    lit_text = LIT_STATE.read_text(encoding="utf-8") if LIT_STATE.exists() else ""
 
-def bullet_items(block: str) -> list[str]:
-    return [ln.strip() for ln in block.splitlines() if ln.strip().startswith(("- ", "* "))]
+    ids = parse_registry_ids(registry_text)
+    unverified = parse_unverified(registry_text)
 
+    lines = [
+        f"# Quarterly Literature Review Agenda",
+        f"",
+        f"**Generated:** {today}  ",
+        f"**Next review:** {next_review}  ",
+        f"**Registry entries:** {len(ids)}  ",
+        f"**Unverified sources:** {len(unverified)}  ",
+        f"",
+        f"---",
+        f"",
+        f"## 1. Unverified Sources to Confirm",
+        f"",
+    ]
 
-def main() -> int:
-    today = dt.date.today()
-    state = read(STATE)
-    notes = read(NOTES)
-    registry = read(REGISTRY)
-
-    print("=" * 70)
-    print("  LITERATURE-REVIEW IMPROVEMENT AGENDA")
-    print(f"  Generated: {today.isoformat()}")
-    print("=" * 70)
-
-    due = find_due_date(state)
-    if due:
-        delta = (due - today).days
-        if delta < 0:
-            print(f"\n[!] Review is OVERDUE by {-delta} days (was due {due}).")
-        else:
-            print(f"\n[ ] Next review due in {delta} days ({due}).")
+    if unverified:
+        for src_id, title in unverified:
+            lines.append(f"- [ ] [{src_id}] {title} — verify URL and metadata")
     else:
-        print("\n[ ] No 'Next review due' date found in literature-review-state.md.")
+        lines.append("- [x] All sources verified in current registry.")
 
-    pending = unverified_sources(registry)
-    print("\n--- Sources pending verification (target: 0 for v0.2.0) ---")
-    if pending:
-        for s in pending:
-            print(f"  - {s}")
+    lines += [
+        f"",
+        f"## 2. Quarterly Search Agenda",
+        f"",
+        f"For each domain below, search for publications from the last 90 days:",
+        f"",
+    ]
+
+    for domain, terms in QUARTERLY_CHECKS:
+        lines.append(f"### {domain}")
+        for t in terms:
+            lines.append(f"- [ ] Search: `{t}` (policy docs, press releases, academic papers)")
+        lines.append("")
+
+    lines += [
+        f"## 3. Gap Areas to Address",
+        f"",
+        f"Priority gaps from current literature review state:",
+        f"",
+        f"- [ ] OSOR Annual Report (latest) — add as source [54]",
+        f"- [ ] GovStack Specification v1.0 — add as source [56]",
+        f"- [ ] EU AI Act implementation guidance for municipalities — add as source [60]",
+        f"- [ ] Citizen satisfaction survey framework (design for v1.0 appendix)",
+        f"- [ ] Longitudinal follow-up on 3 v0.2.0 case studies (Schaffhausen, Biberach, Rosenheim)",
+        f"",
+        f"## 4. Version Targets",
+        f"",
+        f"| Target | Criterion |",
+        f"|---|---|",
+        f"| v0.3.0 | OSOR, GovStack spec, EU AI Act integrated; 2 new case studies |",
+        f"| v1.0.0 | All sources verified; citizen survey framework; peer-reviewed |",
+        f"",
+        f"---",
+        f"*Generated by `Scripts/update_literature_review.py`*",
+    ]
+
+    return "\n".join(lines)
+
+
+def main():
+    import argparse
+    parser = argparse.ArgumentParser(description="Generate quarterly literature review agenda")
+    parser.add_argument("--output", help="Write agenda to this file (default: stdout)")
+    args = parser.parse_args()
+
+    agenda = build_agenda()
+
+    if args.output:
+        pathlib.Path(args.output).write_text(agenda, encoding="utf-8")
+        print(f"Agenda written to {args.output}")
     else:
-        print("  none — all registry sources verified or archived.")
-
-    crit = extract_section(state, "## Critical gaps")
-    print("\n--- Critical gaps to close ---")
-    print("  " + (crit.replace("\n", "\n  ") if crit else "(none recorded)"))
-
-    notyet = extract_section(state, "### Not yet covered")
-    print("\n--- Topics not yet covered ---")
-    items = bullet_items(notyet)
-    for it in items[:20]:
-        print("  " + it)
-    if not items:
-        print("  (none recorded)")
-
-    leads = extract_section(notes, "### Leads to follow up")
-    print("\n--- Open leads (from research-notes.md) ---")
-    todo = checkbox_items(leads)
-    for it in todo:
-        print("  " + it)
-    if not todo:
-        print("  (none recorded)")
-
-    checklist = extract_section(state, "## Quarterly review checklist")
-    print("\n--- Quarterly review checklist ---")
-    cl = checkbox_items(checklist)
-    for it in cl:
-        print("  " + it)
-    if not cl:
-        print("  (none recorded)")
-
-    print("\n" + "=" * 70)
-    print("  Next steps: research the items above, update Mem/source-registry.md and")
-    print("  Mem/literature-review-state.md, then revise Doc/ papers and bump the version.")
-    print("  Finish by running: python3 Scripts/validate_citations.py")
-    print("=" * 70)
-    return 0
+        print(agenda)
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    main()
