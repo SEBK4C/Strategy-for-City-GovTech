@@ -26,4 +26,4 @@ changelog:
     description: "Erstübersetzung ins Deutsche — Zitationsvollständige Version"
 ---
 
-PLACEHOLDER
+CONTENT_PLACEHOLDER_DO_NOT_USE
