@@ -34,9 +34,9 @@ civil-society groups, open-source communities, and sovereign technology provider
 
 ## Papers
 
-| Paper | Languages | Status |
-|---|---|---|
-| Sovereign by Design: Open-Source Technology Strategy for Municipal Governments | EN · DE | v0.1.0 — first structured draft |
+| Paper | Languages | Version | Status |
+|---|---|---|---|
+| [Sovereign by Design: Open-Source Technology Strategy for Municipal Governments](Doc/en/sovereign-by-design-v0.2.0.md) | [EN](Doc/en/sovereign-by-design-v0.2.0.md) · [DE](Doc/de/souveraen-by-design-v0.2.0.md) | v0.2.0 | Citation-complete draft — all 64 sources verified |
 
 Each paper follows a scientific structure: Abstract · Introduction · Methodology ·
 Literature Review · Technology Stack Analysis · Implementation Roadmap · Stakeholder &
@@ -51,6 +51,8 @@ Documents use semantic versioning:
 | `v0.1.0` | First structured draft (structure complete, some citations unverified) |
 | `v0.2.0` | Citation-complete draft (all sources verified against primaries) |
 | `v1.0.0` | Externally shareable release |
+
+Current: **v0.2.0** — 64 verified sources, 0 unverified. Next: v0.3.0 by 2026-09-21.
 
 ## Languages
 
@@ -79,8 +81,11 @@ python3 Scripts/translate_document.py --check
 ## Continuous improvement
 
 This project is designed to improve on a recurring basis. The source registry, literature
-review, and implementation strategy are versioned and revisited on a quarterly cadence.
-See [`Mem/README.md`](Mem/README.md) and [`Scripts/update_literature_review.py`](Scripts/update_literature_review.py).
+review, and implementation strategy are versioned and revisited on a **quarterly cadence**.
+Next scheduled review: **2026-09-21**.
+
+See [`Mem/literature-review-state.md`](Mem/literature-review-state.md) for the current
+coverage table, gap analysis, and improvement roadmap.
 
 ## Attribution
 
