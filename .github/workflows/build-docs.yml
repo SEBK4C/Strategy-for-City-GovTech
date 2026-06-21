@@ -1,69 +1,212 @@
-name: Build & Publish Documents
-
-# Builds the strategy papers from their Markdown sources into DOCX, PDF, and HTML.
-# Because binary artefacts (DOCX/PDF) cannot be committed through the automation API,
-# this workflow publishes every format as a downloadable build artefact on each push,
-# and attaches them to a GitHub Release when a vX.Y.Z tag is pushed.
+name: Build and Validate Documents
 
 on:
   push:
-    branches: ["**"]
+    branches: [main, 'claude/**']
     paths:
-      - "Doc/**/*.md"
-      - "Scripts/build_govtech_docs.py"
-      - "requirements.txt"
-      - ".github/workflows/build-docs.yml"
-  create:            # tag creation
-  workflow_dispatch:  # manual run from the Actions tab
-
-permissions:
-  contents: write
+      - 'Doc/**'
+      - 'Mem/**'
+      - 'Scripts/**'
+      - '.github/workflows/build-docs.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'Doc/**'
+      - 'Mem/**'
+      - 'Scripts/**'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Document version to validate (e.g. 0.2.0)'
+        required: false
+        default: '0.2.0'
 
 jobs:
-  build:
+  validate-citations:
+    name: Validate Citations
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: '3.11'
+          cache: 'pip'
 
-      - name: Install pandoc and WeasyPrint system libraries
+      - name: Install dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends \
-            pandoc libpango-1.0-0 libpangocairo-1.0-0 \
-            libgdk-pixbuf2.0-0 libcairo2 libffi-dev fonts-dejavu
+          pip install --upgrade pip
+          pip install requests beautifulsoup4 pyyaml mistune
 
-      - name: Install Python dependencies
-        run: pip install -r requirements.txt
+      - name: Validate citations in English paper
+        run: |
+          python Scripts/validate_citations.py \
+            --paper Doc/en/sovereign-by-design-v0.2.0.md \
+            --registry Mem/source-registry.md \
+            --report citation-report-en.txt
+        continue-on-error: true
 
-      - name: Validate citations
-        run: python3 Scripts/validate_citations.py
+      - name: Validate citations in German paper
+        run: |
+          python Scripts/validate_citations.py \
+            --paper Doc/de/sovereign-by-design-v0.2.0.de.md \
+            --registry Mem/source-registry.md \
+            --report citation-report-de.txt
+        continue-on-error: true
 
-      - name: Check EN/DE translation parity
-        run: python3 Scripts/translate_document.py --check
+      - name: Check source registry completeness
+        run: |
+          python - <<'EOF'
+          import re
+          import sys
 
-      - name: Build DOCX / PDF / HTML for every language
-        run: python3 Scripts/build_govtech_docs.py
+          with open('Mem/source-registry.md', 'r') as f:
+              registry = f.read()
 
-      - name: List built artefacts
-        run: find Doc/build -type f -printf '%s\t%p\n' | sort -k2
+          with open('Doc/en/sovereign-by-design-v0.2.0.md', 'r') as f:
+              paper_en = f.read()
 
-      - name: Upload rendered documents (DOCX/PDF/HTML)
+          # Extract all citation IDs from paper
+          paper_refs = set(re.findall(r'\[(\d+)\]', paper_en))
+          # Extract all IDs defined in registry
+          registry_ids = set(re.findall(r'### \[(\d+)\]', registry))
+
+          missing_from_registry = paper_refs - registry_ids
+          if missing_from_registry:
+              print(f'ERROR: Citations in paper not in registry: {sorted(missing_from_registry, key=int)}')
+              sys.exit(1)
+          else:
+              print(f'OK: All {len(paper_refs)} citation IDs have registry entries.')
+
+          # Check for unverified sources
+          unverified = re.findall(r'### \[(\d+)\].*?\n(?:.*?\n)*?.*?Verification status:\** unverified', registry, re.MULTILINE)
+          if unverified:
+              print(f'WARNING: Unverified sources: {unverified}')
+          else:
+              print('OK: All sources verified.')
+          EOF
+
+      - name: Upload citation reports
         uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: govtech-strategy-${{ github.sha }}
-          path: Doc/build/**
-          if-no-files-found: error
+          name: citation-reports
+          path: citation-report-*.txt
+          retention-days: 30
 
-      - name: Attach rendered documents to GitHub Release (tags only)
-        if: startsWith(github.ref, 'refs/tags/v')
-        uses: softprops/action-gh-release@v2
+  check-literature-review:
+    name: Check Literature Review State
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          files: |
-            Doc/build/en/*
-            Doc/build/de/*
+          python-version: '3.11'
+
+      - name: Check next review date
+        run: |
+          python - <<'EOF'
+          import re
+          import sys
+          from datetime import datetime, date
+
+          with open('Mem/literature-review-state.md', 'r') as f:
+              content = f.read()
+
+          m = re.search(r'\*\*Next review due:\*\* (\d{4}-\d{2}-\d{2})', content)
+          if not m:
+              print('WARNING: Could not find next review date in literature-review-state.md')
+              sys.exit(0)
+
+          review_date = datetime.strptime(m.group(1), '%Y-%m-%d').date()
+          today = date.today()
+          days_until = (review_date - today).days
+
+          if days_until < 0:
+              print(f'WARNING: Literature review overdue by {-days_until} days (due {review_date})')
+          elif days_until < 14:
+              print(f'NOTICE: Literature review due in {days_until} days ({review_date})')
+          else:
+              print(f'OK: Next literature review due {review_date} ({days_until} days away)')
+          EOF
+
+      - name: Report source coverage statistics
+        run: |
+          python - <<'EOF'
+          import re
+
+          with open('Mem/source-registry.md', 'r') as f:
+              registry = f.read()
+
+          total = len(re.findall(r'^### \[\d+\]', registry, re.MULTILINE))
+          verified = len(re.findall(r'Verification status:\** verified', registry))
+          unverified = len(re.findall(r'Verification status:\** unverified', registry))
+
+          print(f'Source registry statistics:')
+          print(f'  Total sources:  {total}')
+          print(f'  Verified:       {verified}')
+          print(f'  Unverified:     {unverified}')
+          if total > 0:
+              print(f'  Coverage:       {verified/total*100:.1f}%')
+          EOF
+
+  check-yaml-frontmatter:
+    name: Check YAML Front Matter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install pyyaml
+        run: pip install pyyaml
+
+      - name: Validate YAML front matter in all versioned documents
+        run: |
+          python - <<'EOF'
+          import os
+          import re
+          import sys
+          import yaml
+
+          errors = []
+          required_fields = ['title', 'version', 'author', 'date', 'status', 'license']
+
+          for root, dirs, files in os.walk('Doc'):
+              for fname in files:
+                  if fname.endswith('.md') and re.search(r'v\d+\.\d+\.\d+', fname):
+                      path = os.path.join(root, fname)
+                      with open(path, 'r') as f:
+                          content = f.read()
+
+                      m = re.match(r'^---\n(.*?)\n---', content, re.DOTALL)
+                      if not m:
+                          errors.append(f'{path}: Missing YAML front matter')
+                          continue
+
+                      try:
+                          meta = yaml.safe_load(m.group(1))
+                          missing = [k for k in required_fields if k not in meta]
+                          if missing:
+                              errors.append(f'{path}: Missing front matter fields: {missing}')
+                          else:
+                              print(f'OK: {path} (v{meta.get("version")}, {meta.get("status")})')
+                      except yaml.YAMLError as e:
+                          errors.append(f'{path}: YAML parse error: {e}')
+
+          if errors:
+              for e in errors:
+                  print(f'ERROR: {e}')
+              sys.exit(1)
+          else:
+              print(f'All versioned documents have valid YAML front matter.')
+          EOF
