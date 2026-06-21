@@ -2,8 +2,8 @@
 
 **Project:** Open-Source Municipal Government Technology Strategy
 **Maintainer:** Sebastian Graf, Autonomous Office of Civil Digital Infrastructure
-**Last updated:** 2026-06-20
-**Version:** 0.1.0
+**Last updated:** 2026-06-21
+**Version:** 0.2.0
 
 This registry is the canonical source of truth for all citations used in the strategy
 papers. Each entry carries the metadata required for proper attribution, archival, and
@@ -92,8 +92,8 @@ publication date, document title, source URL, and licence/reuse status.
 - **Document title:** Regulation (EU) 2024/903 — Interoperable Europe Act
 - **Source URL:** https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202400903
 - **License/reuse status:** EU legislation (public domain)
-- **Verification status:** unverified — confirm final OJ reference and CELEX number
-- **Notes:** Creates binding cross-border interoperability obligations. Establishes Interoperable Europe Board.
+- **Verification status:** verified
+- **Notes:** Creates binding cross-border interoperability obligations for EU public administrations. Establishes Interoperable Europe Board. Primary obligation falls on national/federal bodies; municipalities affected through national implementation.
 
 ### [7] Wirtz & Weyerer E-Government Maturity Model
 - **Original language:** English
@@ -125,7 +125,7 @@ publication date, document title, source URL, and licence/reuse status.
 - **Document title:** Föderale IT-Kooperation — Jahresbericht 2023
 - **Source URL:** https://www.fitko.de/
 - **License/reuse status:** DL-DE/Zero 2.0
-- **Verification status:** unverified — locate direct PDF link
+- **Verification status:** partially verified — FITKO website confirmed; direct PDF link TBC for v0.3.0
 - **Notes:** FITKO is the federal coordination body for OZG implementation.
 
 ### [10] openCode.de Platform
@@ -137,7 +137,7 @@ publication date, document title, source URL, and licence/reuse status.
 - **Source URL:** https://opencode.de/
 - **License/reuse status:** Open access; repository code under various OSI licences
 - **Verification status:** verified
-- **Notes:** Central platform for government open-source software in Germany. Hosts 300+ repositories.
+- **Notes:** Central platform for government open-source software in Germany. Hosts 300+ repositories. Managed in coordination with ZenDiS.
 
 ### [11] SCS Technical Documentation
 - **Original language:** English
@@ -190,7 +190,7 @@ publication date, document title, source URL, and licence/reuse status.
 - **Document title:** Strategie E-Government Schweiz 2024–2027
 - **Source URL:** https://www.egovernment.ch/de/umsetzung/e-government-strategie/
 - **License/reuse status:** Open access (Swiss federal publication)
-- **Verification status:** unverified — confirm publication date and final URL
+- **Verification status:** partially verified — URL confirmed; exact publication date TBC
 
 ### [19] TYPO3 in Public Administration
 - **Original language:** English / German
@@ -373,12 +373,12 @@ publication date, document title, source URL, and licence/reuse status.
 - **Original language:** German
 - **Region/Jurisdiction:** Germany (federal)
 - **Issuing organization:** Bundesministerium des Innern und für Heimat (BMI) / ZenDiS GmbH
-- **Publication date:** 2023
+- **Publication date:** 2024 (officially launched end of 2024)
 - **Document title:** OpenDesk: Der digitale Arbeitsplatz der Bundesverwaltung
 - **Source URL:** https://opendesk.eu/
 - **License/reuse status:** AGPL-3.0
 - **Verification status:** verified
-- **Notes:** Government-curated open-source workplace suite: Nextcloud + Cryptpad + OpenProject + Jitsi + Element + Collabora. Managed by ZenDiS (Zentrum für Digitale Souveränität der öffentlichen Verwaltung).
+- **Notes:** Government-curated open-source workplace suite: Nextcloud + Cryptpad + OpenProject + Jitsi + Element + Collabora. Managed by ZenDiS (Zentrum für Digitale Souveränität der öffentlichen Verwaltung). Officially launched end of 2024. Available as SaaS from ZenDiS.
 
 ### [43] Swiss GEVER
 - **Original language:** German / French
@@ -388,7 +388,7 @@ publication date, document title, source URL, and licence/reuse status.
 - **Document title:** Geschäftsverwaltung (GEVER) in der Bundesverwaltung
 - **Source URL:** https://www.bar.admin.ch/bar/de/home/digitale-archivierung/gever.html
 - **License/reuse status:** Open access (Swiss federal publication)
-- **Verification status:** unverified — verify URL
+- **Verification status:** partially verified — confirm exact URL path
 
 ### [44] opendata.swiss
 - **Original language:** German / French / Italian / English
@@ -423,22 +423,205 @@ publication date, document title, source URL, and licence/reuse status.
 
 ---
 
-## Sources requiring verification (v0.2.0 milestone)
+## New sources added in v0.2.0
+
+### [47] ZenDiS GmbH
+- **Original language:** German / English
+- **Region/Jurisdiction:** Germany (federal)
+- **Issuing organization:** Zentrum Digitale Souveränität der Öffentlichen Verwaltung GmbH (ZenDiS)
+- **Publication date:** 2022 (founded December 2022; ongoing)
+- **Document title:** ZenDiS: Co-creating Digital Sovereignty
+- **Source URL:** https://www.zendis.de/
+- **License/reuse status:** Open access
+- **Verification status:** verified
+- **Notes:** Founded December 2022 by BMI. Manages OpenDesk and openCode.de. Mission: reduce digital dependency, coordinate open-source strategy for German public administration. Represents the pivotal institutional actor between federal policy (BMI) and municipal implementation. OpenDesk launched as SaaS end of 2024. Targets marketing licence tenders Q1 2026.
+
+### [48] GovStack Initiative
+- **Original language:** English
+- **Region/Jurisdiction:** International
+- **Issuing organization:** International Telecommunication Union (ITU) / Digital Impact Alliance (DIAL) / BMZ / Estonia
+- **Publication date:** 2022 (ongoing)
+- **Document title:** GovStack: Digital Building Blocks for E-Government
+- **Source URL:** https://www.govstack.global/
+- **License/reuse status:** Open access (specifications CC-BY-4.0)
+- **Verification status:** verified
+- **Notes:** Multi-stakeholder initiative providing 9 digital "building block" specifications: payments, registries, identification, digital messaging, information mediation, consent, e-signature, GIS, scheduling. Applied in Montenegro (Dec 2024: 25 local self-governments), Rwanda, Kenya, Ethiopia. Relevant for municipalities as procurement and architecture reference framework. ITU Academy training available.
+
+### [49] eCH Association — E-Government Standards
+- **Original language:** German / French / Italian / English
+- **Region/Jurisdiction:** Switzerland
+- **Issuing organization:** eCH Association (Verein eCH)
+- **Publication date:** ongoing (standards updated continuously)
+- **Document title:** eCH E-Government Standards
+- **Source URL:** https://www.ech.ch/
+- **License/reuse status:** Open access; individual standards may carry specific reuse conditions
+- **Verification status:** verified
+- **Notes:** eCH is the Swiss equivalent of Germany's KoSIT/XÖV. Standards have status of recommendations; federal/cantonal/municipal authorities can declare them binding. Key standards for municipalities: eCH-0007 (historicised municipal directory), eCH-0010 (postal address), eCH-0044 (person identification), eCH-0058 (delivery interface), eCH-0211 (building application — enables data exchange between municipalities and cantons). Published by Swiss Federal Chancellery as mandatory reference: https://www.bk.admin.ch/bk/de/home/digitale-transformation-ikt-lenkung/vorgaben/ech-standards.html
+
+### [50] CONSUL Democracy Platform
+- **Original language:** Spanish / English (+ 45 languages)
+- **Region/Jurisdiction:** International (origin: Madrid, Spain)
+- **Issuing organization:** CONSUL Democracy Foundation
+- **Publication date:** 2015 (Foundation established 2019)
+- **Document title:** CONSUL Democracy: Open Government and E-Participation Web Software
+- **Source URL:** https://consuldemocracy.org/
+- **License/reuse status:** AGPL-3.0
+- **Verification status:** verified
+- **Notes:** Originally developed by Madrid City Council (Decide Madrid, 2015). 250+ deployments globally. 45 languages. Over 100 million citizens can participate via CONSUL-powered platforms. Features: proposals, participatory budgeting, debates, crowd laws, consultations. CONSUL Democracy Foundation (2019) ensures continued open-source maintenance. EU OSOR case study available [55]. Complementary to Decidim: CONSUL stronger in Spanish-speaking world; Decidim stronger in Northern Europe.
+
+### [51] EU Data Act
+- **Original language:** English / all EU official languages
+- **Region/Jurisdiction:** European Union
+- **Issuing organization:** European Parliament and Council
+- **Publication date:** 2023-12-13 (in force 2024-01-11; applies 2025-09-12)
+- **Document title:** Regulation (EU) 2023/2854 on harmonised rules on fair access to and use of data (Data Act)
+- **Source URL:** https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R2854
+- **License/reuse status:** EU legislation (public domain)
+- **Verification status:** verified
+- **Notes:** Distinct from PSI/Open Data Directive which governs public-sector information. Data Act governs data generated by connected devices (IoT). Municipalities as smart city operators must enable data portability for connected devices. Creates obligations for data sharing from IoT/smart city infrastructure. Applies from 12 September 2025.
+
+### [52] EU Data Governance Act
+- **Original language:** English / all EU official languages
+- **Region/Jurisdiction:** European Union
+- **Issuing organization:** European Parliament and Council
+- **Publication date:** 2022-05-30 (applies from September 2023)
+- **Document title:** Regulation (EU) 2022/868 on European data governance (Data Governance Act)
+- **Source URL:** https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022R0868
+- **License/reuse status:** EU legislation (public domain)
+- **Verification status:** verified
+- **Notes:** Enables data altruism registrations, data intermediaries, and European common data spaces. Municipalities can participate as data altruism organisations. Supports open data sharing within European data spaces.
+
+### [53] French Gendarmerie GendBuntu Migration
+- **Original language:** French / English (secondary)
+- **Region/Jurisdiction:** France (national)
+- **Issuing organization:** French National Gendarmerie / Ministry of the Interior
+- **Publication date:** 2024 (ongoing since 2004)
+- **Document title:** GendBuntu: Linux and LibreOffice Migration at Scale — Case Study
+- **Source URL:** https://yeandel.co.uk/21-migration-case-studies/france-gendarmerie.html
+- **License/reuse status:** Open access (secondary source; original French reports restricted)
+- **Verification status:** verified via secondary sources
+- **Notes:** By June 2024: 103,164 workstations (97% of computing estate) running Ubuntu + LibreOffice. Migration began 2004. TCO reduction: ~40%. Annual licence savings: ~€2 million. Key TCO reference for open-source government desktop migration.
+
+### [54] Toulouse Open Source Migration
+- **Original language:** French
+- **Region/Jurisdiction:** France (municipal)
+- **Issuing organization:** Ville de Toulouse, Direction des Systèmes d'Information
+- **Publication date:** 2023
+- **Document title:** Stratégie numérique souveraine de Toulouse: bilan de la migration open source
+- **Source URL:** — [grey literature; cited via secondary reporting]
+- **License/reuse status:** Open access
+- **Verification status:** partially verified via secondary sources
+- **Notes:** €1.8 million savings over 3 years after migrating 90% of desktops to open-source solutions. Key municipal-level TCO reference.
+
+### [55] OSOR Case Study — CONSUL Democracy
+- **Original language:** English
+- **Region/Jurisdiction:** European Union / International
+- **Issuing organization:** Open Source Observatory (OSOR) / Interoperable Europe Portal
+- **Publication date:** 2023
+- **Document title:** Case Study: CONSUL Democracy
+- **Source URL:** https://interoperable-europe.ec.europa.eu/collection/open-source-observatory-osor/document/case-study-consul-democracy
+- **License/reuse status:** CC-BY-4.0
+- **Verification status:** verified
+
+### [56] Swiss e-ID Act
+- **Original language:** German / French / Italian
+- **Region/Jurisdiction:** Switzerland (federal)
+- **Issuing organization:** Swiss Federal Council / Federal Office of Justice
+- **Publication date:** 2024-12-20 (Parliament); 2025-09-28 (referendum approved)
+- **Document title:** Bundesgesetz über den elektronischen Ausweis und andere elektronische Nachweise (BGEID)
+- **Source URL:** https://www.eid.admin.ch/
+- **License/reuse status:** Open access (Swiss federal legislation)
+- **Verification status:** verified
+- **Notes:** E-ID Act passed by Swiss Parliament December 20, 2024. Approved by Swiss voters September 28, 2025 (50.39% in favour). State-managed identity, no central data storage. System targeted for summer 2026 rollout. Budget: CHF 182M for 2023–2028. Public beta started early 2025. Key federation target for Keycloak municipal deployments in Switzerland.
+
+### [57] eVaka — Finnish Municipal Early Education Platform
+- **Original language:** Finnish / Swedish / English
+- **Region/Jurisdiction:** Finland (municipal)
+- **Issuing organization:** City of Espoo / Finnish municipalities
+- **Publication date:** 2021 (ongoing)
+- **Document title:** eVaka: Open Source Early Education Management
+- **Source URL:** https://github.com/espoon-voltti/evaka
+- **License/reuse status:** LGPL-2.1
+- **Verification status:** verified
+- **Notes:** Open-source platform developed by City of Espoo. Shared resource model: multiple Finnish municipalities pool resources for training, maintenance, feature updates. Result: reduced costs, accelerated improvements. Model exemplar of EfA-style (Einer für Alle) approach for small municipalities.
+
+### [58] Fraunhofer IESE — Municipalities and Open Source
+- **Original language:** German / English
+- **Region/Jurisdiction:** Germany
+- **Issuing organization:** Fraunhofer Institut für Experimentelles Software Engineering (IESE)
+- **Publication date:** 2024-01-24
+- **Document title:** The Key to Digital Sovereignty: How Municipalities Can Establish Open Source Software
+- **Source URL:** https://www.iese.fraunhofer.de/en/media/press/pm-2024-01-24-open-source-software.html
+- **License/reuse status:** Open access
+- **Verification status:** verified
+- **Notes:** Key research on municipality-level OSS adoption. Covers barriers, success factors, and recommendations specific to Kommunen.
+
+### [59] EPRS — Digital Sovereignty in Public Administration
+- **Original language:** English
+- **Region/Jurisdiction:** European Union
+- **Issuing organization:** European Parliamentary Research Service (EPRS)
+- **Publication date:** 2023
+- **Document title:** Digital Sovereignty — Panel for the Future of Science and Technology (STOA)
+- **Source URL:** https://www.europarl.europa.eu/RegData/etudes/STUD/2023/737128/EPRS_STU(2023)737128_EN.pdf
+- **License/reuse status:** © European Parliament (open access)
+- **Verification status:** verified
+- **Notes:** Comprehensive assessment of digital sovereignty in EU public administration. Covers open-source strategy, cloud sovereignty, AI governance. Study for European Parliament's STOA panel.
+
+### [60] Lathrop & Ruma — Open Government
+- **Original language:** English
+- **Region/Jurisdiction:** International
+- **Issuing organization:** O'Reilly Media
+- **Publication date:** 2010
+- **Document title:** Open Government: Collaboration, Transparency, and Participation in Practice
+- **Source URL:** https://github.com/oreillymedia/open_government
+- **License/reuse status:** CC-BY (open access edition)
+- **Verification status:** verified
+- **Notes:** Lathrop, D. & Ruma, L. (Eds.). O'Reilly Media, 2010. Foundational text arguing that government data should be open by default. Establishes the philosophical basis for open data mandates later codified in EMBAG, OZG 2.0, and EU Interoperable Europe Act.
+
+### [61] Digital Switzerland Strategy 2025
+- **Original language:** German / French / Italian / English
+- **Region/Jurisdiction:** Switzerland (federal)
+- **Issuing organization:** Swiss Federal Council / Swiss Federal Chancellery
+- **Publication date:** 2023 (updated 2025)
+- **Document title:** Strategie Digitale Schweiz 2025
+- **Source URL:** https://www.bk.admin.ch/bk/en/home/digitale-transformation-ikt-lenkung/strategie-digitale-schweiz.html
+- **License/reuse status:** Open access (Swiss federal publication)
+- **Verification status:** verified
+- **Notes:** Overarching Swiss digital strategy covering e-ID, e-government, open data, data governance, and digital infrastructure. e-ID is identified as a key theme.
+
+### [62] Behörden-Digimeter 2025
+- **Original language:** German
+- **Region/Jurisdiction:** Germany (federal)
+- **Issuing organization:** KOMMUNAL / FITKO
+- **Publication date:** 2025
+- **Document title:** Behörden-Digimeter 2025: Aktueller Stand der OZG-Umsetzung in Deutschland
+- **Source URL:** https://kommunal.de/behoerden-digimeter-2025-so-weit-ist-das-ozg
+- **License/reuse status:** Open access
+- **Verification status:** verified
+- **Notes:** As of early 2025: only 196 of 575 state administrative services available nationwide (less than 34%). Federal government digitalized its 115 prioritized OZG services by end 2024. BundID: ~5.3M active accounts end 2024; ~6M by March 2025; 154k new/month since May 2025; monthly logins doubled to 2M/month vs 2024.
+
+---
+
+## Verification priorities for v0.3.0
 
 | ID | Issue |
 |---|---|
-| [6] | Confirm exact Interoperable Europe Act OJ reference and CELEX number |
-| [9] | Verify FITKO annual report URL and direct PDF link |
-| [16] | Confirm E-Government Strategy 2024–2027 publication date and final URL |
-| [43] | Verify GEVER BAR page URL |
+| [9] | Locate FITKO annual report direct PDF link |
+| [16] | Confirm E-Government Strategy 2024–2027 exact publication date |
+| [43] | Verify GEVER BAR page exact URL path |
+| [54] | Locate primary French source for Toulouse migration savings figure |
 
-## Sources to add (literature-review gap)
+## Sources to add for v0.3.0
 
-- CONSUL Democracy platform (Madrid) — participatory alternative to Decidim
-- eCH standards (Switzerland) — equivalent of XÖV for Swiss e-government
-- OKD (Origin Kubernetes Distribution) — open alternative to OpenShift
-- ZenDiS annual report 2023/2024
-- OSOR Annual Report 2023 (EU Open Source Observatory)
-- Swiss E-ID implementation details (post-2021 referendum)
-- Lathrop & Ruma (2010) Open Government — foundational text
-- GovStack (ITU/DIAL) building-blocks initiative
+- CONSUL Democracy Foundation annual report / community statistics
+- ZenDiS annual report 2024 (when published)
+- OSOR Annual Report 2024 (EU Open Source Observatory)
+- Swiss OGD Strategy 2024–2027 (separate from E-Government Strategy)
+- GAIA-X 2025 state of play for public administration
+- GovStack implementation guide for municipalities
+- eCH-0058 delivery interface specification (specific standard)
+- BundesMessenger adoption statistics (German federal agencies)
+- Fraunhofer IESE full report on municipal OSS (if available)
+- Academic: Bertot et al. — Social media in government (foundational open government text)
+- Academic: Meijer — E-government and democratic legitimacy
+- Academic: post-2022 literature on 4th-generation e-government
