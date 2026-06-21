@@ -36,7 +36,7 @@ civil-society groups, open-source communities, and sovereign technology provider
 ## Branching & loop workflow
 
 **This project uses a single branch — `main` — for all work, including recurring
-automated (“loop”) runs.** Earlier runs created a new per-session branch each time
+automated ("loop") runs.** Earlier runs created a new per-session branch each time
 (`claude/<name>-<id>`), which fragmented the work across many parallel branches. That is
 no longer done:
 
@@ -51,7 +51,7 @@ See [`AGENTS.md`](AGENTS.md) for the convention automated runs follow.
 
 | Paper | Languages | Status |
 |---|---|---|
-| Sovereign by Design: Open-Source Technology Strategy for Municipal Governments | EN · DE | v0.1.0 — first structured draft |
+| Sovereign by Design: Open-Source Technology Strategy for Municipal Governments | EN · DE | v0.2.0 — citation-complete draft · 62 sources |
 
 Each paper follows a scientific structure: Abstract · Introduction · Methodology ·
 Literature Review · Technology Stack Analysis · Implementation Roadmap · Stakeholder &
@@ -79,7 +79,7 @@ Documents use semantic versioning:
 
 English is the **single source of truth**. German is a full translation derived from it.
 The system is designed so additional languages can be added without rewriting the source
-material — see [`Doc/README.md`](Doc/README.md) for the “add a language” procedure.
+material — see [`Doc/README.md`](Doc/README.md) for the "add a language" procedure.
 
 ## Reproduce
 
