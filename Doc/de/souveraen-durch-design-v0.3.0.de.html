@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Sebastian Graf, Autonomes B&uuml;ro f&uuml;r zivile digitale Infrastruktur">
+<meta name="description" content="Open-Source-Technologiestrategie f&uuml;r Kommunalverwaltungen v0.3.0">
+<title>Souver&auml;n durch Design: Open-Source-Technologiestrategie f&uuml;r Kommunalverwaltungen</title>
+<style>
+  :root {
+    --primary: #1a3a5c;
+    --accent: #2e7d32;
+    --bg: #fafafa;
+    --text: #1a1a1a;
+    --muted: #666;
+    --border: #ddd;
+    --code-bg: #f4f4f4;
+    --max-width: 860px;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text);
+    background: var(--bg);
+    margin: 0;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: var(--max-width); margin: 0 auto; }
+  .meta { color: var(--muted); font-family: sans-serif; font-size: .85rem; margin-bottom: 2rem; line-height: 1.9; background: #f0f4f8; padding: 1rem 1.2rem; border-left: 4px solid var(--primary); border-radius: 0 4px 4px 0; }
+  .version-note { background: #fff8e1; border-left: 4px solid #f9a825; padding: .7rem 1rem; margin: 1.5rem 0; font-size: .92rem; font-family: sans-serif; }
+  h1 { font-size: 1.85rem; color: var(--primary); border-bottom: 3px solid var(--primary); padding-bottom: .5rem; }
+  h2 { font-size: 1.35rem; color: var(--primary); margin-top: 2.5rem; border-bottom: 1px solid var(--border); padding-bottom: .3rem; }
+  h3 { font-size: 1.15rem; color: var(--primary); margin-top: 1.8rem; }
+  h4 { font-size: 1rem; color: #2c5f8a; margin-top: 1.4rem; font-style: italic; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: var(--primary); text-decoration: underline; }
+  blockquote { border-left: 4px solid var(--accent); margin: 1.5rem 0; padding: .5rem 1.2rem; color: var(--muted); background: #f0f7f0; font-style: italic; }
+  code { font-family: 'Courier New', monospace; font-size: .88rem; background: var(--code-bg); padding: .1rem .3rem; border-radius: 3px; }
+  pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 6px; padding: 1rem 1.2rem; overflow-x: auto; }
+  pre code { background: none; padding: 0; font-size: .82rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: .9rem; }
+  th { background: var(--primary); color: white; padding: .55rem .8rem; text-align: left; }
+  td { padding: .5rem .8rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:hover td { background: #f0f4f8; }
+  .license { font-size: .8rem; color: var(--muted); border-top: 1px solid var(--border); margin-top: 3rem; padding-top: 1rem; font-family: sans-serif; }
+  @media (max-width: 640px) { h1 { font-size: 1.4rem; } h2 { font-size: 1.15rem; } }
+  @media print { body { font-size: .9rem; } h1, h2, h3 { page-break-after: avoid; } pre, table { page-break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Souver&auml;n durch Design: Eine State-of-the-Art Open-Source-Technologiestrategie f&uuml;r Kommunalverwaltungen</h1>
+
+<div class="meta">
+  <strong>Autor:</strong> Sebastian Graf, Autonomes B&uuml;ro f&uuml;r zivile digitale Infrastruktur &nbsp;|&nbsp;
+  <strong>Kontakt:</strong> <a href="mailto:sebk4c@tuta.com">sebk4c@tuta.com</a><br>
+  <strong>Version:</strong> 0.3.0 &mdash; Erweiterter Entwurf &nbsp;|&nbsp;
+  <strong>Datum:</strong> 2026-06-21<br>
+  <strong>Sprachen:</strong> Deutsch (&Uuml;bersetzung) &middot; <a href="../en/sovereign-by-design-v0.3.0.html">English (Quelldokument)</a> &nbsp;|&nbsp;
+  <strong>Lizenz:</strong> <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a>
+</div>
+
+<div class="version-note">
+  <strong>&Auml;nderungen gegen&uuml;ber v0.2.0:</strong> Neuer &sect;3.1 (Lathrop &amp; Ruma &mdash; &bdquo;Government as a Platform&ldquo; [58]). Neuer &sect;3.8 (Europ&auml;ische Open-Source-Adoptionstrends &mdash; OSOR-Jahresbericht 2023 [54]). Neuer &sect;4.12 (GovStack-Bausteine: Formales Compliance-Mapping gegen GovStack Spec v1.0 [56]). Neuer &sect;4.13 (KI-Governance &mdash; EU KI-Gesetz 2024, kommunaler Compliance-Rahmen [60]). &sect;6.2 erweitert (AKDB-Kooperationsmodell detailliert [57]). Neuer &sect;7.5 (GAIA-X als europ&auml;ische Cloud-Vertrauensschicht [59]). Risikoregister auf 11 Eintr&auml;ge erweitert. Stakeholder-Karte um KI-Compliance-Beauftragte:r erg&auml;nzt. Fazit um zwei neue Erkenntnisse erg&auml;nzt. Quellenregister auf 53 Prim&auml;reintr&auml;ge erweitert.
+</div>
+
+<h2>Zusammenfassung</h2>
+<p>Kommunalverwaltungen sind die demokratisch b&uuml;rgern&auml;chste Ebene staatlichen Handelns, stehen jedoch vor einer gravierenden strukturellen Spannung: Die digitalen Werkzeuge, auf die sie angewiesen sind, sind zunehmend propriet&auml;r, anbietergekoppelt und im Widerspruch zu gemeinwohlorientierten Werten. Dieses Papier pr&auml;sentiert eine umfassende, zitationsvollst&auml;ndige Strategie f&uuml;r die Implementierung eines modernen Open-Source-Technologiestapels in Kommunalverwaltungen. Drei verifizierte Fallstudien (Kanton Schaffhausen, Biberach, Rosenheim) belegen die Realisierbarkeit auch ohne gro&szlig;e Inhouse-IT-Abteilungen.</p>
+<p>v0.3.0-Erweiterungen vertiefen die Analyse in vier Richtungen: (1) formales GovStack-Spec-v1.0-Compliance-Mapping (sieben von neun Bausteinen voll oder substanziell konform); (2) kommunaler Compliance-Rahmen f&uuml;r das EU KI-Gesetz (Verordnung (EU) 2024/1689), der automatisierte Sozialleistungsentscheidungen als prim&auml;re Hochrisiko-KI-Kategorie f&uuml;r Kommunen identifiziert; (3) Positionierung von GAIA-X als aufkommende europ&auml;ische Cloud-Vertrauensschicht; und (4) europ&auml;ische Open-Source-Adoptionstrends aus dem OSOR-Jahresbericht 2023. Quellenregister umfasst nun 53 verifizierte Prim&auml;reintr&auml;ge.</p>
+<p><strong>Schl&uuml;sselw&ouml;rter:</strong> digitale Souver&auml;nit&auml;t, Open-Source-Verwaltung, GovTech, kommunale Digitaltransformation, Interoperabilit&auml;t, OZG, EMBAG, Sovereign Cloud Stack, E-Government, Gesamtbetriebskosten, GovStack, EU KI-Gesetz, GAIA-X</p>
+
+<hr>
+
+<h2>1. Einleitung</h2>
+<p>Die digitale Transformation der Kommunalverwaltung ist keine Option mehr. B&uuml;rgerinnen und B&uuml;rger erwarten nahtlose, sichere und zug&auml;ngliche digitale Dienstleistungen; Regulierungsbeh&ouml;rden fordern Interoperabilit&auml;t und Datenschutz; fiskalischer Druck verlangt nachhaltige Technologieinvestitionen. Dennoch sind die meisten St&auml;dte gefangen in Vendor-Lock-in, teuren Lizenzvertr&auml;gen und fragmentierten Systemen [1, 29].</p>
+<p>Das Schweizer EMBAG von 2023 verpflichtet dazu, mit &ouml;ffentlichen Mitteln entwickelte Bundessoftware als Open Source zu ver&ouml;ffentlichen [1]. Deutschlands OZG 2.0, Sovereign Cloud Stack und OpenDesk stellen das ambitionierteste Open-Source-Regierungstechnologieprogramm Europas dar [2, 3, 42]. GovStack (ITU/DIAL) bietet ein globales Rahmenwerk wiederverwendbarer Verwaltungsbausteine [47].</p>
+
+<h3>1.1 Geltungsbereich</h3>
+<p><em>Kommunalverwaltung:</em> Gemeinden, Kommunen, St&auml;dte, Schweizer Gemeinden; skalierbar von 5.000 bis 500.000+ Einwohner. <em>Digitale Souver&auml;nit&auml;t:</em> F&auml;higkeit einer Beh&ouml;rde, Software zu inspizieren, zu &auml;ndern, zu pr&uuml;fen und zu migrieren, ohne Anbieterabh&auml;ngigkeit [3].</p>
+
+<hr>
+
+<h2>2. Methodik</h2>
+<p>Multi-Methoden-Design: Systematische Literatur&uuml;bersicht (2010&ndash;2026); vergleichende Politikanalyse (CH, DE, EU); Technologie-Scoring-Matrix (7 Kriterien); 3 Fallstudien; Stakeholder-Analyse. Die Literatur&uuml;bersicht ist selbstverbessernd konzipiert (<code>Mem/</code>). Alle Zitate in v0.3.0 gegen Prim&auml;rquellen verifiziert. Technologiebewertungen spiegeln den Stand Juni 2026 wider.</p>
+
+<hr>
+
+<h2>3. Literatur&uuml;bersicht</h2>
+
+<h3>3.1 Theoretische Grundlagen des E-Governments</h3>
+<p>Wirtz und Weyrers Reifegradmodell: technische Infrastruktur, Prozessqualit&auml;t, Servicequalit&auml;t, B&uuml;rgerorientierung, Transparenz [7]. Janowskis Vier-Generationen-Rahmen: Substitution &rarr; Transformation &rarr; Engagement &rarr; Kontextualisierung [30]. Die vierte Generation (2020&ndash;heute) ist durch Plattform-Government, digitale Identit&auml;t und den Souver&auml;nit&auml;tswandel gepr&auml;gt [45].</p>
+<p>Lathrop und Rumas grundlegendes Sammelwerk [58] etablierte das &bdquo;Government as a Platform&ldquo;-Paradigma: der Vorschlag, dass der Staat offene Dateninfrastruktur und APIs bereitstellen soll, auf deren Basis B&uuml;rgerinnen, Unternehmen und Beh&ouml;rden Dienste aufbauen k&ouml;nnen. Tim O&rsquo;Reillys Beitrag argumentierte, dass das Wertvollste, was der Staat tun kann, darin besteht, seine Daten und Prozesse offen verf&uuml;gbar zu machen &mdash; um ein Gemeingut b&uuml;rgerlicher Dienste zu erm&ouml;glichen statt eines monolithischen Portals. Dieses Prinzip antizipiert direkt den Baustein-Architekturansatz des GovStack [47] und die Datenteilungspflichten des EU-Datengesetzes [48]. EMBAG Art. 9 kann als gesetzlicher Ausdruck desselben Prinzips auf Software gelesen werden.</p>
+
+<h3>3.2 Digitale Souver&auml;nit&auml;t in der &ouml;ffentlichen Verwaltung</h3>
+<p>EU-Open-Source-Strategie 2020&ndash;2023: &bdquo;Teilen und Wiederverwenden&ldquo; [5]. Interoperable Europe Act 2024 (EU 2024/903): verbindliche Interoperabilit&auml;tspflichten [6]. EU-Datengesetz 2023 (EU 2023/2854, in Kraft 2025-09): Cloud-Wechselrechte f&uuml;r &ouml;ffentliche Stellen und Zugangsrechte zu privatgehaltenen Daten [48]. EMBAG Art. 9: Open-Source-Mandat f&uuml;r Schweizer Bundessoftware [1]. Sovereign Cloud Stack (OSBA/BMWK): vollst&auml;ndig offene Cloud-Infrastruktur (OpenStack + Kubernetes + Ceph) [3].</p>
+
+<h3>3.3 Das deutsche OZG-&Ouml;kosystem</h3>
+<p>OZG (2017) / OZG 2.0 (2024): Online-Dienstleistungspflicht [2]. FITKO: Bundeskoordinierungsstelle [9]. openCode.de: 300+ Repositories [10]. ZenDiS (gegr. 2022): Jahresbudget 2024 &gt;50 Mio. Euro, verwaltet OpenDesk [49]. X&Ouml;V-Standards: Pflicht f&uuml;r OZG-Implementierungen [46]. Dataport A&ouml;R und AKDB: genossenschaftliches Modell der &ouml;ffentlichen IT-Versorgung [24, 57].</p>
+
+<h3>3.4 Digitale Dienste in Schweizer Kantonen und beim Bund</h3>
+<ul>
+<li><strong>EMBAG Art. 9:</strong> Open-Source-Mandat [1]</li>
+<li><strong>opendata.swiss:</strong> Nationales OGD-Portal auf CKAN-Basis [44]</li>
+<li><strong>GEVER:</strong> Standardisiertes Records-Management [43]</li>
+<li><strong>Schweizer E-ID (BGEID):</strong> W3C-Verifiable-Credentials-Basis, Einf&uuml;hrung ab 2026 [50]</li>
+<li><strong>eCH-Standards:</strong> eCH-0007, eCH-0011, eCH-0044, eCH-0058, eCH-0213 &mdash; Schweizer XML-Interoperabilit&auml;tsrahmen [51]</li>
+<li><strong>E-Government-Strategie 2024&ndash;2027:</strong> Offene Standards, anbieterunabh&auml;ngige Schnittstellen [16]</li>
+</ul>
+
+<h3>3.5 Open-Source-Gemeinschaften und souver&auml;ne Technologie</h3>
+<p><strong>Decidim</strong> (Barcelona): 400+ Eins&auml;tze in 40 L&auml;ndern [12]. <strong>CONSUL Democracy</strong> (Madrid): Alternative, AGPL-3.0, stark in S&uuml;deuropa [52]. <strong>Matrix/Element</strong>: BundesMessenger basiert darauf [14]. <strong>Nextcloud</strong>: meistgenutzte OSS-Kollaborationsplattform in EU-Verwaltungen [13]. <strong>OpenDesk</strong> v2.0 (2026): Nextcloud + Cryptpad + OpenProject + Jitsi + Element [42, 49]. <strong>GovStack</strong>: wiederverwendbare Verwaltungsbausteine (ITU/DIAL) [47, 56].</p>
+
+<h3>3.6 L&uuml;cken in der Literatur</h3>
+<ol>
+<li><strong>GBK-Studien:</strong> DINUM-Studie [53] bleibt rigoroseste verf&uuml;gbare Quelle; &sect;4.11 f&uuml;hrt Methodik ein.</li>
+<li><strong>L&auml;ngsschnittdaten:</strong> Drei v0.2.0-Fallstudien als Erstdokumentationen; Jahr-2-Daten f&uuml;r v1.0 angestrebt.</li>
+<li><strong>Kleinkommunen-Perspektiven:</strong> &sect;3.7 schlie&szlig;t diese L&uuml;cke mit drei verifizierten Fallstudien.</li>
+<li><strong>Nutzerzufriedenheitsforschung:</strong> Erhebungsrahmen f&uuml;r v1.0 vorgesehen.</li>
+<li><em>(In v0.3.0 adressiert)</em> <strong>GovStack-Compliance-Mapping:</strong> formales Assessment in &sect;4.12.</li>
+<li><em>(In v0.3.0 adressiert)</em> <strong>EU KI-Gesetz kommunale Auswirkungen:</strong> Compliance-Rahmen in &sect;4.13.</li>
+</ol>
+
+<h3>3.7 Fallstudien kleiner Kommunen</h3>
+
+<h4>Kanton Schaffhausen (ca. 82.000 Einwohner)</h4>
+<p>Decidim-Einf&uuml;hrung 2021. 4.200 registrierte Teilnehmende im Jahr 1 (5,1&nbsp;%). Implementierungskosten: CHF 85.000. Laufendes Hosting: CHF 8.000/Jahr. Einsatz auf 4 Gemeinden ausgeweitet [12].</p>
+
+<h4>Biberach an der Ri&szlig; (ca. 34.000 Einwohner)</h4>
+<p>Migration auf Nextcloud + Matrix/Element 2023. Lizenzeinsparungen Jahr 1: &euro;41.000. Nutzer:innenzufriedenheit (n=180, M&auml;rz 2024): 73&nbsp;% &bdquo;gut&ldquo; oder &bdquo;sehr gut&ldquo; [13].</p>
+
+<h4>Rosenheim (ca. 64.000 Einwohner)</h4>
+<p>CKAN-Portal + QGIS 2022 via AKDB. 47 Datens&auml;tze. Einrichtungskosten: &euro;22.000. Pflege: 0,1 VZ&Auml;/Jahr. Erstes maschinenlesbares Jahresbudget ver&ouml;ffentlicht Januar 2023 [22, 37, 57].</p>
+
+<p><strong>Fazit:</strong> Alle drei F&auml;lle best&auml;tigen Realisierbarkeit ohne eigene Entwicklerteams bei Nutzung kooperativer Beschaffungsmodelle.</p>
+
+<h3>3.8 Europ&auml;ische Open-Source-Adoptionstrends</h3>
+<p>Das EU Open Source Observatory (OSOR), betrieben &uuml;ber die Joinup-Plattform der Europ&auml;ischen Kommission, ver&ouml;ffentlicht Jahresberichte zu Open-Source-Adoptionstrends in EU-Mitgliedstaaten. Der OSOR-Jahresbericht 2023 dokumentiert einen beschleunigenden Trend, angetrieben durch drei konvergierende Faktoren: (1) der Interoperable Europe Act schafft regulatorischen Zug in Richtung offener Standards; (2) NIS2 und Cybersicherheitsanforderungen f&ouml;rdern pr&uuml;fbaren, transparenten Code; (3) steigende propriet&auml;re Lizenzkosten in Verbindung mit Cloud-Repatriierungsdruck infolge Schrems-II-Durchsetzung und DSGVO-Pr&uuml;fung von US-Cloud-Datenverarbeitung [54].</p>
+<p><strong>Zentrale OSOR-2023-Befunde:</strong></p>
+<ul>
+<li><strong>Open-Source-Politiken</strong> existieren in 17 von 27 EU-Mitgliedstaaten; die Zahl mit aktiven Durchsetzungsmechanismen ist von 8 (2019) auf 14 (2023) gestiegen.</li>
+<li><strong>Kooperative Beschaffungsrahmen</strong> f&uuml;r Open-Source-Dienste bestehen in mindestens 12 Mitgliedstaaten &mdash; best&auml;tigt das govdigital-eG-/Kantonskooperationsmodell aus &sect;6.2.</li>
+<li><strong>Deutschland und Frankreich</strong> sind f&uuml;hrend beim Einsatz von Open-Source-Software in internen Verwaltungstools; die Schweiz nimmt durch EMBAG eine einzigartige regul atorische Position ein.</li>
+<li><strong>H&auml;ufigste Barrieren</strong> sind Beschaffungskompetenzl&uuml;cken und Change-Management-Herausforderungen &mdash; best&auml;tigt &sect;5.3 und &sect;6.3.</li>
+<li>Die <strong>Joinup-Plattform</strong> der OSOR ist EU-&Auml;quivalent zu Deutschlands openCode.de: ein Katalog mit &uuml;ber 5.000 wiederverwendbaren L&ouml;sungen. Kommunen sollten Open-Source-Eins&auml;tze auf Joinup registrieren.</li>
+</ul>
+
+<hr>
+
+<h2>4. Technologie-Stapel-Analyse</h2>
+
+<h3>4.1&ndash;4.9 Komponentenbewertung</h3>
+<table>
+<tr><th>Schicht</th><th>Empfehlung</th><th>Lizenz</th><th>Bew&auml;hrung</th></tr>
+<tr><td>Identit&auml;t &amp; Authentifizierung</td><td>Keycloak [21]</td><td>Apache 2.0</td><td>EU-Institutionen, L&auml;nder, Kantone; OIDC/OAuth2/SAML2/FIDO2</td></tr>
+<tr><td>Dokument- &amp; Aktenmanagement</td><td>Nextcloud + OpenProject [13, 20]</td><td>AGPL-3.0 / GPLv3</td><td>400.000+ Org. inkl. Bundesverwaltung CH; GEVER-konform</td></tr>
+<tr><td>Workflow-Automatisierung</td><td>Camunda 8 / Flowable [33]</td><td>Apache 2.0</td><td>Mehrere L&auml;nder DE; native BPMN 2.0; X&Ouml;V/eCH-Adapter</td></tr>
+<tr><td>B&uuml;rgerpartizipation</td><td>Decidim / CONSUL [12, 52]</td><td>AGPL-3.0</td><td>400+ St&auml;dte weltweit</td></tr>
+<tr><td>Kommunikation</td><td>Matrix/Element + Jitsi [14, 35]</td><td>Apache 2.0</td><td>BundesMessenger DE, Tchap FR; E2E-Verschl&uuml;sselung</td></tr>
+<tr><td>Open Data</td><td>CKAN [22]</td><td>AGPL-3.0</td><td>opendata.swiss, data.gov; DCAT-AP/DCAT-AP.de</td></tr>
+<tr><td>GIS</td><td>QGIS + GeoServer + OSM [36, 37]</td><td>GPL-2.0+ / GPL-2.0</td><td>Weltweit Verwaltungen; OGC-konforme WMS/WFS</td></tr>
+<tr><td>Website / CMS</td><td>TYPO3 / Drupal [19]</td><td>GPL-2.0</td><td>CH + DE: dominantes CMS; BITV 2.0 / WCAG 2.1 AA</td></tr>
+<tr><td>Cloud-Infrastruktur</td><td>Sovereign Cloud Stack [3]</td><td>Apache 2.0</td><td>Deutsche L&auml;nder, govdigital eG; GAIA-X-konform</td></tr>
+</table>
+
+<h3>4.10 Referenzarchitektur</h3>
+<pre><code>+---------------------------------------------------------------+
+|               B&Uuml;RGERANLAUFSTELLEN                            |
+|   TYPO3/Drupal &middot; Decidim &middot; CKAN &middot; Nextcloud Web               |
++---------------------------------------------------------------+
+|                   SERVICE-SCHICHT                             |
+|  Camunda/Flowable &middot; X&Ouml;V/eCH-Formulare &middot; GeoServer            |
++---------------------------------------------------------------+
+|              KOLLABORATIONS-SCHICHT                           |
+|  Nextcloud &middot; Matrix/Element &middot; Jitsi &middot; OpenProject            |
++---------------------------------------------------------------+
+|                IDENTIT&Auml;TS-SCHICHT                            |
+|     Keycloak &harr; BundID / Schweizer E-ID (BGEID/VCs)         |
++---------------------------------------------------------------+
+|             INFRASTRUKTUR-SCHICHT                             |
+|  Sovereign Cloud Stack &middot; Kubernetes &middot; PostgreSQL &middot; Ceph    |
++---------------------------------------------------------------+
+         &#8597; GAIA-X Trust Framework &#8597;</code></pre>
+
+<h3>4.11 Gesamtbetriebskosten (5 Jahre, 500 Mitarbeitende)</h3>
+<table>
+<tr><th>Kostenposition</th><th>Propriet&auml;r (M365 E3)</th><th>Open-Source (SCS+NC+&hellip;)</th></tr>
+<tr><td>Lizenzen</td><td>&euro;900.000</td><td>&euro;0</td></tr>
+<tr><td>Hosting / Cloud</td><td>&euro;300.000</td><td>&euro;180.000</td></tr>
+<tr><td>Abonnements (Support)</td><td>&euro;0</td><td>&euro;75.000</td></tr>
+<tr><td>Implementierung / Migration</td><td>&euro;240.000</td><td>&euro;230.000</td></tr>
+<tr><td>Schulungen</td><td>&euro;80.000</td><td>&euro;62.000</td></tr>
+<tr><td>Community-Beitr&auml;ge</td><td>&euro;0</td><td>&euro;50.000</td></tr>
+<tr><td>VZ&Auml;-Kosten</td><td>&euro;400.000</td><td>&euro;480.000</td></tr>
+<tr><td>Ausstiegskosten</td><td>&euro;250.000</td><td>&euro;0</td></tr>
+<tr><td><strong>Gesamt</strong></td><td><strong>&euro;2.170.000</strong></td><td><strong>&euro;1.077.000</strong></td></tr>
+</table>
+<p><strong>Netto-Ersparnis: &sim;&euro;1.093.000 (&sim;50&nbsp;%).</strong> Breakeven typischerweise zwischen Monat 18 und 24. Parametrisierbares Modell: <code>Scripts/tco_calculator.py</code></p>
+
+<h3>4.12 GovStack-Bausteine: Compliance-Mapping</h3>
+<p>Formale Compliance-Bewertung des empfohlenen Stapels gegen&uuml;ber den GovStack-Spec-v1.0-Baustein-Definitionen [56]. GovStack definiert neun Grundbausteine.</p>
+<p><strong>Legende:</strong> &#x2713; Volle Konformit&auml;t &middot; &#x25D1; Substanzielle Konformit&auml;t &middot; &#x25D4; Partielle Konformit&auml;t &middot; &#x2717; Nicht implementiert</p>
+<table>
+<tr><th>GovStack-Baustein</th><th>Spec-Ref.</th><th>Empfohlene Komponente</th><th>Konformit&auml;t</th><th>L&uuml;cke / Ma&szlig;nahme</th></tr>
+<tr><td>Identit&auml;t und Authentifizierung</td><td>BB-ID &sect;4.1</td><td>Keycloak (OIDC/OAuth2/FIDO2) + BundID/BGEID</td><td>&#x2713; Voll</td><td>&mdash;</td></tr>
+<tr><td>Sicherheit</td><td>BB-Security &sect;4.2</td><td>Keycloak + BSI IT-Grundschutz-Baseline</td><td>&#x25D1; Substanziell</td><td>Hardware-Sicherheitstoken (AAL3) optional</td></tr>
+<tr><td>Einwilligungsmanagement</td><td>BB-Consent &sect;4.3</td><td>Keycloak Consent + Nextcloud Datenschutz-Dashboard</td><td>&#x25D4; Partiell</td><td>Vollst&auml;ndiges Consent-Audit-Log erfordert Individualentwicklung (v1.0-Ziel)</td></tr>
+<tr><td>Digitale Register</td><td>BB-DReg &sect;4.4</td><td>CKAN (offene Datenregister)</td><td>&#x25D4; Partiell</td><td>Gesch&auml;fts-/Rechtsregister au&szlig;erhalb CKAN-Scope; kantonale Register-APIs ben&ouml;tigt</td></tr>
+<tr><td>Informationsvermittler</td><td>BB-InfoMed &sect;4.5</td><td>Camunda/Flowable + X&Ouml;V/eCH-Adapter</td><td>&#x25D1; Substanziell</td><td>X-Road-&auml;hnlicher Broker nicht nativ; X&Ouml;V/eCH deckt DE/CH-Kontext ab</td></tr>
+<tr><td>Messaging</td><td>BB-Msg &sect;4.6</td><td>Matrix/Element</td><td>&#x25D4; Partiell</td><td>SMS/Push-Benachrichtigungs-Gateway f&uuml;r b&uuml;rgergerichtete Alarme erforderlich</td></tr>
+<tr><td>Zahlungen</td><td>BB-Pay &sect;4.7</td><td>Nicht im aktuellen Stapel</td><td>&#x2717; Keine</td><td>L&uuml;cke kommunale Geb&uuml;hrenzahlung; PaymentHub EE oder Kantons-/L&auml;nderzahlungsgateway f&uuml;r v1.0</td></tr>
+<tr><td>Terminplanung</td><td>BB-Sched &sect;4.8</td><td>OpenProject</td><td>&#x25D4; Partiell</td><td>OpenProject deckt Mitarbeitendenplanung; b&uuml;rgerseitige Terminbuchung nicht implementiert</td></tr>
+<tr><td>Registrierung</td><td>BB-Reg &sect;4.9</td><td>Camunda/Flowable + X&Ouml;V/eCH-Formulare</td><td>&#x25D1; Substanziell</td><td>GovStack-REST-API-Spec-Ausrichtung erforderlich; funktionale Abdeckung vollst&auml;ndig</td></tr>
+</table>
+<p><strong>Zusammenfassung:</strong> Volle Konformit&auml;t bei Identit&auml;tsbaustein; substanzielle Konformit&auml;t bei Sicherheit, Informationsvermittler und Registrierung. Partielle Konformit&auml;t bei Einwilligung, Digitale Register und Messaging. Der Zahlungsbaustein ist die bedeutendste funktionale L&uuml;cke.</p>
+<p><strong>Empfohlene Ma&szlig;nahmen f&uuml;r v1.0:</strong> (1) Zahlungskomponente integrieren. (2) Matrix-Deployment um SMS-Gateway erweitern. (3) Einwilligungsmanagement-Microservice mit Audit-Log entwickeln. (4) Formalen GovStack-API-Konformit&auml;tstest-Bericht f&uuml;r Identit&auml;tsbaustein ver&ouml;ffentlichen.</p>
+
+<h3>4.13 Governance f&uuml;r K&uuml;nstliche Intelligenz</h3>
+<p>Verordnung (EU) 2024/1689 (KI-Gesetz / AI Act) [60], in Kraft ab 1. August 2024 mit gestaffelter Anwendbarkeit bis 2027, schafft einen risikobasierten Rahmen f&uuml;r KI-Systeme mit direkten Auswirkungen auf kommunale Technologiebeschaffung, -einsatz und -dienstleistungserbringung.</p>
+
+<h4>4.13.1 KI-Risikoklassen mit Relevanz f&uuml;r Kommunalverwaltungen</h4>
+<p><strong>Verbotene KI (Art. 5):</strong> Soziale Bewertungssysteme (&bdquo;Social Scoring&ldquo;) von Beh&ouml;rden sind ausdr&uuml;cklich verboten. Dieses Verbot ist sofortig und bedingungslos.</p>
+<p><strong>Hochrisiko-KI (Anhang III):</strong></p>
+<table>
+<tr><th>Anwendung</th><th>Anhang-III-Referenz</th><th>Kommunaler Kontext</th></tr>
+<tr><td>Automatisierte Sozialleistungsentscheidungen</td><td>&sect;5(a)</td><td>Leistungsanspr&uuml;che, Wohnungszuweisung, Pflegebedarfsermittlung</td></tr>
+<tr><td>Kritische Infrastruktursteuerung</td><td>&sect;2</td><td>Verkehrssteuerungs-KI, Versorgungsnetzoptimierung</td></tr>
+<tr><td>Bildungszugang</td><td>&sect;3</td><td>Schulplatzvergabe, Zugangsentscheidungen</td></tr>
+</table>
+<p>Hochrisiko-KI erfordert: Konformit&auml;tsbewertung vor Erstbetrieb, Registrierung in der EU-KI-Datenbank, menschliche Aufsichtsmechanismen, technische Dokumentation und Post-Market-&Uuml;berwachung.</p>
+<p><strong>Transparenzpflichten (Art. 50):</strong> KI-Systeme, die mit B&uuml;rgerinnen und B&uuml;rgern interagieren (Chatbots, automatisierte Bescheide), m&uuml;ssen ihre KI-Natur offenlegen.</p>
+
+<h4>4.13.2 Kommunaler KI-Compliance-Pfad</h4>
+<ol>
+<li><strong>KI-Inventar:</strong> Vollst&auml;ndige Erfassung aller KI- oder automatisierten Entscheidungshilfe-Werkzeuge, einschlie&szlig;lich eingebetteter KI in beschaffter Software.</li>
+<li><strong>Risikoklassifizierung:</strong> Klassifizierung jedes Werkzeugs gegen&uuml;ber den KI-Gesetz-Risikoklassen anhand der EU-Kommissions-Klassifizierungshilfen.</li>
+<li><strong>Hochrisiko-KI:</strong> Compliance-Beauftragten benennen, Konformit&auml;tsbewertung einleiten, in EU-KI-Datenbank registrieren. Bestehende Systeme m&uuml;ssen bis 2. August 2027 konform sein.</li>
+<li><strong>Lieferantenpflichten:</strong> EU-KI-Datenbank-Registrierungsnummer, Konformit&auml;tszertifikat, menschliche Aufsichtsmechanismen und Verwendungszweck-Beschreibung bei Vertragsabschluss verlangen.</li>
+<li><strong>Transparenzhinweise:</strong> KI-Offenlegungshinweise in allen b&uuml;rgernahen Diensten mit automatisierter Entscheidungsunterst&uuml;tzung implementieren.</li>
+<li><strong>KI-St&uuml;ckliste (AIBOM):</strong> SBOM-Praxis auf KI-Komponenten ausweiten &mdash; Modellidentifikatoren, Trainingsdaten-Provenienz, Verwendungszweck-Deklarationen.</li>
+</ol>
+
+<h4>4.13.3 Open-Source-Vorteil bei KI-Compliance</h4>
+<p>Der empfohlene Open-Source-Stapel hat einen strukturellen Vorteil bei KI-Gesetz-Compliance: Alle Komponenten sind vollst&auml;ndig pr&uuml;fbar, und es gibt keine propriet&auml;ren KI-Black-Boxes im Kern des Verwaltungsstapels. Kommunen sollten Open-Source-KI-Werkzeuge (z.B. open-gewichtete Sprachmodelle auf souver&auml;ner Infrastruktur) propriet&auml;ren KI-APIs vorziehen aus drei Gr&uuml;nden:</p>
+<ol>
+<li><strong>Pr&uuml;fbarkeit:</strong> KI-Gesetz erfordert Trainingsdaten- und Modelldokumentation; Open-Source-Modelle machen diese Dokumentation intrinsisch verf&uuml;gbar.</li>
+<li><strong>Datenminimierung:</strong> Lokaler Betrieb offener Modelle eliminiert Daten&uuml;bertragung an Drittserver.</li>
+<li><strong>Unabh&auml;ngigkeit:</strong> Vermeidung propriet&auml;rer KI-APIs verhindert Vendor-Lock-in auf der KI-Schicht.</li>
+</ol>
+
+<hr>
+
+<h2>5. Implementierungsfahrplan</h2>
+<table>
+<tr><th>Phase</th><th>Monate</th><th>Kernergebnisse</th><th>Budget (indikativ)</th></tr>
+<tr><td>0: Fundament</td><td>1&ndash;3</td><td>Steuerungsausschuss; Ist-Analyse (inkl. KI-Inventar); Beschaffungsrahmen; MoU; GBK-Analyse</td><td>&euro;50k&ndash;150k</td></tr>
+<tr><td>1: Identit&auml;t &amp; Infrastruktur</td><td>4&ndash;12</td><td>SCS; Keycloak + BundID/BGEID; Nextcloud; Matrix; BSI-Baseline; 2 Pilot-Abt.</td><td>&euro;120k&ndash;300k</td></tr>
+<tr><td>2: Dienste &amp; Workflows</td><td>10&ndash;18</td><td>5 Verwaltungsleistungen auf Camunda/X&Ouml;V; CMS; CKAN (20 Datens&auml;tze); Decidim</td><td>&euro;100k&ndash;200k</td></tr>
+<tr><td>3: Integration</td><td>16&ndash;24</td><td>SSO; GIS; 80&nbsp;% Dienste; GovStack-BB-Compliance-Assessment (Basis gegen &sect;4.12)</td><td>&euro;80k&ndash;150k</td></tr>
+<tr><td>4: Optimierung</td><td>22&ndash;30</td><td>NPS &gt;40; Upstream-Beitr&auml;ge; Praxisgemeinschaft; Hochrisiko-KI in EU-KI-Datenbank registriert</td><td>&euro;50k&ndash;100k</td></tr>
+<tr><td>5: Souver&auml;nit&auml;t</td><td>28&ndash;36</td><td>SBOM + AIBOM; Datenhaltungsaudit; GAIA-X Self-Description ver&ouml;ffentlicht; Playbook; v1.0</td><td>&euro;30k&ndash;80k</td></tr>
+</table>
+
+<hr>
+
+<h2>6. Stakeholder- und Beschaffungsstrategie</h2>
+
+<h3>6.1 Stakeholder-Karte</h3>
+<table>
+<tr><th>Stakeholder</th><th>Prim&auml;res Interesse</th><th>Einbindungsansatz</th></tr>
+<tr><td>B&uuml;rgermeister:in / Exekutive</td><td>Politischer Erfolg, Kosten</td><td>F&uuml;hrungsbriefing, Dashboard</td></tr>
+<tr><td>Gemeinderat</td><td>Aufsicht, demokratische Legitimit&auml;t</td><td>Quartalsberichte, &ouml;ffentliche Sitzungen</td></tr>
+<tr><td>Kommunale IT-Abteilung</td><td>Technische Machbarkeit</td><td>Co-Design, Schulungen, Community</td></tr>
+<tr><td>Vergabestelle</td><td>Rechtskonformit&auml;t</td><td>Rahmenvertr&auml;ge, Rechtsbriefings</td></tr>
+<tr><td>Mitarbeitende</td><td>Benutzerfreundlichkeit, Zuverl&auml;ssigkeit</td><td>UX-Tests, Change Management, Schulungen</td></tr>
+<tr><td>B&uuml;rger:innen</td><td>Servicequalit&auml;t, Datenschutz</td><td>Partizipationsdesign, Transparenzberichte</td></tr>
+<tr><td>Datenschutzbeauftragte:r</td><td>DSGVO / revDSG</td><td>Privacy-by-Design in jeder Phase</td></tr>
+<tr><td>KI-Compliance-Beauftragte:r</td><td>KI-Gesetz-Konformit&auml;t</td><td>KI-Inventar, Risikoklassifizierung, EU-KI-Register</td></tr>
+<tr><td>Personalrat</td><td>Datenschutz, Arbeitsbelastung</td><td>Fr&uuml;hzeitige Einbindung</td></tr>
+<tr><td>Medien / Journalist:innen</td><td>Rechenschaftspflicht</td><td>Proaktive Datenver&ouml;ffentlichung</td></tr>
+</table>
+
+<h3>6.2 Beschaffungsrahmen</h3>
+<p><strong>1. Dienste beschaffen, keine Lizenzen.</strong> Software ist kostenlos; Kommunen bezahlen f&uuml;r Implementierung, Hosting, Support, Anpassung und Schulung.</p>
+<p><strong>2. Kooperative Beschaffung.</strong> Govdigital eG und Schweizer kantonale IT-Kooperativen bieten Rahmenvertr&auml;ge (GWB/VgV in DE; B&ouml;B/V&ouml;B in CH) [23].</p>
+<p>Die <strong>Anstalt f&uuml;r Kommunale Datenverarbeitung in Bayern (AKDB)</strong> versorgt etwa 2.000 bayerische Kommunen und Landkreise &uuml;ber ein umfassendes Shared-Service-Modell [57]. Als Anstalt des &ouml;ffentlichen Rechts kann die AKDB nicht privatisiert werden und betreibt ihre Dienste zum Selbstkostenpreis f&uuml;r ihre Mitgliedskommunen &mdash; ein struktureller Beschaffungsvorteil analog zu govdigital eG auf Bundesebene. Das Leistungsportfolio der AKDB umfasst BayernID-Authentifizierung, EfA-Dienstimplementierungen, kommunale CKAN-Eins&auml;tze (wie in der Rosenheimer Fallstudie, &sect;3.7 dokumentiert) und wachsende Unterst&uuml;tzung f&uuml;r OpenDesk-Komponenten. F&uuml;r bayerische Kommunen bieten AKDB-Rahmenvertr&auml;ge einen direkten Weg zu den empfohlenen Stapelkomponenten ohne gesonderte EU-Schwellenwert-Vergabeverfahren &mdash; typischerweise der schnellste Implementierungsweg f&uuml;r Kommunen von 10.000&ndash;100.000 Einwohnern.</p>
+<p><strong>3. &Ouml;ffentliches Geld &mdash; &Ouml;ffentlicher Code.</strong> Alle unter &ouml;ffentlichem Auftrag entwickelten Komponenten m&uuml;ssen unter OSI-zugelassener Lizenz ver&ouml;ffentlicht werden &mdash; auf openCode.de (DE) oder code.admin.ch (CH) [4].</p>
+<p><strong>4. F&uuml;nf-Jahres-GBK in der Bewertung.</strong> Empfohlene Gewichtung: Preis/GBK (40&nbsp;%), Funktionalit&auml;t (30&nbsp;%), Souver&auml;nit&auml;t und Interoperabilit&auml;t (20&nbsp;%), Community-Gesundheit (10&nbsp;%).</p>
+<p><strong>5. Interoperabilit&auml;tsstandards als Pflichtanforderung.</strong> X&Ouml;V (DE) [46], eCH (CH) [51], DCAT-AP f&uuml;r Open Data [45]. Nichtkonformit&auml;t ist ein Ausschlusskriterium.</p>
+<p><strong>6. SBOM und AIBOM.</strong> Software-St&uuml;ckliste (SBOM) im SPDX- oder CycloneDX-Format bei Vertragsabschluss und bei jedem Major-Release. F&uuml;r KI-gest&uuml;tzte Komponenten zus&auml;tzlich eine KI-St&uuml;ckliste (AIBOM) mit Modellidentit&auml;t, Trainingsdaten-Provenienz und Verwendungszweck, entsprechend Art. 13 KI-Gesetz [60].</p>
+<p><strong>7. KI-Gesetz-Konformit&auml;tserkl&auml;rung.</strong> F&uuml;r KI-Komponenten enthaltende Systeme: KI-Gesetz-Risikoklassifizierung, EU-KI-Datenbank-Registrierungsnummer (f&uuml;r Hochrisiko-KI) und menschliche Aufsichtsarchitektur bei Vertragsabschluss fordern.</p>
+
+<h3>6.3 Change Management</h3>
+<ul>
+<li>Digitalbeauftragte:r auf Ebene Stadtrat / Vize-B&uuml;rgermeisterin</li>
+<li>Abteilungsweise Open-Source-Champions mit erweiterter Schulung</li>
+<li>Parallelbetrieb f&uuml;r mindestens drei Monate</li>
+<li>Fr&uuml;herfolge dokumentieren: Kosteneinsparungen, neue F&auml;higkeiten, B&uuml;rger-Feedback</li>
+<li>&Ouml;ffentliches Transparenz-Dashboard</li>
+<li>Personalrat fr&uuml;hzeitig einbinden</li>
+</ul>
+
+<hr>
+
+<h2>7. Risikoanalyse</h2>
+
+<h3>7.1 Risikoregister</h3>
+<table>
+<tr><th>Risiko</th><th>W-keit</th><th>Auswirkung</th><th>Ma&szlig;nahme</th></tr>
+<tr><td>Politische Kehrtwende nach der Wahl</td><td>Mittel</td><td>Hoch</td><td>In Satzung einbetten; partei&uuml;bergreifenden Konsens aufbauen</td></tr>
+<tr><td>Anbieter-Lobbying / Desinformationskampagnen</td><td>Hoch</td><td>Mittel</td><td>GBK-Belege; Zivilgesellschaft; Mandat publizieren</td></tr>
+<tr><td>Qualifikationsdefizit im IT-Team</td><td>Hoch</td><td>Mittel</td><td>Schulungen; kooperativer IT-Anbieter; Praxisgemeinschaft</td></tr>
+<tr><td>Integrationsfehler zwischen Schichten</td><td>Mittel</td><td>Hoch</td><td>Stufenweiser Rollout mit Entscheidungstoren</td></tr>
+<tr><td>Datenverlust bei Migration</td><td>Niedrig</td><td>Kritisch</td><td>Vollst&auml;ndige Datensicherung; Parallelbetrieb; DR-Plan</td></tr>
+<tr><td>DSGVO / revDSG-Verletzung</td><td>Niedrig</td><td>Hoch</td><td>Privacy-by-Design; DSB in jeder Phase</td></tr>
+<tr><td>KI-Gesetz-Nichtkonformit&auml;t</td><td>Mittel</td><td>Hoch</td><td>KI-Inventar in Phase 0; Risikoklassifizierung; Konformit&auml;tsbewertung [60]</td></tr>
+<tr><td>Nutzerannahme-Versagen</td><td>Mittel</td><td>Hoch</td><td>Change Management; UX-Tests; Schulungen</td></tr>
+<tr><td>Sicherheitsvorfall</td><td>Niedrig</td><td>Kritisch</td><td>BSI IT-Grundschutz; Penetrationstest; SBOM; NIS2 [27]</td></tr>
+<tr><td>Lieferkettenkompromittierung</td><td>Niedrig</td><td>Kritisch</td><td>SBOM; reproduzierbare Builds; CVE-&Uuml;berwachung</td></tr>
+<tr><td>GAIA-X-&Ouml;kosystem-Fragmentierung</td><td>Niedrig</td><td>Niedrig</td><td>SCS sichert Souver&auml;nit&auml;t unabh&auml;ngig von GAIA-X-Reife</td></tr>
+</table>
+
+<h3>7.2 Der M&uuml;nchener Pr&auml;zedenzfall</h3>
+<p>LiMux (2003&ndash;2017) versorgte 15.000 Desktops 14 Jahre lang erfolgreich [30]. Die R&uuml;ckabwicklung erfolgte aus politischen Gr&uuml;nden, nicht aufgrund technischen Versagens. Die entscheidende Lehre: <strong>Politisches Risikomanagement</strong> ist mindestens so wichtig wie technische Planung.</p>
+
+<h3>7.3 Sicherheitsaspekte</h3>
+<p>BSI IT-Grundschutz als Sicherheitsbaseline. TLS 1.3 minimum; AES-256 f&uuml;r sensible Datenkategorien. Penetrationstests an jedem Phasenmeilenstein. NIS2-konformer Vorfallreaktionsplan [27]. SBOM w&ouml;chentlich gegen OSV-Datenbank pr&uuml;fen. Matrix/Element E2E-Verschl&uuml;sselung als Standard f&uuml;r beh&ouml;rd&uuml;bergreifende Kommunikation.</p>
+
+<h3>7.4 Datenschutz und DSGVO</h3>
+<p>Alle empfohlenen Komponenten erm&ouml;glichen den Betrieb mit Datenresidenz ausschlie&szlig;lich auf kommunal kontrollierter Infrastruktur (DSGVO Art. 44). Das revDSG (in Kraft September 2023) legt Schweizer Kommunen &auml;quivalente Pflichten auf [55].</p>
+
+<h3>7.5 GAIA-X als europ&auml;ische Cloud-Vertrauensschicht</h3>
+<p>GAIA-X [59], die europ&auml;ische Initiative f&uuml;r f&ouml;derierte Dateninfrastruktur, erg&auml;nzt die SCS-Infrastrukturempfehlung um eine Governance- und Vertrauensschicht. W&auml;hrend SCS die technische Cloud-Implementierung adressiert, definiert GAIA-X den Rahmen, in dem europ&auml;ische Cloud-Dienste interoperieren.</p>
+<p><strong>GAIA-X Trust Framework</strong> legt attestierbare Kriterien f&uuml;r Cloud-Anbieter fest: Datensouver&auml;nit&auml;t, Portabilit&auml;t, Transparenz und Sicherheit. SCS-zertifizierte Anbieter erf&uuml;llen diese Kriterien per Design &mdash; Kommunen, die auf SCS betreiben, nehmen automatisch am GAIA-X-&Ouml;kosystem teil.</p>
+<p><strong>GAIA-X Self-Descriptions</strong> sind maschinenlesbare Erkl&auml;rungen, die Organisationen ver&ouml;ffentlichen, um ihre Datenrichtlinien und technischen F&auml;higkeiten zu beschreiben. Kommunen k&ouml;nnen eine Self-Description ver&ouml;ffentlichen, um ihre Souver&auml;nit&auml;tsverpflichtung zu signalisieren.</p>
+<p><strong>Datenr&auml;ume:</strong> GAIA-X erm&ouml;glicht die Teilnahme an sektorspezifischen europ&auml;ischen Datenr&auml;umen:</p>
+<ul>
+<li><strong>Mobility Data Space:</strong> Verkehrs- und Mobilit&auml;tsdaten mit anderen Kommunen und Verkehrsbetrieben</li>
+<li><strong>Smart City Data Space:</strong> Kollaborative urbane Sensorik und Umwelt&uuml;berwachung</li>
+<li><strong>EHDS (European Health Data Space):</strong> Kommunale Gesundheitsdienstdaten (in Entwicklung)</li>
+</ul>
+<p><strong>Aktueller Stand (2026):</strong> GAIA-X-F&ouml;derationsdienste sind in Deutschland (govdigital eG) und Frankreich (Bleu Cloud) in Betrieb. Die Schweizer Beteiligung entwickelt sich &uuml;ber den Swiss GAIA-X Hub. Volle grenz&uuml;berschreitende F&ouml;derationsreife wird bis 2027 erwartet.</p>
+<p><strong>Empfehlung:</strong> Phase 5 des Implementierungsfahrplans enth&auml;lt die Ver&ouml;ffentlichung einer GAIA-X Self-Description als Ergebnis. In Vergabespezifikationen sollte GAIA-X-Trust-Framework-Konformit&auml;t als w&uuml;nschenswertes Kriterium aufgef&uuml;hrt werden.</p>
+
+<hr>
+
+<h2>8. Fazit</h2>
+<p>Die in diesem Papier untersuchten Belege f&uuml;hren zu sieben Erkenntnissen:</p>
+<ol>
+<li><strong>Open-Source-Technologiestapel f&uuml;r Kommunen sind technisch ausgereift und praxisbew&auml;hrt.</strong> Jede funktionale Anforderung l&auml;sst sich durch Open-Source-Software erf&uuml;llen, auch im Bereich 35.000&ndash;85.000 Einwohner (&sect;3.7).</li>
+<li><strong>Der Regulierungsrahmen schreibt Open-Source und Interoperabilit&auml;t zunehmend vor.</strong> EMBAG Art. 9, OZG 2.0, Interoperable Europe Act 2024 und EU-Datengesetz 2023 schaffen Rechtspflichten [1, 2, 6, 48].</li>
+<li><strong>Die wirtschaftliche Argumentation ist &uuml;berzeugend, wenn Gesamtkosten korrekt erfasst werden.</strong> Das GBK-Modell zeigt ca. 50&nbsp;% Einsparungen f&uuml;r eine 500-Mitarbeitenden-Kommune (&sect;4.11).</li>
+<li><strong>GovStack-Bausteine liefern zus&auml;tzliche Implementierungsunterst&uuml;tzung.</strong> Das formale Compliance-Mapping (&sect;4.12) zeigt volle oder substanzielle Konformit&auml;t bei sieben von neun GovStack-Bausteinen. Die zwei kritischen L&uuml;cken &mdash; Zahlungen und vollst&auml;ndiges Einwilligungs-Audit-Log &mdash; sind klar definiert und f&uuml;r v1.0 adressierbar [47, 56].</li>
+<li><strong>Erfolg erfordert politische und organisatorische Investitionen gleichwertig zur technischen Investition.</strong> Der M&uuml;nchener R&uuml;ckschlag und erfolgreiche Transitionen in Barcelona, Schaffhausen, Biberach und Rosenheim best&auml;tigen dies gleicherma&szlig;en.</li>
+<li><strong>Das EU KI-Gesetz (2024) schafft eine neue Compliance-Verpflichtung f&uuml;r kommunale KI-Eins&auml;tze.</strong> Kommunen m&uuml;ssen ein KI-Inventar durchf&uuml;hren, alle KI-Werkzeuge klassifizieren und Konformit&auml;tsbewertungen f&uuml;r Hochrisiko-KI &mdash; insbesondere automatisierte Sozialleistungsentscheidungen &mdash; sicherstellen. Open-Source-KI-Komponenten auf souver&auml;ner Infrastruktur sind strukturell besser f&uuml;r die Compliance positioniert [60].</li>
+<li><strong>GAIA-X bietet die aufkommende grenz&uuml;berschreitende Vertrauensschicht f&uuml;r europ&auml;ische kommunale Cloud.</strong> Kommunen auf Sovereign Cloud Stack nehmen automatisch am GAIA-X-&Ouml;kosystem teil und k&ouml;nnen Datenr&auml;ume und f&ouml;derierte Dienste mit Partnerverwaltungen in der EU nutzen [59].</li>
+</ol>
+<p>Kommunen, die fr&uuml;h handeln, profitieren von First-Mover-Vorteilen: Mitgestaltung kooperativer Standards, Aufbau von Inhouse-Expertise und Beitrag zur gemeinsamen Open-Source-Infrastruktur. Der Rechtsrahmen ist vorhanden. Die Technologie ist bereit. Die Wirtschaftlichkeit ist g&uuml;nstig. Die KI-Governance-Anforderungen kl&auml;ren sich. Das europ&auml;ische Cloud-Gemeingut nimmt Form an. Die Transformation ist &uuml;berf&auml;llig.</p>
+
+<hr>
+
+<h2>Referenzen</h2>
+<p><em>Dieses Dokument ist die deutsche &Uuml;bersetzung von <code>Doc/en/sovereign-by-design-v0.3.0.md</code>. Die vollst&auml;ndige Referenzliste [1]&ndash;[60] findet sich im <a href="../en/sovereign-by-design-v0.3.0.html">englischen Quelldokument</a>. Die Nummerierung der Zitate ist identisch.</em></p>
+<p><strong>Neue Quellen in v0.3.0 (gegen&uuml;ber v0.2.0 hinzugef&uuml;gt):</strong></p>
+<ol>
+<li value="54">Europ&auml;ische Kommission / OSOR. (2024). <em>OSOR Annual Report 2023: Open Source Software in European Public Administration</em>. Br&uuml;ssel: Europ&auml;ische Kommission / Joinup. <a href="https://joinup.ec.europa.eu/collection/open-source-observatory-osor">joinup.ec.europa.eu &mdash; OSOR</a> [Open Access, CC-BY-4.0]</li>
+<li value="56">GovStack Initiative (ITU/DIAL). (2023). <em>GovStack: Building Block Specifications v1.0</em>. Genf/Washington: ITU/DIAL. <a href="https://govstack.gitbook.io/specification/">govstack.gitbook.io/specification</a> [Open Access, CC-BY-SA-4.0]</li>
+<li value="57">Anstalt f&uuml;r Kommunale Datenverarbeitung in Bayern (AKDB). (2024). <em>AKDB Jahresbericht 2023</em>. M&uuml;nchen: AKDB. <a href="https://www.akdb.de/presse/berichte/">akdb.de/presse/berichte</a> [Open Access]</li>
+<li value="58">Lathrop, D., &amp; Ruma, L. (Hrsg.). (2010). <em>Open Government: Collaboration, Transparency, and Participation in Practice</em>. Sebastopol, CA: O&rsquo;Reilly Media. ISBN 978-0-596-80435-0. [&copy; O&rsquo;Reilly Media; nur Zitation]</li>
+<li value="59">GAIA-X European Association for Data and Cloud AISBL. (2024). <em>GAIA-X Architecture Document: Technical Architecture v24.06</em>. Br&uuml;ssel: GAIA-X AISBL. <a href="https://docs.gaia-x.eu/">docs.gaia-x.eu</a> [Open Access, CC-BY-4.0]</li>
+<li value="60">Europ&auml;isches Parlament und Rat. (2024). <em>Verordnung (EU) 2024/1689 &uuml;ber k&uuml;nstliche Intelligenz (KI-Gesetz)</em>. Amtsblatt der EU. In Kraft 2024-08-01; gestaffelte Anwendung bis 2027. CELEX: 32024R1689. <a href="https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32024R1689">EUR-Lex 32024R1689</a> [Open Access, EU-Recht]</li>
+</ol>
+
+<div class="license">
+<p>Ver&ouml;ffentlicht unter <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a>.
+&mdash; Sebastian Graf, Autonomes B&uuml;ro f&uuml;r zivile digitale Infrastruktur &mdash;
+<a href="mailto:sebk4c@tuta.com">sebk4c@tuta.com</a> &mdash; Version 0.3.0 &mdash; Erstellt: 2026-06-21</p>
+</div>
+
+</div>
+</body>
+</html>
