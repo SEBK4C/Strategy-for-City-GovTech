@@ -1,93 +1,98 @@
 # Literature Review State — City GovTech Strategy
 
-**Version:** 0.1.0
-**Last reviewed:** 2026-06-20
-**Next review due:** 2026-09-20 (quarterly cadence)
+**Project:** Open-Source Municipal Government Technology Strategy  
+**Version:** 0.2.0  
+**Last updated:** 2026-06-21  
+**Next scheduled review:** 2026-09-21 (quarterly cadence)
 
-This document tracks the current state of the literature review: what is covered, what is
-missing, and what needs updating. It is the primary input to
-`Scripts/update_literature_review.py`.
+This file tracks the state of the literature review, identifies gaps, and documents
+the improvement roadmap. It is the input document for `Scripts/update_literature_review.py`.
 
 ---
 
-## Coverage map
+## Current coverage (v0.2.0)
 
-### Covered (v0.1.0)
+### Well-covered areas
 
-| Domain | Depth | Key gaps |
+| Area | Coverage | Key sources |
 |---|---|---|
-| E-government theory (Wirtz/Weyerer, Janowski) | Medium | No post-2022 literature on 4th-gen e-gov |
-| Swiss EMBAG and federal digital strategy | High | Cantonal implementation data lacking |
-| German OZG / OZG 2.0 | High | Municipal uptake statistics missing |
-| Sovereign Cloud Stack | High | Production metrics not yet available |
-| Open Source in EU public administration | Medium | OSOR annual report not yet integrated |
-| Identity management (Keycloak, BundID, eID) | Medium | BundID uptake data missing |
-| Decidim / participatory platforms | Medium | Schaffhausen canton case study needed |
-| Matrix/Element for government | Medium | BundesMessenger adoption data needed |
-| Nextcloud for government | Medium | Swiss federal deployment details |
-| Open data portals (CKAN) | Medium | opendata.swiss technical details |
-| GIS for municipalities | Low | No academic literature cited |
-| Procurement frameworks | Low | No comparative EU procurement studies |
-| Total cost of ownership studies | Low | CRITICAL GAP — see below |
-| User experience / satisfaction research | Absent | CRITICAL GAP — see below |
-| Small municipality case studies | Low | CRITICAL GAP — see below |
-| Change management in IT transitions | Low | Munich LiMux referenced but not deep |
+| Swiss EMBAG legislation | Comprehensive | [1], [16], [47] |
+| German OZG ecosystem | Comprehensive | [2], [9], [10], [23], [24], [46] |
+| Sovereign Cloud Stack | Comprehensive | [3], [11], [55] |
+| ZenDiS / OpenDesk | Comprehensive | [42], [50] |
+| BundesMessenger / Matrix | Comprehensive | [14], [59] |
+| Nextcloud government deployments | Comprehensive | [13], [58] |
+| Decidim / citizen participation | Good | [12], [48] |
+| CKAN / open data | Good | [22], [44] |
+| EU regulatory framework | Comprehensive | [5], [6], [27], [45], [64] |
+| Economic evidence | Good | [49], [56], [62] |
+| Munich LiMux case | Comprehensive | [30], [56] |
+| Schleswig-Holstein migration | Comprehensive | [51], [58] |
+| TYPO3 / web publishing | Good | [19], [61] |
+| BSI IT-Grundschutz / NIS2 | Comprehensive | [26], [27], [57] |
+| Forgejo / code hosting | Adequate | [60] |
+| LibreOffice / office suite | Adequate | [63] |
+| GovStack | Adequate | [53] |
+| Deutschland-Stack | Adequate | [54] |
 
-### Not yet covered
+### Gap analysis
 
-- **eCH standards** (Swiss XML interoperability, equivalent to German XÖV)
-- **CONSUL Democracy platform** (Madrid; alternative/complement to Decidim)
-- **GovStack** (ITU/DIAL initiative for government digital building blocks)
-- **EU Data Act 2023** (implications for municipal data governance)
-- **Digital Services Act / Digital Markets Act** — interaction with municipal procurement
-- **OpenDesk v2.x** (2025/2026 updates)
-- **ZenDiS** (German Centre for Digital Sovereignty — key actor, under-covered)
-- **Lathrop & Ruma (2010)** — Open Government foundational text
-- **OSOR Annual Report 2023** (EU Open Source Observatory)
-- **Swiss OGD Strategy 2024–2027**
-- **GAIA-X implementation status** (2025 state of play)
-
----
-
-## Critical gaps
-
-### TCO studies
-No rigorous independent comparative Total Cost of Ownership studies cover the full
-open-source vs. proprietary municipal stack. Available studies are vendor-commissioned
-or context-specific (Munich LiMux 2003–2017; French state LibreOffice migration).
-**Action:** identify/commission an independent municipal TCO methodology. Target: v0.2.0.
-
-### User experience research
-Almost no peer-reviewed literature exists on citizen satisfaction with open-source vs.
-proprietary municipal digital services. **Action:** design a citizen-satisfaction survey
-framework usable by participating municipalities. Target: v1.0 appendix.
-
-### Small-municipality data
-Most case studies involve large cities (Barcelona, Helsinki, Munich) or federal agencies.
-The median EU municipality has population <10,000. **Action:** document 3–5 case studies
-of municipalities <50,000 that completed open-source transitions. Target: v0.2.0.
+| Gap | Priority | Action for v0.3.0 |
+|---|---|---|
+| Long-term TCO studies for small municipalities (<50,000 pop) | High | Search academic databases for 2020–2026 studies; commission if none found |
+| User experience / citizen satisfaction research comparing OS vs proprietary | High | Search HCI/CSCW literature; contact Barcelona and Schleswig-Holstein for data |
+| Longitudinal contribution-back economics | Medium | Search OSS economics literature; contact FSFE for data |
+| Barcelona Digital Plan 2017 (primary source) | Medium | Fetch from ajuntament.barcelona.cat |
+| Decidim Social Contract (primary source) | Medium | Fetch from meta.decidim.org |
+| AI Act implementing regulations for public sector | Medium | Monitor EUR-Lex; expected 2025–2026 |
+| OZG 2.0 first scientific evaluation report | Low | Due 2027; flag for future review |
+| AKDB specific technology stack and services | Low | Request from AKDB directly |
+| Open-Xchange technical documentation | Low | Fetch from open-xchange.com |
+| Swiss E-ID Act implementation details | Medium | Fetch from fedlex.admin.ch |
+| eCH-0160 digital archiving standard specifics | Low | Fetch from ech.ch |
+| Horizon Europe NGI specific active calls 2026 | Medium | Check ec.europa.eu/info/funding-tenders |
 
 ---
 
-## Improvement log
+## Literature review improvement roadmap
 
-| Date | Action | By | Result |
-|---|---|---|---|
-| 2026-06-20 | Initial literature review, v0.1.0 draft | SG | 30 primary sources identified; 46 citation slots in papers |
+### v0.3.0 (target: 2026-09-21)
+
+1. **Close TCO gap:** Commission or locate 2020–2026 comparative TCO studies for small municipalities. If none available, draft a model TCO calculation based on Schleswig-Holstein and Munich data, clearly marked as indicative.
+2. **Add primary sources:** Barcelona Digital Plan 2017, Decidim Social Contract, Swiss E-ID Act.
+3. **Expand AI Act section:** Add implementing regulations once published; include French "Albert" AI assistant as case study.
+4. **Add AKDB profile:** Request technology stack documentation from AKDB for Bavaria-specific implementation guidance.
+5. **Update OZG metrics:** Track OZG 2.0 implementation dashboard for 2025 data (target: services online count).
+
+### v1.0.0 (target: 2027-01-21)
+
+1. **Commission user satisfaction study:** Design and propose a comparative study of citizen satisfaction with open-source vs. proprietary municipal digital services across at least three municipalities.
+2. **Full regulatory update:** Include NIS2 implementing acts, AI Act delegated regulations, updated EU Open Source Strategy (expected 2024+).
+3. **Economic model:** Publish a reproducible economic model for open-source municipal TCO, covering municipalities of 10,000 / 50,000 / 250,000 population.
+4. **Case study expansion:** Add at least two more city-level case studies (suggested: Zurich, Vienna, or Tallinn).
 
 ---
 
-## Quarterly review checklist
+## Recurring improvement workflow
 
-When running `Scripts/update_literature_review.py`, check for:
+Run quarterly:
 
-- [ ] New Swiss e-government legislation or strategy updates
-- [ ] New German OZG implementation reports or FITKO publications
-- [ ] New EU legislation (Data Act, AI Act implementation, etc.)
-- [ ] New Sovereign Cloud Stack releases or governance updates
-- [ ] New openCode.de statistics or case studies
-- [ ] New academic papers on e-government maturity (GIQ, ISM, EJEG)
-- [ ] New municipal open-source deployments or case studies
-- [ ] New security advisories affecting stack components
-- [ ] OSOR annual report (EU Open Source Observatory, annual)
-- [ ] UN E-Government Survey (biannual)
+```bash
+python3 Scripts/update_literature_review.py
+```
+
+This script:
+1. Loads this file and the source registry
+2. Checks each source URL for availability and changed content
+3. Prompts for review of each gap item
+4. Generates a structured agenda for the next literature review cycle
+5. Updates the `Last updated` date and `Next scheduled review` date
+
+---
+
+## Change log
+
+| Version | Date | Changes |
+|---|---|---|
+| 0.1.0 | 2026-06-20 | Initial literature review state |
+| 0.2.0 | 2026-06-21 | Added 18 new sources [47]–[64]; fixed all unverified citations; added economic evidence section; updated gap analysis |

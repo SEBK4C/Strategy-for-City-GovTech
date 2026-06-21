@@ -1,83 +1,139 @@
 # Research Notes — City GovTech Strategy
 
-**Version:** 0.1.0
-**Last updated:** 2026-06-20
-
-Append-only working document for findings, open questions, hypotheses, and leads. Add new
-entries at the top.
+**Project:** Open-Source Municipal Government Technology Strategy  
+**Version:** 0.2.0  
+**Last updated:** 2026-06-21  
 
 ---
 
-## 2026-06-20 — Initial research round
+## Session: 2026-06-21 — v0.2.0 Research Sprint
 
-### Key findings
+### Key findings from deep research
 
-**1. EMBAG is the strongest legislative mandate globally.** Switzerland's EMBAG (SR
-172.019, in force 2024-01-01) requires open-source release *by default* with a narrow
-security exception — stronger than comparable French, Italian, or German federal law.
-Municipal implementation guidance is still being developed by cantons.
+**EMBAG (Switzerland):**
+- In force January 1, 2024. Key articles: Art. 3 (digital by default), Art. 9 (OSS mandate), Art. 10 (open data), Arts. 12–15 (standards)
+- Applies to all federal software developed with public funds; exceptions for security/third-party rights
+- Places Switzerland among most progressive OSS-mandating jurisdictions globally
+- Camptocamp (Swiss tech firm) has written analysis of EMBAG impact on OSS vendors
 
-**2. OpenDesk is the reference implementation for German municipalities.** Managed by
-ZenDiS GmbH des Bundes, OpenDesk bundles Nextcloud + Cryptpad + OpenProject + Jitsi +
-Element + Collabora. It is the most operationally complete reference for German
-municipalities. Need current version number and deployment statistics.
+**OZG 2.0 (Germany):**
+- In force July 24, 2024 (voted Bundestag February 2024)
+- Key change: mandatory OSS preference for federal procurement; enhanced monitoring (3-year scientific review)
+- By end 2023 only 81/581 services digitised — stark implementation lag
+- DeutschlandID replacing/expanding BundID; citizens entitled to digital services from 2029
+- OSOR article confirms: OZG 2.0 "favors open source solutions" with binding procurement language
 
-**3. Sovereign Cloud Stack is production-ready but adoption is early.** SCS is technically
-mature (OpenStack + Kubernetes + Ceph). Most German Länder are in pilot/evaluation as of
-mid-2026. Municipalities should plan on SCS-certified hosters first, not self-hosting.
+**Sovereign Cloud Stack:**
+- BMWK project funding ended December 2024
+- R8 released April 9, 2025 — ScaleUp Technologies newest operator; 6+ production operators
+- GovStack cloud spec integrated with SCS
+- SLURP upgrade flexibility = skip-level update process (major operational improvement)
 
-**4. BundID adoption is the key bottleneck for German OZG progress.** Citizen adoption is
-growing but still low relative to target. Municipalities should design Keycloak
-federations supporting both BundID and simpler fallback flows with upgrade paths.
+**Deutsche Verwaltungscloud:**
+- Symbolically launched March 2025 at IT Planning Council conference
+- Jointly led by govdigital eG and FITKO
+- Enables cross-location application deployment and national sharing via openCode.de
 
-**5. Decidim governance is a transferable pattern.** A multi-stakeholder association with
-a published social contract is itself a model for municipal open-source communities. The
-Canton of Schaffhausen deployment merits a case study.
+**ZenDiS / OpenDesk:**
+- Founded December 2022
+- Three pillars: openCode (platform), openDesk (product), Sovereignty Check (advisory)
+- OpenDesk v1.0: October 20, 2024
+- OpenDesk v2.0 with mobile app: targeted September 2025
+- 100,000+ users by June 2025
+- BWI (Bundeswehr IT): 7-year contract April 2025
+- Robert Koch Institute / Federal Ministry of Health (7,000 users): announced June 2025
+- "Sovereignty Check" tool: evaluates IT solutions using transparent sovereignty criteria
 
-**6. Munich LiMux failure was political, not technical.** Post-mortems consistently cite
-(a) 2014 political shift; (b) insufficient end-user training; (c) state-level
-interoperability problems (ODF support). The software worked. Validates political risk as
-the primary concern.
+**Deutschland-Stack:**
+- Emerged from 2025 coalition agreement
+- Federal Ministry for Digital Affairs and State Modernization responsible
+- Full rollout target: 2028
+- Integrates: OpenDesk + SCS + DVC + X-Road interoperability
+- Nextcloud's "Impulspapier" from Schleswig-Holstein contributed to concept
 
-**7. French Gendarmerie/state migration provides TCO evidence.** The Gendarmerie
-Nationale migrated ~72,000 desktops to Ubuntu/LibreOffice (2008–2014), reporting ~40%
-cost savings; the French state runs Tchap (Matrix) for government communication. Real,
-large-scale data points for v0.2.0.
+**BundesMessenger:**
+- BWI launched December 2023 (expansion of BwMessenger from 2021)
+- Built on Matrix protocol + modified Element client
+- Source code on openCode.de
+- Features: E2E encryption, BYOD, built-in malware scanning, data on own servers
+- Dataport planning Matrix deployment for 500,000 users in SH + Hamburg
+- Referenced at Matrix Conference 2025 (talk: "The German BundesMessenger")
 
-### Open questions
+**Nextcloud:**
+- 500,000+ server instances worldwide (2025 wrap-up)
+- Customer interest tripled H1 2025 (attributed to US cloud concerns)
+- Key 2025 deployments:
+  - Austria Federal Ministry of Economy, Energy and Tourism (BMWET)
+  - City of Stuttgart
+  - Schleswig-Holstein ("Implementation Role Model" award)
+  - Île-de-France: 550,000 students and staff on sovereign cloud platform
+  - Denmark federal government (standard collaboration platform)
+  - France: multiple 6-figure deployments
+  - Netherlands: 8x increase in public sector inquiries in 2025
+- Enterprise Days planned for Switzerland, Austria, Spain in 2026
 
-- **Q1:** Current deployment count for BundesMessenger (Matrix) across German federal
-  agencies? Any Länder using it for municipal services?
-- **Q2:** Exact status of the Swiss eID as of mid-2026? Which cantonal services accept
-  it? How does it federate with Keycloak?
-- **Q3:** Is there a formal eCH standard equivalent to XÖV (eCH-0058, eCH-0020,
-  eCH-0007)? Which matter most for municipalities?
-- **Q4:** Current SCS-certified cloud operators, their SLAs and municipal pricing?
-- **Q5:** ZenDiS mandate re: municipal access to OpenDesk — is there a framework
-  agreement non-federal entities can use?
-- **Q6:** Does the Interoperable Europe Act (2024) create direct obligations for
-  municipalities or only national/federal bodies? Implementation timeline?
-- **Q7:** Current state of GAIA-X — practical tools for municipalities, or policy only?
+**Schleswig-Holstein:**
+- April 2024: announced 30,000 PC migration to Linux/LibreOffice/Nextcloud/Thunderbird
+- October 2, 2025: completed email migration (40,000+ mailboxes, Exchange → Open-Xchange/Thunderbird)
+- 6-month email migration process
+- Dataport implementing Matrix for 500,000 users
+- Model published: "Impulspapier" for Deutschland-Stack
+- Recognized as Nextcloud "Implementation Role Model"
 
-### Leads to follow up
+**Munich LiMux:**
+- 2003–2017; 14,800 of 29,000 desktops migrated
+- By 2012: >€10M savings documented (€4M by March 2012; cumulative including avoided hardware and licence costs)
+- 2017 reversal: new mayor, political not technical failure
+- Return to Windows: estimated €100M (The Register, 2018)
+- OSOR has detailed historical documentation
 
-- [ ] Contact Decidim Association re: Schaffhausen case study
-- [ ] Pull openCode.de stats: repo count, most-reused components
-- [ ] Find an independent (non-vendor) government-software TCO methodology
-- [ ] Locate OSOR Annual Report 2023 PDF; add to source registry
-- [ ] Check status of Interoperable Europe Act implementing acts
-- [ ] Contact KoSIT re: XÖV relevance for small municipalities
-- [ ] Identify 3 municipalities <50,000 with completed OS transitions
+**TYPO3:**
+- >35% of German government websites on TYPO3
+- GSB 11 (Government Site Builder 11) launched 2024: federal standard for ministerial and municipal websites
+- 54%+ of German university websites on TYPO3
+- Rwanda: 250+ government websites on TYPO3 since 2019
 
-### Working hypotheses
+**Forgejo / Netherlands:**
+- Netherlands OSPO (Ministry of Interior) selected Forgejo for code.overheid.nl
+- Soft-launched 2026 as self-hosted sovereign alternative to GitHub/GitLab
+- Explicit rationale: "public money, public code"
+- MIT-licensed; community-governed fork of Gitea
 
-- **H1:** The binding constraint for municipal open-source adoption is not technical
-  maturity (sufficient) nor cost (favourable) but political sustainability across
-  election cycles.
-- **H2:** Cooperative IT structures (govdigital eG, AKDB, Dataport, Swiss cantonal IT
-  cooperatives) are the most efficient delivery vehicle for municipalities <100,000.
-- **H3:** A phased approach starting with identity (Keycloak) and files (Nextcloud) gives
-  the fastest path to demonstrable wins at lowest disruption risk.
-- **H4:** The EU regulatory environment (EMBAG, OZG 2.0, Interoperable Europe Act, NIS2)
-  will make proprietary, vendor-locked municipal IT legally problematic within 5–7 years.
-  Early movers gain compliance capital; late movers accumulate regulatory debt.
+**Interoperable Europe Act:**
+- Regulation (EU) 2024/903
+- Adopted March 4, 2024 (Council); in force April 11, 2024; substantive obligations from January 12, 2025
+- €77M in Digital Europe Work Programme 2025–27 for implementation
+- Establishes Interoperable Europe Board
+- Explicitly supports FOSS for achieving interoperability
+
+**AI Act:**
+- Regulation (EU) 2024/1689; in force August 1, 2024
+- High-risk provisions for public administration AI applicable August 2, 2026
+- Public sector AI for citizen decisions: high-risk (conformity assessment, registration, human oversight)
+- French "Albert" AI: open-source models on sovereign infrastructure = compliance-forward
+- Open-source AI: code/weight auditability = structural compliance advantage
+
+**BSI IT-Grundschutz++ / NIS2 Germany:**
+- NIS2 Implementation Act (Germany): in force December 5, 2025
+- BSI IT-Grundschutz++ catalogue: released January 1, 2026
+- Mandatory for federal agencies and publicly organised IT service providers
+- New methodology = "state of the art" as required by NIS2 Implementation Ordinance
+
+**EU Funding:**
+- Digital Europe Programme: €8.1B total
+- NGI (Next Generation Internet) within Horizon Europe: €5K–50K grants for OSS code enhancement
+- Every €1 in OSS = at least €4 economic value (European Commission estimate)
+- Sovereign Tech Fund Germany: €17M/year; €23.5M cumulative in 60+ projects
+- TSI (Technical Support Instrument): advisory support, no co-financing required
+
+---
+
+## Open questions for v0.3.0
+
+1. What are the actual measured TCO figures from Schleswig-Holstein's migration? (Migration in progress; final figures expected 2026–2027)
+2. Is there a peer-reviewed comparison of citizen satisfaction with Decidim vs. non-participatory processes?
+3. What is the current state of Swiss eID rollout to cantonal/municipal level?
+4. Are there published API compatibility guidelines for Keycloak ↔ Swiss eID integration?
+5. What are the specific eCH standards for document management (eCH-0160 details)?
+6. Which Swiss cantons have adopted EMBAG-aligned open-source policies?
+7. What is the status of OZG 2.0 implementation as of Q2 2026 (target: find dashboard or report)?
