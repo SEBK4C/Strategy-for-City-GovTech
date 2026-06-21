@@ -1,0 +1,157 @@
+name: Quarterly Literature Review
+
+on:
+  schedule:
+    # Run on the 21st of March, June, September, December at 08:00 UTC
+    - cron: '0 8 21 3,6,9,12 *'
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Reason for manual trigger'
+        required: false
+        default: 'Manual review trigger'
+
+jobs:
+  create-review-issue:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt || true
+
+      - name: Run literature review update script
+        id: review
+        run: |
+          python3 Scripts/update_literature_review.py --output-json review_output.json || echo '{}' > review_output.json
+        continue-on-error: true
+
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+
+      - name: Get paper versions
+        id: versions
+        run: |
+          echo "en_latest=$(ls Doc/en/sovereign-by-design-v*.md 2>/dev/null | sort -V | tail -1 | xargs basename 2>/dev/null || echo 'not found')" >> $GITHUB_OUTPUT
+          echo "de_latest=$(ls Doc/de/sovereign-by-design-v*.de.md 2>/dev/null | sort -V | tail -1 | xargs basename 2>/dev/null || echo 'not found')" >> $GITHUB_OUTPUT
+
+      - name: Create quarterly review issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const date = '${{ steps.date.outputs.date }}';
+            const enLatest = '${{ steps.versions.outputs.en_latest }}';
+            const deLatest = '${{ steps.versions.outputs.de_latest }}';
+
+            const body = `## Quarterly Literature Review — ${date}
+
+This issue tracks the quarterly literature review for the Open-Source Municipal GovTech Strategy papers.
+
+**Current document versions:**
+- English: \`${enLatest}\`
+- German: \`${deLatest}\`
+
+---
+
+## Review checklist
+
+### Swiss e-government
+- [ ] New Swiss federal legislation or ordinances (fedlex.admin.ch)
+- [ ] E-Government Suisse updates (egovernment.ch)
+- [ ] eCH standards — new or revised standards (ech.ch)
+- [ ] Swiss eID (Swiyu) pilot/launch updates
+- [ ] opendata.swiss new publications or strategy updates
+- [ ] Cantonal open-source legislation or case studies
+
+### German federal/Länder e-government
+- [ ] New OZG 2.0 implementation regulations (bmi.bund.de)
+- [ ] FITKO annual report or new publications (fitko.de)
+- [ ] openCode.de statistics update
+- [ ] ZenDiS / OpenDesk release announcements (zendis.de)
+- [ ] govdigital eG new framework contracts or services (govdigital.de)
+- [ ] BundID uptake statistics
+- [ ] New EfA shared-service launches
+
+### EU legislation and policy
+- [ ] New EU legislation affecting municipal digital infrastructure (eur-lex.europa.eu)
+- [ ] EU AI Act implementing acts with public-sector scope
+- [ ] Interoperable Europe Act implementing measures
+- [ ] EU Data Act (Art. 23–31) cloud switching implementation updates
+- [ ] GAIA-X Trust Framework version updates
+
+### Technology stack
+- [ ] Sovereign Cloud Stack new releases (scs.community)
+- [ ] Keycloak major releases — new OIDC/OAuth features
+- [ ] Nextcloud new releases — government features
+- [ ] Decidim releases and new deployments
+- [ ] OpenDesk component updates (opendesk.eu)
+- [ ] Security advisories affecting stack components (OSV.dev)
+
+### Research and case studies
+- [ ] New academic papers: Government Information Quarterly, ISM, EJEG
+- [ ] OSOR Annual Report update (joinup.ec.europa.eu)
+- [ ] UN E-Government Survey (biannual — check if due)
+- [ ] New small-municipality open-source case studies
+- [ ] New TCO studies — independent comparative data
+- [ ] Change management research in public-sector IT
+
+### Source registry maintenance
+- [ ] Verify previously unverified sources [see Mem/source-registry.md]
+- [ ] Archive sources with changed URLs
+- [ ] Add newly identified sources with full metadata
+
+---
+
+## Action items
+
+Based on review findings, update:
+1. \`Mem/source-registry.md\` — add new sources, update verification status
+2. \`Mem/literature-review-state.md\` — update coverage map, move gaps to covered
+3. Relevant paper sections — add new citations, correct outdated claims
+4. Version the paper to next patch/minor release as appropriate
+
+## Paper versioning guidance
+
+| Change type | Version bump |
+|---|---|
+| Corrected citation URL | patch (e.g. v0.2.1) |
+| New source added, no structural change | patch |
+| New section or substantial coverage expansion | minor (e.g. v0.3.0) |
+| Complete rewrite or external release | major (v1.0.0) |
+
+---
+
+*Triggered by: ${context.eventName === 'schedule' ? 'quarterly cron schedule' : '${{ github.event.inputs.reason }}'}*
+*Run: ${{ github.run_id }}*
+`;
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Quarterly literature review — ${date}`,
+              body: body,
+              labels: ['literature-review', 'quarterly-review'],
+            });
+
+      - name: Validate citations
+        run: |
+          python3 Scripts/validate_citations.py --report 2>&1 | tee citation_report.txt || true
+
+      - name: Upload citation report
+        uses: actions/upload-artifact@v4
+        with:
+          name: citation-report-${{ steps.date.outputs.date }}
+          path: citation_report.txt
+        if: always()

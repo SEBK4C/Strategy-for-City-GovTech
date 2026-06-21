@@ -28,19 +28,27 @@ civil-society groups, open-source communities, and sovereign technology provider
 
 | Path | Purpose |
 |---|---|
-| [`Doc/`](Doc/) | Published documents (Markdown source of truth + generated DOCX, PDF, HTML) |
+| [`Doc/`](Doc/) | Published documents (Markdown source of truth + generated HTML, DOCX, PDF) |
 | [`Mem/`](Mem/) | Memory: source registry, literature-review state, research notes |
 | [`Scripts/`](Scripts/) | Automation: document generation, translation, citation management, validation |
+| [`.github/workflows/`](.github/workflows/) | CI: quarterly literature review, citation validation |
 
 ## Papers
 
-| Paper | Languages | Status |
-|---|---|---|
-| Sovereign by Design: Open-Source Technology Strategy for Municipal Governments | EN · DE | v0.1.0 — first structured draft |
+| Paper | Languages | Latest version | Status |
+|---|---|---|---|
+| Sovereign by Design: Open-Source Technology Strategy for Municipal Governments | EN · DE | **v0.2.0** | Citation-complete draft |
 
 Each paper follows a scientific structure: Abstract · Introduction · Methodology ·
 Literature Review · Technology Stack Analysis · Implementation Roadmap · Stakeholder &
 Procurement Strategy · Risk Analysis · Conclusion · References.
+
+### v0.2.0 highlights (relative to v0.1.0)
+
+- **56 references** [1]–[56] with full source registry metadata; all previously unverified citations resolved
+- **New sections 3.6–3.11** covering GovStack, ZenDiS, eCH/Swiyu, TCO evidence, small-municipality mechanisms, and remaining literature gaps
+- **Jurisdiction-specific implementation tracks** for Germany (Section 5.6: OZG 2.0, govdigital, ZenDiS, NIS2/NISG) and Switzerland (Section 5.7: EMBAG, eCH, Swiyu, ISDS)
+- **Three appendices**: scoring methodology, implementation cost model (3 municipality sizes), CIO decision checklist
 
 ## Versioning
 
@@ -49,7 +57,8 @@ Documents use semantic versioning:
 | Version | Meaning |
 |---|---|
 | `v0.1.0` | First structured draft (structure complete, some citations unverified) |
-| `v0.2.0` | Citation-complete draft (all sources verified against primaries) |
+| `v0.2.0` | Citation-complete draft (all sources verified against primaries; critical gaps addressed) |
+| `v0.3.0` | Small-municipality case studies; independent TCO data; AI Act implications |
 | `v1.0.0` | Externally shareable release |
 
 ## Languages
@@ -78,9 +87,15 @@ python3 Scripts/translate_document.py --check
 
 ## Continuous improvement
 
-This project is designed to improve on a recurring basis. The source registry, literature
-review, and implementation strategy are versioned and revisited on a quarterly cadence.
-See [`Mem/README.md`](Mem/README.md) and [`Scripts/update_literature_review.py`](Scripts/update_literature_review.py).
+This project is designed to improve on a recurring basis. A GitHub Actions workflow
+(`.github/workflows/quarterly-review.yml`) runs automatically on the 21st of March,
+June, September, and December. It creates a GitHub issue with a structured checklist
+covering Swiss, German, and EU legislation updates; stack component releases; new
+academic literature; and source registry maintenance.
+
+The source registry (`Mem/source-registry.md`) and literature review state
+(`Mem/literature-review-state.md`) are versioned alongside the papers and track
+what is covered, what is missing, and what requires verification.
 
 ## Attribution
 
