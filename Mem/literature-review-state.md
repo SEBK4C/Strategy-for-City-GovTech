@@ -1,79 +1,103 @@
 # Literature Review State — City GovTech Strategy
 
-**Version:** 0.1.0
-**Last reviewed:** 2026-06-20
-**Next review due:** 2026-09-20 (quarterly cadence)
+**Version:** 0.2.0
+**Last reviewed:** 2026-06-21
+**Next review due:** 2026-09-21 (quarterly cadence)
 
-This document tracks the current state of the literature review: what is covered, what is
-missing, and what needs updating. It is the primary input to
+This document tracks the current state of the literature review: what is covered, what
+is missing, and what needs updating. It is the primary input to
 `Scripts/update_literature_review.py`.
 
 ---
 
-## Coverage map
+## Coverage map (v0.2.0)
 
-### Covered (v0.1.0)
+### Covered
 
-| Domain | Depth | Key gaps |
+| Domain | Depth | Status |
 |---|---|---|
-| E-government theory (Wirtz/Weyerer, Janowski) | Medium | No post-2022 literature on 4th-gen e-gov |
-| Swiss EMBAG and federal digital strategy | High | Cantonal implementation data lacking |
-| German OZG / OZG 2.0 | High | Municipal uptake statistics missing |
-| Sovereign Cloud Stack | High | Production metrics not yet available |
-| Open Source in EU public administration | Medium | OSOR annual report not yet integrated |
-| Identity management (Keycloak, BundID, eID) | Medium | BundID uptake data missing |
-| Decidim / participatory platforms | Medium | Schaffhausen canton case study needed |
-| Matrix/Element for government | Medium | BundesMessenger adoption data needed |
-| Nextcloud for government | Medium | Swiss federal deployment details |
-| Open data portals (CKAN) | Medium | opendata.swiss technical details |
-| GIS for municipalities | Low | No academic literature cited |
-| Procurement frameworks | Low | No comparative EU procurement studies |
-| Total cost of ownership studies | Low | CRITICAL GAP — see below |
-| User experience / satisfaction research | Absent | CRITICAL GAP — see below |
-| Small municipality case studies | Low | CRITICAL GAP — see below |
-| Change management in IT transitions | Low | Munich LiMux referenced but not deep |
+| E-government theory (Wirtz/Weyerer, Janowski, Scholl, Lucke/Reinermann) | High | v0.2.0 ✓ |
+| Swiss EMBAG and federal digital strategy | High | v0.2.0 ✓ |
+| Swiss E-ID (BGEID, post-2021 redesign) | High | v0.2.0 ✓ NEW |
+| German OZG / OZG 2.0 | High | v0.2.0 ✓ |
+| Sovereign Cloud Stack | High | v0.2.0 ✓ |
+| Open Source in EU public administration (OSOR, FSFE) | High | v0.2.0 ✓ |
+| ZenDiS and OpenDesk | High | v0.2.0 ✓ NEW |
+| Identity management (Keycloak, BundID, eID) | High | v0.2.0 ✓ |
+| Decidim / CONSUL participatory platforms | High | v0.2.0 ✓ |
+| Matrix/Element for government | Medium | v0.2.0 ✓ |
+| Nextcloud for government | High | v0.2.0 ✓ |
+| Open data portals (CKAN, opendata.swiss) | High | v0.2.0 ✓ |
+| GIS for municipalities (QGIS, OSM) | Medium | v0.2.0 ✓ |
+| eCH standards (Swiss interoperability) | Medium | v0.2.0 ✓ NEW |
+| XÖV standards (German interoperability) | High | v0.2.0 ✓ |
+| FIM / Föderales Informationsmanagement | Medium | v0.2.0 ✓ NEW |
+| GovStack building blocks | Medium | v0.2.0 ✓ NEW |
+| EU Digital Compass 2030 | Medium | v0.2.0 ✓ NEW |
+| OECD Digital Government Framework | Medium | v0.2.0 ✓ NEW |
+| Total cost of ownership evidence | Medium | v0.2.0 ✓ NEW |
+| Procurement frameworks | Medium | v0.2.0 ✓ |
+| Legal/regulatory compliance matrix | Medium | v0.2.0 ✓ NEW |
+| Citizen experience and digital inclusion | Medium | v0.2.0 ✓ NEW |
+| Change management in IT transitions | Medium | v0.2.0 ✓ |
+| Cooperative IT structures (govdigital, AKDB, Dataport) | High | v0.2.0 ✓ |
+| AI in public administration | Low | v0.2.0 ✓ NEW — needs deepening in v0.3.0 |
+| BSI security frameworks | High | v0.2.0 ✓ |
+| NIS2 and cybersecurity law | High | v0.2.0 ✓ |
 
-### Not yet covered
+### Not yet covered (to address in v0.3.0+)
 
-- **eCH standards** (Swiss XML interoperability, equivalent to German XÖV)
-- **CONSUL Democracy platform** (Madrid; alternative/complement to Decidim)
-- **GovStack** (ITU/DIAL initiative for government digital building blocks)
-- **EU Data Act 2023** (implications for municipal data governance)
-- **Digital Services Act / Digital Markets Act** — interaction with municipal procurement
-- **OpenDesk v2.x** (2025/2026 updates)
-- **ZenDiS** (German Centre for Digital Sovereignty — key actor, under-covered)
-- **Lathrop & Ruma (2010)** — Open Government foundational text
-- **OSOR Annual Report 2023** (EU Open Source Observatory)
-- **Swiss OGD Strategy 2024–2027**
-- **GAIA-X implementation status** (2025 state of play)
+- **EU Data Act 2023** (Regulation 2023/2854) — municipal data governance
+- **EU AI Act 2024** (Regulation 2024/1689) — AI in public administration
+- **eIDAS 2.0** (European Digital Identity Regulation) — cross-border digital identity
+- **GAIA-X** (2025 state of play) — European data space infrastructure
+- **LocalAI / Ollama** — sovereign open-source AI inference for public sector
+- **Swiss OGD-Strategie 2024–2027** — dedicated open data strategy
+- **IT-Planungsrat Annual Report 2024** — German federal IT planning council
+- **GeoServer** — detailed analysis of OGC-compliant map server
+- **Flowable BPM** — Apache 2.0 alternative to Camunda
+- **Barcelona Decidim case study** — detailed post-2020 outcomes
+- **Helsinki Hel.fi open-source journey** — Nordic case study
+- **Schleswig-Holstein Linux migration** — current German Land OS migration
+- **Small municipality implementations** (<10,000 population)
+- **Rural municipality challenges** — connectivity, skills, shared services
+- **Citizen trust in digital government services** — dedicated survey literature
+- **Digital accessibility standards** (WCAG 2.2, EN 301 549, Swiss P028)
 
 ---
 
-## Critical gaps
+## Critical gaps (v0.3.0 priorities)
 
-### TCO studies
-No rigorous independent comparative Total Cost of Ownership studies cover the full
-open-source vs. proprietary municipal stack. Available studies are vendor-commissioned
-or context-specific (Munich LiMux 2003–2017; French state LibreOffice migration).
-**Action:** identify/commission an independent municipal TCO methodology. Target: v0.2.0.
+### 1. AI Act compliance for municipal AI use
+The EU AI Act (Regulation (EU) 2024/1689, applicable August 2026) classifies several
+municipal AI applications as High Risk: benefits assessment, credit scoring,
+population surveillance. A v0.3.0 section on sovereign AI tooling with AI Act
+compliance requirements is needed.
 
-### User experience research
-Almost no peer-reviewed literature exists on citizen satisfaction with open-source vs.
-proprietary municipal digital services. **Action:** design a citizen-satisfaction survey
-framework usable by participating municipalities. Target: v1.0 appendix.
+### 2. EU Data Act and data sharing obligations
+The Data Act (Regulation (EU) 2023/2854, applicable September 2025) requires public
+sector bodies to share data upon request under FAIR conditions. Implications for
+municipal open data portals and inter-agency data exchange must be documented.
 
-### Small-municipality data
-Most case studies involve large cities (Barcelona, Helsinki, Munich) or federal agencies.
-The median EU municipality has population <10,000. **Action:** document 3–5 case studies
-of municipalities <50,000 that completed open-source transitions. Target: v0.2.0.
+### 3. Longitudinal cost data from completed transitions
+The Munich LiMux case (2003–2017) is available but the reversal confounds cost
+analysis. Schleswig-Holstein's ongoing Linux migration (2021–2026) and
+Bourgogne-Franche-Comté (LibreOffice, 2017–2022) offer cleaner data once published.
+Target: cite 3 independent TCO comparisons with methodology documented.
+
+### 4. Small municipality implementation data
+Most case studies involve cities >100,000. The median EU municipality has <5,000
+residents. Shared-service models (Zweckverbände, IT-Kooperationen) deserve detailed
+analysis. Target: 3 case studies of municipalities <20,000 for v0.3.0.
 
 ---
 
 ## Improvement log
 
-| Date | Action | By | Result |
-|---|---|---|---|
-| 2026-06-20 | Initial literature review, v0.1.0 draft | SG | 30 primary sources identified; 46 citation slots in papers |
+| Date | Version | Action | By | Result |
+|---|---|---|---|---|
+| 2026-06-20 | 0.1.0 | Initial literature review | SG | 30 primary sources; 46 citation slots |
+| 2026-06-21 | 0.2.0 | Citation-complete review | SG | 55 verified sources; all citations verified; 5 new sections added |
 
 ---
 
@@ -81,13 +105,18 @@ of municipalities <50,000 that completed open-source transitions. Target: v0.2.0
 
 When running `Scripts/update_literature_review.py`, check for:
 
-- [ ] New Swiss e-government legislation or strategy updates
-- [ ] New German OZG implementation reports or FITKO publications
-- [ ] New EU legislation (Data Act, AI Act implementation, etc.)
-- [ ] New Sovereign Cloud Stack releases or governance updates
-- [ ] New openCode.de statistics or case studies
-- [ ] New academic papers on e-government maturity (GIQ, ISM, EJEG)
-- [ ] New municipal open-source deployments or case studies
-- [ ] New security advisories affecting stack components
-- [ ] OSOR annual report (EU Open Source Observatory, annual)
-- [ ] UN E-Government Survey (biannual)
+- [ ] New Swiss e-government legislation or strategy updates (fedlex.admin.ch)
+- [ ] New German OZG implementation reports or FITKO publications (fitko.de)
+- [ ] New EU legislation affecting digital government (eur-lex.europa.eu)
+- [ ] New Sovereign Cloud Stack releases (scs.community, docs.scs.community)
+- [ ] New openCode.de statistics or case studies (opencode.de)
+- [ ] New ZenDiS publications (zendis.de)
+- [ ] New academic papers on e-government maturity (GIQ, ISM, EJEG, IP journals)
+- [ ] New municipal open-source case studies (OSOR, Joinup)
+- [ ] New security advisories affecting stack components (BSI, CERT-Bund)
+- [ ] OSOR annual review (joinup.ec.europa.eu — published Q1 each year)
+- [ ] UN E-Government Survey (next edition: 2024, then 2026)
+- [ ] eCH standard updates (ech.ch)
+- [ ] XÖV standard updates (xoev.de)
+- [ ] IT-Planungsrat resolutions (it-planungsrat.de)
+- [ ] Swiss IT-Planungsrat equivalent (E-Government Suisse)
