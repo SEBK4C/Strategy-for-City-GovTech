@@ -85,7 +85,7 @@ Microsoft Office.
 - **Q6:** Have any German municipalities deployed EU-AI-Act-classified high-risk AI
   systems with documented FRIA and human oversight mechanisms?
 
-### Leads to follow up (v0.3.0)
+### Leads to follow up
 
 - [ ] Locate ZenDiS Open-Source-Beschaffungs-Leitfaden (2023) full PDF; add as [53]
 - [ ] Check EU Digital Identity Wallet (EUDIW) ARF compatibility with eCH-based Swiss E-ID
