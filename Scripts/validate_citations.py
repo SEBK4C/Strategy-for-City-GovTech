@@ -124,7 +124,7 @@ def main() -> int:
             print(f"  {status:11s} {n:3d}  ({pct:4.1f}%)")
         print(f"  {'total':11s} {total:3d}")
         if coverage.get("unverified"):
-            print("\n  -> v0.2.0 milestone requires unverified == 0")
+            print("\n  -> v0.3.0 milestone requires unverified == 0 and registry >= 55 sources")
     else:
         print("  (registry not found or has no verification-status entries)")
 

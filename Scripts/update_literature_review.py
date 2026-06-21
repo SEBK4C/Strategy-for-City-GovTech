@@ -107,7 +107,7 @@ def main() -> int:
         print("\n[ ] No 'Next review due' date found in literature-review-state.md.")
 
     pending = unverified_sources(registry)
-    print("\n--- Sources pending verification (target: 0 for v0.2.0) ---")
+    print("\n--- Sources pending verification (target: 0 for v0.3.0) ---")
     if pending:
         for s in pending:
             print(f"  - {s}")
@@ -118,8 +118,8 @@ def main() -> int:
     print("\n--- Critical gaps to close ---")
     print("  " + (crit.replace("\n", "\n  ") if crit else "(none recorded)"))
 
-    notyet = extract_section(state, "### Not yet covered")
-    print("\n--- Topics not yet covered ---")
+    notyet = extract_section(state, "### Not yet covered (target v0.3.0)")
+    print("\n--- Topics not yet covered (target v0.3.0) ---")
     items = bullet_items(notyet)
     for it in items[:20]:
         print("  " + it)
@@ -128,7 +128,7 @@ def main() -> int:
 
     leads = extract_section(notes, "### Leads to follow up")
     print("\n--- Open leads (from research-notes.md) ---")
-    todo = checkbox_items(leads)
+    todo = [ln for ln in checkbox_items(leads) if ln.startswith("- [ ]")]
     for it in todo:
         print("  " + it)
     if not todo:
@@ -144,7 +144,7 @@ def main() -> int:
 
     print("\n" + "=" * 70)
     print("  Next steps: research the items above, update Mem/source-registry.md and")
-    print("  Mem/literature-review-state.md, then revise Doc/ papers and bump the version.")
+    print("  Mem/literature-review-state.md, then revise Doc/ papers and bump to v0.3.0.")
     print("  Finish by running: python3 Scripts/validate_citations.py")
     print("=" * 70)
     return 0
