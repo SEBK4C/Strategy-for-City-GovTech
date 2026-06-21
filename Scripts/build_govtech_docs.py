@@ -1,201 +1,184 @@
 #!/usr/bin/env python3
-"""Build GovTech strategy documents from Markdown into DOCX, PDF, and HTML.
+"""
+build_govtech_docs.py
 
-The Markdown files under ``Doc/<lang>/`` are the source of truth. This script renders
-each into the three published formats and writes them to ``Doc/build/<lang>/``.
-
-Rendering strategy (in order of preference):
-  1. ``pandoc`` if available — best fidelity for all of DOCX/PDF/HTML.
-  2. Pure-Python fallback — ``markdown`` for HTML, ``python-docx`` for DOCX. PDF is
-     produced from HTML via ``weasyprint`` if installed; otherwise skipped with a notice.
+Build pipeline: Markdown source of truth -> DOCX -> PDF -> HTML
+for strategy-for-city-govtech.
 
 Usage:
-    python3 Scripts/build_govtech_docs.py                 # build every paper, every format
-    python3 Scripts/build_govtech_docs.py Doc/en/foo.md   # build a single file
-    python3 Scripts/build_govtech_docs.py --formats html  # restrict output formats
+    python3 Scripts/build_govtech_docs.py [--lang en|de|all] [--version VERSION]
 
-Exit code is non-zero if any requested build fails.
+Requires: pandoc, weasyprint (or wkhtmltopdf), python-docx
+
+All document formats are generated from the Markdown source of truth.
+English is always the primary source; German (and future languages) are
+derived translations stored in Doc/<lang>/.
 """
-from __future__ import annotations
 
 import argparse
-import os
-import re
-import shutil
 import subprocess
 import sys
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
-DOC_DIR = REPO_ROOT / "Doc"
-BUILD_DIR = DOC_DIR / "build"
-ALL_FORMATS = ("docx", "pdf", "html")
+ROOT = Path(__file__).parent.parent
+DOC = ROOT / "Doc"
+
+# Document registry: (version, lang, stem)
+DOCUMENTS = [
+    ("0.2.0", "en", "sovereign-by-design-v0.2.0"),
+    ("0.2.0", "de", "sovereign-by-design-v0.2.0.de"),
+    ("0.1.0", "en", "sovereign-by-design-v0.1.0"),
+    ("0.1.0", "de", "sovereign-by-design-v0.1.0.de"),
+]
+
+PANDOC_COMMON = [
+    "--standalone",
+    "--from", "markdown+yaml_metadata_block+smart",
+    "--metadata", "lang=en",
+]
 
 
-def find_markdown_sources() -> list[Path]:
-    """Return every language-versioned Markdown source under Doc/<lang>/."""
-    sources: list[Path] = []
-    for lang_dir in sorted(DOC_DIR.iterdir()):
-        if not lang_dir.is_dir() or lang_dir.name == "build":
-            continue
-        sources.extend(sorted(lang_dir.glob("*.md")))
-    return sources
-
-
-def strip_front_matter(text: str) -> tuple[dict, str]:
-    """Split YAML front-matter (between leading ``---`` fences) from the body."""
-    meta: dict[str, str] = {}
-    if text.startswith("---"):
-        end = text.find("\n---", 3)
-        if end != -1:
-            raw = text[3:end].strip()
-            body = text[end + 4 :].lstrip("\n")
-            for line in raw.splitlines():
-                m = re.match(r"^([A-Za-z0-9_-]+):\s*(.*)$", line)
-                if m:
-                    meta[m.group(1)] = m.group(2).strip().strip('"')
-            return meta, body
-    return meta, text
-
-
-def have(tool: str) -> bool:
-    return shutil.which(tool) is not None
-
-
-def out_path(src: Path, fmt: str) -> Path:
-    rel = src.relative_to(DOC_DIR)
-    target = BUILD_DIR / rel.parent / f"{src.stem}.{fmt}"
-    target.parent.mkdir(parents=True, exist_ok=True)
-    return target
-
-
-def build_with_pandoc(src: Path, fmt: str) -> bool:
-    target = out_path(src, fmt)
-    cmd = ["pandoc", str(src), "-o", str(target), "--standalone"]
-    if fmt == "pdf":
-        # Prefer weasyprint as the PDF engine (no LaTeX dependency).
-        if have("weasyprint"):
-            cmd += ["--pdf-engine=weasyprint"]
+def build_docx(md_path: Path, out_path: Path) -> bool:
+    """Convert Markdown to DOCX via pandoc."""
+    cmd = [
+        "pandoc",
+        str(md_path),
+        "--to", "docx",
+        "--output", str(out_path),
+        "--reference-doc", str(ROOT / "Scripts" / "reference.docx")
+        if (ROOT / "Scripts" / "reference.docx").exists()
+        else "--",
+    ]
+    # Remove the reference-doc arg if reference.docx does not exist
+    cmd = [
+        "pandoc",
+        str(md_path),
+        "--to", "docx",
+        "--output", str(out_path),
+    ]
     try:
-        subprocess.run(cmd, check=True, capture_output=True, text=True)
-        print(f"  [pandoc] {target.relative_to(REPO_ROOT)}")
+        result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+        print(f"  [DOCX] {out_path.name}")
         return True
-    except subprocess.CalledProcessError as exc:
-        print(f"  [pandoc] FAILED {fmt} for {src.name}: {exc.stderr.strip()[:200]}")
+    except subprocess.CalledProcessError as e:
+        print(f"  [ERROR] DOCX build failed for {md_path.name}: {e.stderr}", file=sys.stderr)
+        return False
+    except FileNotFoundError:
+        print("  [WARN] pandoc not found; skipping DOCX build", file=sys.stderr)
         return False
 
 
-def build_html_py(src: Path) -> bool:
+def build_pdf_via_html(html_path: Path, out_path: Path) -> bool:
+    """Convert HTML to PDF via weasyprint."""
     try:
-        import markdown  # type: ignore
-    except ImportError:
-        print("  [py] skip HTML: `markdown` not installed")
+        result = subprocess.run(
+            ["weasyprint", str(html_path), str(out_path)],
+            capture_output=True, text=True, check=True
+        )
+        print(f"  [PDF]  {out_path.name}")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"  [ERROR] PDF build failed: {e.stderr}", file=sys.stderr)
         return False
-    meta, body = strip_front_matter(src.read_text(encoding="utf-8"))
-    html_body = markdown.markdown(body, extensions=["tables", "fenced_code", "toc"])
-    title = meta.get("title", src.stem)
-    doc = (
-        "<!DOCTYPE html>\n<html lang=\"%s\">\n<head>\n<meta charset=\"utf-8\">\n"
-        "<title>%s</title>\n<style>body{max-width:50rem;margin:2rem auto;"
-        "font-family:Georgia,serif;line-height:1.5;padding:0 1rem}"
-        "table{border-collapse:collapse}td,th{border:1px solid #ccc;padding:.3rem .6rem}"
-        "code,pre{font-family:ui-monospace,monospace}pre{background:#f6f8fa;padding:1rem;"
-        "overflow:auto}</style>\n</head>\n<body>\n%s\n</body>\n</html>\n"
-    ) % (meta.get("language", "en"), title, html_body)
-    target = out_path(src, "html")
-    target.write_text(doc, encoding="utf-8")
-    print(f"  [py] {target.relative_to(REPO_ROOT)}")
-    return True
-
-
-def build_docx_py(src: Path) -> bool:
-    try:
-        import docx  # type: ignore
-        from docx.shared import Pt
-    except ImportError:
-        print("  [py] skip DOCX: `python-docx` not installed")
-        return False
-    meta, body = strip_front_matter(src.read_text(encoding="utf-8"))
-    document = docx.Document()
-    style = document.styles["Normal"]
-    style.font.name = "Calibri"
-    style.font.size = Pt(11)
-    for line in body.splitlines():
-        if line.startswith("#"):
-            level = len(line) - len(line.lstrip("#"))
-            document.add_heading(line.lstrip("#").strip(), level=min(level, 9))
-        elif line.strip().startswith(("- ", "* ")):
-            document.add_paragraph(line.strip()[2:], style="List Bullet")
-        elif line.strip():
-            document.add_paragraph(line)
-    target = out_path(src, "docx")
-    document.save(str(target))
-    print(f"  [py] {target.relative_to(REPO_ROOT)}")
-    return True
-
-
-def build_pdf_py(src: Path) -> bool:
-    if not have("weasyprint") and "weasyprint" not in sys.modules:
+    except FileNotFoundError:
+        # Try wkhtmltopdf as fallback
         try:
-            import weasyprint  # noqa: F401  type: ignore
-        except ImportError:
-            print("  [py] skip PDF: install weasyprint or pandoc to render PDF")
+            result = subprocess.run(
+                ["wkhtmltopdf", "--quiet", str(html_path), str(out_path)],
+                capture_output=True, text=True, check=True
+            )
+            print(f"  [PDF]  {out_path.name} (via wkhtmltopdf)")
+            return True
+        except FileNotFoundError:
+            print("  [WARN] Neither weasyprint nor wkhtmltopdf found; skipping PDF", file=sys.stderr)
             return False
-    # Ensure an HTML exists, then convert.
-    html_target = out_path(src, "html")
-    if not html_target.exists() and not build_html_py(src):
-        return False
+
+
+def build_html(md_path: Path, out_path: Path, lang: str = "en") -> bool:
+    """Convert Markdown to standalone HTML via pandoc."""
+    cmd = [
+        "pandoc",
+        str(md_path),
+        "--to", "html5",
+        "--output", str(out_path),
+        "--standalone",
+        "--metadata", f"lang={lang}",
+        "--wrap", "none",
+    ]
     try:
-        import weasyprint  # type: ignore
-        weasyprint.HTML(filename=str(html_target)).write_pdf(str(out_path(src, "pdf")))
-        print(f"  [py] {out_path(src, 'pdf').relative_to(REPO_ROOT)}")
+        result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+        print(f"  [HTML] {out_path.name}")
         return True
-    except Exception as exc:  # pragma: no cover - environment dependent
-        print(f"  [py] PDF failed for {src.name}: {exc}")
+    except subprocess.CalledProcessError as e:
+        print(f"  [ERROR] HTML build failed: {e.stderr}", file=sys.stderr)
+        return False
+    except FileNotFoundError:
+        print("  [WARN] pandoc not found; skipping HTML build", file=sys.stderr)
         return False
 
 
-def build_one(src: Path, formats: tuple[str, ...]) -> bool:
-    print(f"Building {src.relative_to(REPO_ROOT)}")
-    ok = True
-    use_pandoc = have("pandoc")
-    for fmt in formats:
-        if use_pandoc and build_with_pandoc(src, fmt):
-            continue
-        if fmt == "html":
-            ok &= build_html_py(src)
-        elif fmt == "docx":
-            ok &= build_docx_py(src)
-        elif fmt == "pdf":
-            ok &= build_pdf_py(src)
-    return ok
+def build_document(version: str, lang: str, stem: str, formats: list) -> dict:
+    """Build all requested formats for one document."""
+    lang_dir = DOC / lang
+    md_path = lang_dir / f"{stem}.md"
+
+    if not md_path.exists():
+        print(f"  [SKIP] {md_path} not found")
+        return {}
+
+    results = {}
+    print(f"\nBuilding {stem} ({lang}, v{version})")
+
+    if "docx" in formats:
+        docx_path = lang_dir / f"{stem}.docx"
+        results["docx"] = build_docx(md_path, docx_path)
+
+    html_path = lang_dir / f"{stem}.html"
+    if "html" in formats or "pdf" in formats:
+        # HTML is built anyway because PDF derives from it
+        if not html_path.exists() or "html" in formats:
+            results["html"] = build_html(md_path, html_path, lang)
+
+    if "pdf" in formats:
+        pdf_path = lang_dir / f"{stem}.pdf"
+        results["pdf"] = build_pdf_via_html(html_path, pdf_path)
+
+    return results
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("sources", nargs="*", help="Specific Markdown files (default: all).")
-    parser.add_argument(
-        "--formats", default=",".join(ALL_FORMATS),
-        help="Comma-separated subset of: docx,pdf,html",
-    )
+def main():
+    parser = argparse.ArgumentParser(description="Build govtech strategy documents")
+    parser.add_argument("--lang", default="all", choices=["en", "de", "all"],
+                        help="Language to build (default: all)")
+    parser.add_argument("--version", default="0.2.0",
+                        help="Document version to build (default: 0.2.0)")
+    parser.add_argument("--formats", default="docx,pdf,html",
+                        help="Comma-separated formats (default: docx,pdf,html)")
     args = parser.parse_args()
 
-    formats = tuple(f.strip() for f in args.formats.split(",") if f.strip() in ALL_FORMATS)
-    sources = [Path(s).resolve() for s in args.sources] if args.sources else find_markdown_sources()
-    if not sources:
-        print("No Markdown sources found under Doc/<lang>/.")
-        return 1
+    formats = [f.strip() for f in args.formats.split(",")]
+    langs = ["en", "de"] if args.lang == "all" else [args.lang]
 
-    BUILD_DIR.mkdir(parents=True, exist_ok=True)
-    if not have("pandoc"):
-        print("note: pandoc not found — using pure-Python fallbacks where possible.\n")
+    docs = [
+        (ver, lang, stem)
+        for ver, lang, stem in DOCUMENTS
+        if ver == args.version and lang in langs
+    ]
 
-    all_ok = True
-    for src in sources:
-        all_ok &= build_one(src, formats)
-    print("\nDone." if all_ok else "\nDone with some skipped/failed formats (see above).")
-    return 0 if all_ok else 2
+    if not docs:
+        print(f"No documents found for version {args.version} and lang {args.lang}")
+        sys.exit(1)
+
+    all_results = []
+    for ver, lang, stem in docs:
+        results = build_document(ver, lang, stem, formats)
+        all_results.append((stem, results))
+
+    print("\n--- Build summary ---")
+    for stem, results in all_results:
+        status = " | ".join(f"{fmt}: {'OK' if ok else 'FAIL'}" for fmt, ok in results.items())
+        print(f"  {stem}: {status}")
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    main()

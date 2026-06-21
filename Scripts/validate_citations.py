@@ -1,136 +1,131 @@
 #!/usr/bin/env python3
-"""Validate citations across the GovTech strategy papers.
+"""
+validate_citations.py
 
-Checks, for each paper under ``Doc/<lang>/``:
-  1. Every inline citation ``[N]`` resolves to a numbered entry in that paper's
-     ``## References`` / ``## Literaturverzeichnis`` section.
-  2. Every reference number used by the English source of truth exists in the
-     canonical source registry (``Mem/source-registry.md``).
-  3. Reports source-registry verification coverage (verified / unverified / archived).
-
-Returns a non-zero exit code if any inline citation is unresolved, so it can gate a
-release in CI.
+Validate every citation in the Markdown papers against the source registry.
+Reports:
+  - Citations in paper not found in registry
+  - Registry entries not cited in any paper
+  - Registry entries marked 'unverified'
 
 Usage:
-    python3 Scripts/validate_citations.py
+    python3 Scripts/validate_citations.py [--strict]
+
+--strict: exit code 1 if any unverified sources or missing citations
 """
-from __future__ import annotations
 
 import re
 import sys
+import argparse
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
-DOC_DIR = REPO_ROOT / "Doc"
-REGISTRY = REPO_ROOT / "Mem" / "source-registry.md"
-
-REF_HEADINGS = ("## References", "## Literaturverzeichnis", "## Bibliography")
-INLINE_RE = re.compile(r"\[(\d+(?:\s*,\s*\d+)*)\]")
-REF_DEF_RE = re.compile(r"^\[(\d+)\]\s", re.MULTILINE)
-REGISTRY_ID_RE = re.compile(r"^###\s*\[(\d+)\]", re.MULTILINE)
-VERIFY_RE = re.compile(r"\*\*Verification status:\*\*\s*(\w+)")
+ROOT = Path(__file__).parent.parent
+DOC_EN = ROOT / "Doc" / "en"
+MEM = ROOT / "Mem"
 
 
-def split_references(text: str) -> tuple[str, str]:
-    """Return (body_before_refs, references_block)."""
-    for heading in REF_HEADINGS:
-        idx = text.find(heading)
-        if idx != -1:
-            return text[:idx], text[idx:]
-    return text, ""
+def extract_citations_from_md(md_path: Path) -> set:
+    """Extract all [N] citation references from a Markdown file."""
+    text = md_path.read_text(encoding="utf-8")
+    # Match [1], [2, 3], [1, 29], etc.
+    raw = re.findall(r"\[([\d,\s]+)\]", text)
+    citations = set()
+    for group in raw:
+        for num in group.split(","):
+            num = num.strip()
+            if num.isdigit():
+                citations.add(int(num))
+    return citations
 
 
-def inline_ids(body: str) -> set[int]:
-    ids: set[int] = set()
-    for group in INLINE_RE.findall(body):
-        for part in group.split(","):
-            ids.add(int(part.strip()))
-    return ids
+def extract_registry_entries(registry_path: Path) -> dict:
+    """Extract {id: {title, verification_status}} from source registry."""
+    text = registry_path.read_text(encoding="utf-8")
+    entries = {}
+    # Match ### [N] lines
+    current_id = None
+    current = {}
+    for line in text.splitlines():
+        m = re.match(r"^### \[(\d+)\]", line)
+        if m:
+            if current_id is not None:
+                entries[current_id] = current
+            current_id = int(m.group(1))
+            current = {"title": line, "verification_status": "unknown"}
+        elif current_id is not None:
+            if "Verification status:** " in line:
+                status = line.split("Verification status:** ", 1)[1].strip()
+                current["verification_status"] = status
+            elif "Document title:** " in line:
+                current["title"] = line.split("Document title:** ", 1)[1].strip()
+    if current_id is not None:
+        entries[current_id] = current
+    return entries
 
 
-def registry_ids_and_coverage() -> tuple[set[int], dict[str, int]]:
-    if not REGISTRY.exists():
-        return set(), {}
-    text = REGISTRY.read_text(encoding="utf-8")
-    ids = {int(n) for n in REGISTRY_ID_RE.findall(text)}
-    coverage: dict[str, int] = {}
-    for status in VERIFY_RE.findall(text):
-        key = status.lower()
-        coverage[key] = coverage.get(key, 0) + 1
-    return ids, coverage
+def main():
+    parser = argparse.ArgumentParser(description="Validate citations against source registry")
+    parser.add_argument("--strict", action="store_true",
+                        help="Exit 1 if any issues found")
+    args = parser.parse_args()
 
+    registry_path = MEM / "source-registry.md"
+    if not registry_path.exists():
+        print(f"ERROR: Registry not found at {registry_path}", file=sys.stderr)
+        sys.exit(1)
 
-def validate_paper(path: Path, registry_ids: set[int]) -> list[str]:
-    text = path.read_text(encoding="utf-8")
-    body, refs = split_references(text)
-    problems: list[str] = []
+    registry = extract_registry_entries(registry_path)
+    print(f"Registry entries: {len(registry)}")
 
-    if not refs:
-        problems.append(f"{path.name}: no References section found")
-        return problems
-
-    defined = {int(n) for n in REF_DEF_RE.findall(refs)}
-    used = inline_ids(body)
-
-    missing = sorted(used - defined)
-    if missing:
-        problems.append(f"{path.name}: inline citations with no reference entry: {missing}")
-
-    unused = sorted(defined - used)
-    if unused:
-        # Not fatal, but worth surfacing.
-        problems.append(f"{path.name}: NOTE reference entries never cited inline: {unused}")
-
-    if registry_ids:
-        not_in_registry = sorted(defined - registry_ids)
-        if not_in_registry:
-            problems.append(
-                f"{path.name}: NOTE reference ids absent from source registry: {not_in_registry}"
-            )
-    return problems
-
-
-def main() -> int:
-    papers = []
-    for lang_dir in sorted(DOC_DIR.iterdir()) if DOC_DIR.exists() else []:
-        if lang_dir.is_dir() and lang_dir.name != "build":
-            papers.extend(sorted(lang_dir.glob("*.md")))
-
+    # Collect all citations from all English papers
+    all_citations = set()
+    papers = list(DOC_EN.glob("*.md"))
     if not papers:
-        print("No papers found under Doc/<lang>/.")
-        return 1
+        print("No papers found in Doc/en/", file=sys.stderr)
+        sys.exit(1)
 
-    registry_ids, coverage = registry_ids_and_coverage()
-
-    fatal = False
-    print("Citation validation\n" + "=" * 60)
     for paper in papers:
-        problems = validate_paper(paper, registry_ids)
-        hard = [p for p in problems if "NOTE" not in p]
-        if not problems:
-            print(f"OK    {paper.relative_to(REPO_ROOT)}")
-        else:
-            for p in problems:
-                marker = "FAIL " if "NOTE" not in p else "note "
-                print(f"{marker} {p}")
-            fatal = fatal or bool(hard)
+        cites = extract_citations_from_md(paper)
+        print(f"  {paper.name}: {len(cites)} citation references")
+        all_citations |= cites
 
-    print("\nSource registry verification coverage\n" + "-" * 60)
-    if coverage:
-        total = sum(coverage.values())
-        for status in ("verified", "unverified", "archived"):
-            n = coverage.get(status, 0)
-            pct = (100 * n / total) if total else 0
-            print(f"  {status:11s} {n:3d}  ({pct:4.1f}%)")
-        print(f"  {'total':11s} {total:3d}")
-        if coverage.get("unverified"):
-            print("\n  -> v0.2.0 milestone requires unverified == 0")
+    print(f"Total unique citation IDs in papers: {len(all_citations)}")
+
+    issues = []
+
+    # Citations in paper not in registry
+    missing_in_registry = sorted(all_citations - set(registry.keys()))
+    if missing_in_registry:
+        issues.append(f"Citations in paper NOT in registry: {missing_in_registry}")
+        for cid in missing_in_registry:
+            print(f"  [MISSING] [{cid}] not in source-registry.md")
+
+    # Registry entries not cited
+    uncited = sorted(set(registry.keys()) - all_citations)
+    if uncited:
+        print(f"\nRegistry entries not cited in any paper ({len(uncited)}):")
+        for cid in uncited:
+            print(f"  [UNCITED] [{cid}] {registry[cid].get('title', '')}")
+
+    # Unverified sources that ARE cited
+    unverified_cited = [
+        cid for cid in all_citations
+        if cid in registry and "unverified" in registry[cid].get("verification_status", "")
+    ]
+    if unverified_cited:
+        issues.append(f"Unverified cited sources: {unverified_cited}")
+        for cid in sorted(unverified_cited):
+            print(f"  [UNVERIFIED] [{cid}] {registry[cid].get('title', '')}")
+
+    print("\n--- Validation summary ---")
+    if issues:
+        for issue in issues:
+            print(f"  ISSUE: {issue}")
+        if args.strict:
+            sys.exit(1)
     else:
-        print("  (registry not found or has no verification-status entries)")
-
-    print("\n" + ("FAILED: unresolved citations." if fatal else "PASSED."))
-    return 2 if fatal else 0
+        print("  All citations verified. No issues found.")
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()

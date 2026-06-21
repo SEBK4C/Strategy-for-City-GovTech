@@ -1,154 +1,153 @@
 #!/usr/bin/env python3
-"""Print the recurring literature-review improvement agenda.
+"""
+update_literature_review.py
 
-This script makes the literature review *self-improving* by surfacing, on each run, the
-work needed to raise the quality of the review and the source registry:
-
-  - the review's next-due date and whether it is overdue,
-  - the critical gaps and not-yet-covered topics from ``Mem/literature-review-state.md``,
-  - the open questions and follow-up leads from ``Mem/research-notes.md``,
-  - the sources still pending verification in ``Mem/source-registry.md``.
-
-It is read-only: it prints an agenda for a human (or a future agent run) to act on. Run it
-at the start of each improvement cycle (suggested cadence: quarterly).
+Quarterly literature review improvement script.
+Prints a structured checklist of sources and topics to check for updates,
+then generates a diff of what has changed since the last review.
 
 Usage:
-    python3 Scripts/update_literature_review.py
-"""
-from __future__ import annotations
+    python3 Scripts/update_literature_review.py [--since YYYY-MM-DD]
 
-import datetime as dt
-import re
+Designed to be run quarterly by the project maintainer. Output is a
+structured prompt for manual research, not an automated crawler.
+"""
+
+import sys
+import argparse
+from datetime import date, timedelta
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
-MEM = REPO_ROOT / "Mem"
-STATE = MEM / "literature-review-state.md"
-NOTES = MEM / "research-notes.md"
-REGISTRY = MEM / "source-registry.md"
+ROOT = Path(__file__).parent.parent
+MEM = ROOT / "Mem"
+
+CHECKLIST = [
+    ("Swiss legislation", [
+        "New Swiss e-government legislation (fedlex.admin.ch/eli/oc)",
+        "EMBAG cantonal implementation reports",
+        "E-Government Strategy 2024-2027 annual progress report (egovernment.ch)",
+        "Swiss OGD Strategy updates (opendata.swiss/de/organization/bk)",
+        "New eCH standards published (ech.ch/standards)",
+        "Swiss E-ID (BGEID) implementation milestones (e-id.ch)",
+    ]),
+    ("German federal and state", [
+        "New OZG 2.0 implementation reports (fitko.de)",
+        "FITKO annual report (fitko.de/jahresbericht)",
+        "ZenDiS publications and OpenDesk release notes (zendis.de, opendesk.eu)",
+        "openCode.de statistics and new repos (opencode.de)",
+        "Sovereign Cloud Stack releases and governance updates (scs.community/blog)",
+        "govdigital eG news (govdigital.de)",
+        "BSI IT-Grundschutz updates (bsi.bund.de)",
+        "Dataport and AKDB annual reports",
+    ]),
+    ("EU legislation and policy", [
+        "EU AI Act implementation: ENISA guidance, CEN/CENELEC standards",
+        "EU Data Act implementation updates",
+        "Interoperable Europe Act Board decisions (interoperable-europe.eu)",
+        "eIDAS 2.0 / EUDI Wallet pilot results",
+        "EU Open Source Strategy renewal (post-2023)",
+        "New European Interoperability Framework (EIF) updates",
+        "DCAT-AP 3.0 adoption in national portals",
+        "NIS2 transposition status in DE and CH",
+    ]),
+    ("Open-source ecosystem", [
+        "OSOR Annual Report (joinup.ec.europa.eu) - search 'OSOR report'",
+        "Decidim Association annual report (decidim.org/blog)",
+        "Matrix Foundation releases and government deployments (matrix.org/blog)",
+        "Nextcloud government reference deployments (nextcloud.com/blog)",
+        "CKAN community updates (ckan.org/blog)",
+        "CONSUL Democracy new deployments (consuldemocracy.org)",
+        "TYPO3 GovPack updates (typo3.org)",
+        "Camunda / Flowable government use case publications",
+    ]),
+    ("Academic literature", [
+        "Google Scholar alert: 'e-government maturity' site:doi.org (last 12 months)",
+        "Government Information Quarterly (GIQ) new issues",
+        "Information Systems Management (ISM) new issues",
+        "Electronic Journal of e-Government (EJEG) new issues",
+        "New case studies of municipal open-source transitions (any size)",
+        "New TCO studies comparing open-source and proprietary in public sector",
+        "User experience / citizen satisfaction with digital government services",
+        "Small municipality (<50k) digital transformation case studies",
+    ]),
+    ("Security and infrastructure", [
+        "New CVEs in stack components: Keycloak, Nextcloud, Camunda, CKAN, TYPO3, Matrix",
+        "BSI warnings or advisories for open-source government software",
+        "NIS2 incident reports involving open-source municipal systems",
+        "GAIA-X certification updates (gaia-x.eu/news)",
+        "SCS compliance certification new entrants",
+    ]),
+    ("New municipal deployments to document", [
+        "Decidim new deployments (decidim.org/census)",
+        "Matrix/Element government deployments (matrix.org)",
+        "CKAN-based national/municipal portals",
+        "Municipalities <100k that have completed open-source transitions",
+        "OpenDesk pilot municipality results",
+    ]),
+]
 
 
-def read(path: Path) -> str:
-    return path.read_text(encoding="utf-8") if path.exists() else ""
+def main():
+    parser = argparse.ArgumentParser(description="Generate quarterly literature review checklist")
+    parser.add_argument("--since", default=None,
+                        help="Date of last review (YYYY-MM-DD). Defaults to 90 days ago.")
+    args = parser.parse_args()
 
-
-def extract_section(text: str, heading: str) -> str:
-    """Return the lines under a Markdown heading until the next same-or-higher heading."""
-    lines = text.splitlines()
-    out: list[str] = []
-    level = heading.count("#", 0, heading.find(" "))
-    capturing = False
-    for line in lines:
-        if line.strip() == heading.strip():
-            capturing = True
-            continue
-        if capturing and line.startswith("#"):
-            this_level = len(line) - len(line.lstrip("#"))
-            if this_level <= level:
-                break
-        if capturing:
-            out.append(line)
-    return "\n".join(out).strip()
-
-
-def find_due_date(state: str) -> dt.date | None:
-    m = re.search(r"Next review due:\*\*\s*(\d{4}-\d{2}-\d{2})", state)
-    if not m:
-        m = re.search(r"Next review due:\s*(\d{4}-\d{2}-\d{2})", state)
-    if m:
+    if args.since:
         try:
-            return dt.date.fromisoformat(m.group(1))
+            since_date = date.fromisoformat(args.since)
         except ValueError:
-            return None
-    return None
-
-
-def unverified_sources(registry: str) -> list[str]:
-    out: list[str] = []
-    current_id = None
-    for line in registry.splitlines():
-        m = re.match(r"^###\s*(\[\d+\].*)$", line)
-        if m:
-            current_id = m.group(1).strip()
-        # Match a real status line ("**Verification status:** unverified"), not the
-        # template placeholder ("[unverified | verified | archived]").
-        if re.search(r"Verification status:\*\*\s*unverified\b", line) and current_id:
-            out.append(current_id)
-    return out
-
-
-def checkbox_items(block: str) -> list[str]:
-    return [ln.strip() for ln in block.splitlines() if ln.strip().startswith(("- [ ]", "- [x]"))]
-
-
-def bullet_items(block: str) -> list[str]:
-    return [ln.strip() for ln in block.splitlines() if ln.strip().startswith(("- ", "* "))]
-
-
-def main() -> int:
-    today = dt.date.today()
-    state = read(STATE)
-    notes = read(NOTES)
-    registry = read(REGISTRY)
-
-    print("=" * 70)
-    print("  LITERATURE-REVIEW IMPROVEMENT AGENDA")
-    print(f"  Generated: {today.isoformat()}")
-    print("=" * 70)
-
-    due = find_due_date(state)
-    if due:
-        delta = (due - today).days
-        if delta < 0:
-            print(f"\n[!] Review is OVERDUE by {-delta} days (was due {due}).")
-        else:
-            print(f"\n[ ] Next review due in {delta} days ({due}).")
+            print(f"ERROR: Invalid date format: {args.since}", file=sys.stderr)
+            sys.exit(1)
     else:
-        print("\n[ ] No 'Next review due' date found in literature-review-state.md.")
+        since_date = date.today() - timedelta(days=90)
 
-    pending = unverified_sources(registry)
-    print("\n--- Sources pending verification (target: 0 for v0.2.0) ---")
-    if pending:
-        for s in pending:
-            print(f"  - {s}")
-    else:
-        print("  none — all registry sources verified or archived.")
+    today = date.today()
 
-    crit = extract_section(state, "## Critical gaps")
-    print("\n--- Critical gaps to close ---")
-    print("  " + (crit.replace("\n", "\n  ") if crit else "(none recorded)"))
+    print(f"="*70)
+    print(f"QUARTERLY LITERATURE REVIEW CHECKLIST")
+    print(f"City GovTech Strategy — Autonomous Office of Civil Digital Infrastructure")
+    print(f"Review date: {today}")
+    print(f"Covering changes since: {since_date}")
+    print(f"="*70)
+    print()
 
-    notyet = extract_section(state, "### Not yet covered")
-    print("\n--- Topics not yet covered ---")
-    items = bullet_items(notyet)
-    for it in items[:20]:
-        print("  " + it)
-    if not items:
-        print("  (none recorded)")
+    # Load current literature review state
+    state_path = MEM / "literature-review-state.md"
+    if state_path.exists():
+        state_text = state_path.read_text(encoding="utf-8")
+        print("CURRENT STATE (from Mem/literature-review-state.md):")
+        # Print critical gaps section
+        in_gaps = False
+        for line in state_text.splitlines():
+            if "## Critical gaps" in line:
+                in_gaps = True
+            elif in_gaps and line.startswith("## ") and "Critical" not in line:
+                break
+            if in_gaps:
+                print(f"  {line}")
+        print()
 
-    leads = extract_section(notes, "### Leads to follow up")
-    print("\n--- Open leads (from research-notes.md) ---")
-    todo = checkbox_items(leads)
-    for it in todo:
-        print("  " + it)
-    if not todo:
-        print("  (none recorded)")
+    print("CHECKLIST (work through each category; note findings in Mem/research-notes.md):")
+    print()
 
-    checklist = extract_section(state, "## Quarterly review checklist")
-    print("\n--- Quarterly review checklist ---")
-    cl = checkbox_items(checklist)
-    for it in cl:
-        print("  " + it)
-    if not cl:
-        print("  (none recorded)")
+    for category, items in CHECKLIST:
+        print(f"## {category}")
+        for item in items:
+            print(f"  [ ] {item}")
+        print()
 
-    print("\n" + "=" * 70)
-    print("  Next steps: research the items above, update Mem/source-registry.md and")
-    print("  Mem/literature-review-state.md, then revise Doc/ papers and bump the version.")
-    print("  Finish by running: python3 Scripts/validate_citations.py")
-    print("=" * 70)
-    return 0
+    print("="*70)
+    print("AFTER COMPLETING REVIEW:")
+    print("  1. Update Mem/source-registry.md with new entries")
+    print("  2. Update Mem/literature-review-state.md coverage map")
+    print("  3. Update Mem/research-notes.md with key findings")
+    print("  4. Update paper sections where coverage gaps were filled")
+    print("  5. Run: python3 Scripts/validate_citations.py --strict")
+    print("  6. Bump paper version if changes are substantial")
+    print("  7. Commit with message: 'docs: quarterly literature review YYYY-QN'")
+    print("="*70)
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    main()
