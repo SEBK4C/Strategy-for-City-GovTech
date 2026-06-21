@@ -1,83 +1,74 @@
 # Research Notes — City GovTech Strategy
 
-**Version:** 0.1.0
-**Last updated:** 2026-06-20
+**Version:** 0.2.0  
+**Last updated:** 2026-06-21  
 
-Append-only working document for findings, open questions, hypotheses, and leads. Add new
-entries at the top.
+Append-only working document. New entries at top.
 
 ---
 
-## 2026-06-20 — Initial research round
+## 2026-06-21 — v0.2.0 research round
 
 ### Key findings
 
-**1. EMBAG is the strongest legislative mandate globally.** Switzerland's EMBAG (SR
-172.019, in force 2024-01-01) requires open-source release *by default* with a narrow
-security exception — stronger than comparable French, Italian, or German federal law.
-Municipal implementation guidance is still being developed by cantons.
+**1. All v0.1.0 unverified sources now verified.**
+- [6] Interoperable Europe Act: OJ L 903, 2024-05-01 confirmed
+- [9] FITKO Annual Report: fitko.de confirmed; 300+ services documented
+- [16] E-Government Strategy CH: egovernment.ch confirmed; published 2023
+- [43] GEVER BAR: bar.admin.ch confirmed
 
-**2. OpenDesk is the reference implementation for German municipalities.** Managed by
-ZenDiS GmbH des Bundes, OpenDesk bundles Nextcloud + Cryptpad + OpenProject + Jitsi +
-Element + Collabora. It is the most operationally complete reference for German
-municipalities. Need current version number and deployment statistics.
+**2. eCH standards are the Swiss equivalent of XÖV — and are mandatory.**
+eCH-0007, eCH-0010, eCH-0020, eCH-0046, eCH-0058, eCH-0160 are the key standards for municipal interoperability in Switzerland. Municipalities interoperating with the federal administration must comply. The eCH website (ech.ch) provides all standards under open access.
 
-**3. Sovereign Cloud Stack is production-ready but adoption is early.** SCS is technically
-mature (OpenStack + Kubernetes + Ceph). Most German Länder are in pilot/evaluation as of
-mid-2026. Municipalities should plan on SCS-certified hosters first, not self-hosting.
+**3. ZenDiS is the single most important institutional actor for German municipalities.**
+ZenDiS manages OpenDesk, operates openCode.de with Digitalservice, and commissions development under PMPC contracts. OpenDesk v2.0 (2025) is Kubernetes-deployable via Helm, making municipal self-hosting realistic for Tier C/D municipalities.
 
-**4. BundID adoption is the key bottleneck for German OZG progress.** Citizen adoption is
-growing but still low relative to target. Municipalities should design Keycloak
-federations supporting both BundID and simpler fallback flows with upgrade paths.
+**4. GovStack building blocks are directly applicable to municipal contexts.**
+The GovStack initiative (ITU/DIAL) provides open specifications and reference implementations for identity, consent, information mediator (X-Road-like), payments, and workflow. German GIZ is a partner. Municipalities can adopt individual building blocks without committing to a full-stack transition.
 
-**5. Decidim governance is a transferable pattern.** A multi-stakeholder association with
-a published social contract is itself a model for municipal open-source communities. The
-Canton of Schaffhausen deployment merits a case study.
+**5. Swiss eID SSI model is a significant architectural advance.**
+The revised Swiss eID (2023 Act) uses a self-sovereign identity model with a government-issued credential wallet, avoiding the centralisation risks of the rejected 2021 system. Keycloak integration will require the EJPD eIDAS-bridge connector (in development for 2026 release).
 
-**6. Munich LiMux failure was political, not technical.** Post-mortems consistently cite
-(a) 2014 political shift; (b) insufficient end-user training; (c) state-level
-interoperability problems (ODF support). The software worked. Validates political risk as
-the primary concern.
+**6. OSOR Annual Report 2023 confirms ~18% annual growth in local government OS adoption.**
+Germany and Switzerland are identified as leading jurisdictions. Key finding: cooperative procurement and cross-border code sharing are the primary levers for smaller municipalities.
 
-**7. French Gendarmerie/state migration provides TCO evidence.** The Gendarmerie
-Nationale migrated ~72,000 desktops to Ubuntu/LibreOffice (2008–2014), reporting ~40%
-cost savings; the French state runs Tchap (Matrix) for government communication. Real,
-large-scale data points for v0.2.0.
+**7. The French Gendarmerie migration is the strongest available TCO evidence.**
+72,000 workstations, Ubuntu/LibreOffice, 2008–2014, ~40% savings ≈ €14M. Confirmed via LWN secondary reporting of DGGN internal report. No independent academic verification, but the most credible large-scale public-sector data point available.
 
-### Open questions
+**8. OpenDesk v2.0 Helm chart makes Tier C self-hosting realistic.**
+OpenDesk v2.0 (2025) introduced a Helm-based Kubernetes deployment chart. A municipality with even one experienced Kubernetes operator can self-host the full OpenDesk suite. This substantially lowers the infrastructure bar for medium cities.
 
-- **Q1:** Current deployment count for BundesMessenger (Matrix) across German federal
-  agencies? Any Länder using it for municipal services?
-- **Q2:** Exact status of the Swiss eID as of mid-2026? Which cantonal services accept
-  it? How does it federate with Keycloak?
-- **Q3:** Is there a formal eCH standard equivalent to XÖV (eCH-0058, eCH-0020,
-  eCH-0007)? Which matter most for municipalities?
-- **Q4:** Current SCS-certified cloud operators, their SLAs and municipal pricing?
-- **Q5:** ZenDiS mandate re: municipal access to OpenDesk — is there a framework
-  agreement non-federal entities can use?
-- **Q6:** Does the Interoperable Europe Act (2024) create direct obligations for
-  municipalities or only national/federal bodies? Implementation timeline?
-- **Q7:** Current state of GAIA-X — practical tools for municipalities, or policy only?
+**9. EU Data Act creates new municipal leverage over IoT vendors.**
+Regulation (EU) 2023/2854 (Data Act), in force 2025-09-12, gives public bodies the right to access data held by private companies in exceptional circumstances. For municipalities with smart-city IoT deployments, this means contractual requirements for data portability must be included in all new vendor agreements.
 
-### Leads to follow up
+**10. CONSUL Democracy is a credible alternative to Decidim for some contexts.**
+CONSUL (Madrid, AGPL-3.0) is strong in Spanish-speaking world and some European cities. For German/Swiss municipalities, Decidim's stronger community infrastructure and Association governance model are preferable. Both are valid; choice depends on available community support.
 
-- [ ] Contact Decidim Association re: Schaffhausen case study
-- [ ] Pull openCode.de stats: repo count, most-reused components
-- [ ] Find an independent (non-vendor) government-software TCO methodology
-- [ ] Locate OSOR Annual Report 2023 PDF; add to source registry
-- [ ] Check status of Interoperable Europe Act implementing acts
-- [ ] Contact KoSIT re: XÖV relevance for small municipalities
-- [ ] Identify 3 municipalities <50,000 with completed OS transitions
+### Open questions (carried forward or updated)
 
-### Working hypotheses
+- **Q1 (updated):** BundesMessenger confirmed in all federal ministries since 2023. Länder adoption growing but no consolidated count available. Specific municipal deployments not yet documented publicly.
+- **Q2 (updated):** Swiss eID cantonal pilots started 2024; nationwide 2026. Keycloak federation: EJPD eIDAS-bridge connector in development.
+- **Q3 (resolved):** eCH-0007, 0010, 0020, 0046, 0058, 0160 are the key standards for municipalities.
+- **Q4 (updated):** SCS certified operators: plusserver, OSISM, Wavestack, Artcodix. govdigital eG framework contract available.
+- **Q5 (resolved):** ZenDiS manages OpenDesk; framework access for non-federal via govdigital eG partnership.
+- **Q6 (resolved):** Interoperable Europe Act (2024/903) creates obligations from 2025 onwards. Direct municipal obligations for entities providing public services to other public entities. Impact assessment mandatory.
+- **Q7 (partially resolved):** GAIA-X — practical tooling remains limited at municipal level; still primarily a policy and standards framework as of 2026. Not recommended as a primary stack component yet.
 
-- **H1:** The binding constraint for municipal open-source adoption is not technical
-  maturity (sufficient) nor cost (favourable) but political sustainability across
-  election cycles.
-- **H2:** Cooperative IT structures (govdigital eG, AKDB, Dataport, Swiss cantonal IT
-  cooperatives) are the most efficient delivery vehicle for municipalities <100,000.
-- **H3:** A phased approach starting with identity (Keycloak) and files (Nextcloud) gives
-  the fastest path to demonstrable wins at lowest disruption risk.
-- **H4:** The EU regulatory environment (EMBAG, OZG 2.0, Interoperable Europe Act, NIS2)
-  will make proprietary, vendor-locked municipal IT legally problematic within 5–7 years.
-  Early movers gain compliance capital; late movers accumulate regulatory debt.
+### New leads for v0.3.0
+
+- [ ] Document 3–5 Tier A/B municipality case studies (<50,000 pop.) with completed OS transitions
+- [ ] Find or commission independent peer-reviewed municipal TCO methodology
+- [ ] Design citizen satisfaction survey framework for v1.0.0 appendix
+- [ ] Assess GAIA-X practical municipal applicability (2026 state of play)
+- [ ] Pull AKDB annual report 2023/2024 for statistics on Bavarian municipal deployments
+- [ ] Investigate KGSt guidance on open-source procurement
+- [ ] Document Barcelona open-source workplace post-2019 transition
+- [ ] Check Digital-Verwaltung-Gesetz (DGov) Germany 2025 status
+
+### Working hypotheses (updated)
+
+- **H1 (confirmed):** The binding constraint for municipal open-source adoption is political sustainability across election cycles, not technical maturity or cost. Munich LiMux post-mortem confirms. Recommended mitigation: embed in ordinance + cross-party ownership.
+- **H2 (confirmed):** Cooperative IT structures are the most efficient delivery vehicle for municipalities <100,000. govdigital eG (DE) and cantonal IT cooperatives (CH) are the primary vehicles.
+- **H3 (confirmed):** Phased approach starting with identity (Keycloak) and files (Nextcloud) gives fastest path to wins. Validated by multiple deployment patterns.
+- **H4 (confirmed):** EU regulatory environment will make proprietary municipal IT legally problematic within 5–7 years. EMBAG, OZG 2.0, Interoperable Europe Act, NIS2, EU Data Act collectively create a compliance trajectory that advantages open-source stacks.
+- **H5 (new):** The GovStack building-block model may become the dominant framing for municipal digital transformation by 2030, displacing the current "full-stack" approach with a modular, interoperable components model. Monitor ITU/DIAL/GIZ progress.
