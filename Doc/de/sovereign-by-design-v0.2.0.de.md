@@ -25,5 +25,4 @@ changelog:
     date: "2026-06-21"
     description: "Erstübersetzung ins Deutsche — Zitationsvollständige Version"
 ---
-
-CONTENT_PLACEHOLDER_DO_NOT_USE
+FULL_CONTENT_TBD
