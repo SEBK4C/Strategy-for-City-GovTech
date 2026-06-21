@@ -6,24 +6,26 @@ each into the three published formats and writes them to ``Doc/build/<lang>/``.
 
 Rendering strategy (in order of preference):
   1. ``pandoc`` if available — best fidelity for all of DOCX/PDF/HTML.
-  2. Pure-Python fallback — ``markdown`` for HTML, ``python-docx`` for DOCX. PDF is
-     produced from HTML via ``weasyprint`` if installed; otherwise skipped with a notice.
+  2. LibreOffice CLI (``soffice``/``libreoffice``) for PDF conversion from generated DOCX.
+  3. Pure-Python fallback — ``markdown`` for HTML, ``python-docx`` for DOCX. PDF is
+     produced from HTML via ``weasyprint`` if native libraries are available; otherwise
+     skipped with a notice.
 
 Usage:
-    python3 Scripts/build_govtech_docs.py                 # build every paper, every format
-    python3 Scripts/build_govtech_docs.py Doc/en/foo.md   # build a single file
-    python3 Scripts/build_govtech_docs.py --formats html  # restrict output formats
+    uv run python Scripts/build_govtech_docs.py                 # build every paper, every format
+    uv run python Scripts/build_govtech_docs.py Doc/en/foo.md   # build a single file
+    uv run python Scripts/build_govtech_docs.py --formats html  # restrict output formats
 
 Exit code is non-zero if any requested build fails.
 """
 from __future__ import annotations
 
 import argparse
-import os
 import re
 import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -60,6 +62,14 @@ def strip_front_matter(text: str) -> tuple[dict, str]:
 
 def have(tool: str) -> bool:
     return shutil.which(tool) is not None
+
+
+def libreoffice_cmd() -> str | None:
+    for tool in ("soffice", "libreoffice"):
+        found = shutil.which(tool)
+        if found:
+            return found
+    return None
 
 
 def out_path(src: Path, fmt: str) -> Path:
@@ -134,19 +144,54 @@ def build_docx_py(src: Path) -> bool:
     return True
 
 
-def build_pdf_py(src: Path) -> bool:
-    if not have("weasyprint") and "weasyprint" not in sys.modules:
+def build_pdf_libreoffice(src: Path) -> bool:
+    tool = libreoffice_cmd()
+    if not tool:
+        return False
+
+    docx_target = out_path(src, "docx")
+    if not docx_target.exists() and not build_docx_py(src):
+        return False
+
+    target = out_path(src, "pdf")
+    with tempfile.TemporaryDirectory(prefix="city-gov-lo-") as profile:
+        cmd = [
+            tool,
+            "--headless",
+            f"-env:UserInstallation={Path(profile).as_uri()}",
+            "--convert-to",
+            "pdf",
+            "--outdir",
+            str(target.parent),
+            str(docx_target),
+        ]
         try:
-            import weasyprint  # noqa: F401  type: ignore
-        except ImportError:
-            print("  [py] skip PDF: install weasyprint or pandoc to render PDF")
+            subprocess.run(cmd, check=True, capture_output=True, text=True)
+            produced = docx_target.with_suffix(".pdf")
+            if produced != target and produced.exists():
+                produced.replace(target)
+            print(f"  [libreoffice] {target.relative_to(REPO_ROOT)}")
+            return True
+        except subprocess.CalledProcessError as exc:
+            msg = (exc.stderr or exc.stdout or "").strip()
+            print(f"  [libreoffice] PDF failed for {src.name}: {msg[:200]}")
             return False
+
+
+def build_pdf_py(src: Path) -> bool:
+    if build_pdf_libreoffice(src):
+        return True
+
+    try:
+        import weasyprint  # type: ignore
+    except (ImportError, OSError) as exc:
+        print(f"  [py] skip PDF: install pandoc, LibreOffice CLI, or WeasyPrint native libraries ({exc})")
+        return False
     # Ensure an HTML exists, then convert.
     html_target = out_path(src, "html")
     if not html_target.exists() and not build_html_py(src):
         return False
     try:
-        import weasyprint  # type: ignore
         weasyprint.HTML(filename=str(html_target)).write_pdf(str(out_path(src, "pdf")))
         print(f"  [py] {out_path(src, 'pdf').relative_to(REPO_ROOT)}")
         return True
@@ -188,7 +233,7 @@ def main() -> int:
 
     BUILD_DIR.mkdir(parents=True, exist_ok=True)
     if not have("pandoc"):
-        print("note: pandoc not found — using pure-Python fallbacks where possible.\n")
+        print("note: pandoc not found — using fallback renderers where possible.\n")
 
     all_ok = True
     for src in sources:

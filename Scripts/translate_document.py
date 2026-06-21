@@ -15,8 +15,8 @@ pointing back at its source. This script keeps translations honest:
 The design goal: additional languages can be added later WITHOUT rewriting the source.
 
 Usage:
-    python3 Scripts/translate_document.py --check
-    python3 Scripts/translate_document.py --scaffold fr
+    uv run python Scripts/translate_document.py --check
+    uv run python Scripts/translate_document.py --scaffold fr
 """
 from __future__ import annotations
 

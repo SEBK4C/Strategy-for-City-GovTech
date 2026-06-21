@@ -28,9 +28,11 @@ civil-society groups, open-source communities, and sovereign technology provider
 
 | Path | Purpose |
 |---|---|
+| [`PLAN.md`](PLAN.md) | Requirements matrix, implementation status, open decisions, and milestone plan |
 | [`Doc/`](Doc/) | Published documents (Markdown source of truth + committed HTML; DOCX/PDF via build) |
 | [`Mem/`](Mem/) | Memory: source registry, literature-review state, research notes |
 | [`Scripts/`](Scripts/) | Automation: document generation, translation, citation management, validation |
+| [`Archive/`](Archive/) | Branch audit and full snapshots of the fetched loop-created branches |
 | [`.github/workflows/`](.github/workflows/) | CI that builds & publishes DOCX/PDF/HTML on every push |
 
 ## Branching & loop workflow
@@ -43,15 +45,21 @@ no longer done:
 - `main` is the **single source of truth** and the only long-lived branch.
 - Recurring/automated runs commit their work to `main` (via short-lived PRs or directly).
 - Historical per-session `claude/*` branches are **superseded by `main`** and may be
-  deleted; they were parallel attempts at the same deliverable, now consolidated here.
+  deleted after review; their fetched contents are preserved under
+  [`Archive/branch-snapshots/`](Archive/branch-snapshots/).
 
 See [`AGENTS.md`](AGENTS.md) for the convention automated runs follow.
+See [`Archive/branch-audit-2026-06-21.md`](Archive/branch-audit-2026-06-21.md) for the
+branch-by-branch consolidation notes.
 
 ## Papers
 
-| Paper | Languages | Status |
-|---|---|---|
-| Sovereign by Design: Open-Source Technology Strategy for Municipal Governments | EN · DE | v0.1.0 — first structured draft |
+| Paper | Version | Languages | Status | Source |
+|---|---:|---|---|---|
+| Sovereign by Design: Open-Source Technology Strategy for Municipal Governments | v0.3.0 | EN · DE | Extended draft | [`EN`](Doc/en/sovereign-by-design-v0.3.0.md) · [`DE`](Doc/de/sovereign-by-design-v0.3.0.de.md) |
+| Sovereign by Design: Open-Source Technology Strategy for Municipal Governments | v0.2.0 | EN · DE | Citation-complete draft | [`EN`](Doc/en/sovereign-by-design-v0.2.0.md) · [`DE`](Doc/de/sovereign-by-design-v0.2.0.de.md) |
+| Sovereign by Design: Open-Source Technology Strategy for Municipal Governments | v0.1.0 | EN · DE | First structured draft | [`EN`](Doc/en/sovereign-by-design-v0.1.0.md) · [`DE`](Doc/de/sovereign-by-design-v0.1.0.de.md) |
+| Sovereign by Design appendices | v0.2.0 | EN · DE | Supporting material | [`EN`](Doc/en/appendices-v0.2.0.md) · [`DE`](Doc/de/appendices-v0.2.0.de.md) |
 
 Each paper follows a scientific structure: Abstract · Introduction · Methodology ·
 Literature Review · Technology Stack Analysis · Implementation Roadmap · Stakeholder &
@@ -73,6 +81,7 @@ Documents use semantic versioning:
 |---|---|
 | `v0.1.0` | First structured draft (structure complete, some citations unverified) |
 | `v0.2.0` | Citation-complete draft (all sources verified against primaries) |
+| `v0.3.0` | Extended draft adding GovStack, EU AI Act, GAIA-X, OSOR, AKDB, and TCO material |
 | `v1.0.0` | Externally shareable release |
 
 ## Languages
@@ -84,20 +93,26 @@ material — see [`Doc/README.md`](Doc/README.md) for the “add a language” p
 ## Reproduce
 
 ```bash
-pip install -r requirements.txt
+uv sync
 
 # Build all documents (Markdown → DOCX → PDF → HTML)
-python3 Scripts/build_govtech_docs.py
+uv run python Scripts/build_govtech_docs.py
 
 # Validate every citation against the source registry
-python3 Scripts/validate_citations.py
+uv run python Scripts/validate_citations.py
 
 # Generate the literature-review improvement agenda
-python3 Scripts/update_literature_review.py
+uv run python Scripts/update_literature_review.py
 
 # Check translation parity between language versions
-python3 Scripts/translate_document.py --check
+uv run python Scripts/translate_document.py --check
+
+# Smoke-check source length, EN/DE length parity, and generated artifacts
+uv run python Scripts/smoke_check.py
 ```
+
+Use `uv` for project dependencies and `uvx` for one-off external Python CLIs. Do not use
+`pip install` in the project root.
 
 ## Continuous improvement
 

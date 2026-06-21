@@ -12,8 +12,8 @@ authors:
     given-names: Sebastian
     affiliation: "Autonomous Office of Civil Digital Infrastructure"
     email: sebk4c@tuta.com
-version: "0.1.0"
-date-released: "2026-06-20"
+version: "0.3.0"
+date-released: "2026-06-21"
 license: CC-BY-4.0
 keywords:
   - digital sovereignty
@@ -24,4 +24,7 @@ keywords:
   - EMBAG
   - OZG
   - Sovereign Cloud Stack
+  - GovStack
+  - EU AI Act
+  - GAIA-X
 repository-code: "https://github.com/SEBK4C/Strategy-for-City-GovTech"

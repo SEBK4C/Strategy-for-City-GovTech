@@ -1,0 +1,21 @@
+# Generated document artefacts (regenerate with Scripts/build_govtech_docs.py)
+Doc/build/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Archived source captures may be large; keep registry metadata, ignore bulky binaries
+Mem/archive/*.pdf
+Mem/archive/*.zip

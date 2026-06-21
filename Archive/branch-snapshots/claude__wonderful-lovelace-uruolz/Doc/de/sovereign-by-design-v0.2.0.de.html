@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Von Anfang an souverän v0.2.0 — Open-Source-Technologiestrategie für Kommunalverwaltungen</title>
+<meta name="author" content="Sebastian Graf, Autonomes Büro für zivile digitale Infrastruktur">
+<meta name="description" content="Zitationsvollständige Strategie für die Implementierung von Open-Source-Technologiestapeln in Kommunalverwaltungen. Behandelt EMBAG, OZG 2.0, EU-Interoperabilitätsgesetz und 14 Technologiekomponenten.">
+<style>
+body{font-family:Georgia,'Times New Roman',serif;max-width:900px;margin:0 auto;padding:2rem 1.5rem;color:#222;line-height:1.75;background:#fff}
+h1{font-size:1.9rem;line-height:1.3;color:#1a1a2e;margin-bottom:.5rem}
+h2{font-size:1.4rem;color:#1a1a2e;margin-top:2.8rem;border-bottom:2px solid #e0e0e8;padding-bottom:.3rem}
+h3{font-size:1.15rem;color:#2d2d5e;margin-top:1.8rem}
+.meta{background:#f4f4f8;border-left:4px solid #7c83fd;padding:1rem 1.2rem;border-radius:0 4px 4px 0;margin:1.5rem 0;font-family:system-ui,sans-serif;font-size:.88rem;line-height:1.5}
+.meta dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.2rem .8rem}
+.meta dt{font-weight:700;color:#444}
+.abstract{background:#fafafa;border:1px solid #e0e0e0;padding:1.5rem 1.8rem;border-radius:4px;margin:1.5rem 0}
+table{border-collapse:collapse;width:100%;margin:1.2rem 0;font-size:.9rem}
+th,td{border:1px solid #d0d0d8;padding:.55rem .8rem;text-align:left;vertical-align:top}
+th{background:#f0f0f8;font-weight:700}
+tr:nth-child(even){background:#fafafa}
+pre{background:#f8f8f8;border:1px solid #e0e0e0;border-radius:4px;padding:1rem;overflow-x:auto;font-size:.85rem}
+code{font-family:'Courier New',Courier,monospace;background:#f4f4f4;padding:.1rem .3rem;border-radius:3px;font-size:.88em}
+a{color:#4a5bd6}
+ul,ol{padding-left:1.5rem}
+li{margin:.3rem 0}
+.checklist li{list-style:none;padding-left:1.2rem;text-indent:-1.2rem}
+.checklist li::before{content:"\25a1\2002"}
+.license{margin-top:3rem;padding-top:1.2rem;border-top:1px solid #e0e0e0;font-size:.82rem;color:#666;font-family:system-ui,sans-serif}
+@media(max-width:600px){body{padding:1rem}.meta dl{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<h1>Von Anfang an souverän: Eine aktuelle Open-Source-Technologiestrategie für Kommunalverwaltungen</h1>
+<div class="meta">
+<dl>
+<dt>Autor</dt><dd>Sebastian Graf, Autonomes Büro für zivile digitale Infrastruktur</dd>
+<dt>Korrespondenz</dt><dd><a href="mailto:sebk4c@tuta.com">sebk4c@tuta.com</a></dd>
+<dt>Version</dt><dd>0.2.0 — Zitationsvollständiger Entwurf</dd>
+<dt>Vorgängerversion</dt><dd><a href="sovereign-by-design-v0.1.0.de.html">v0.1.0</a></dd>
+<dt>Datum</dt><dd>2026-06-20</dd>
+<dt>Sprachen</dt><dd><a href="../en/sovereign-by-design-v0.2.0.html">English (Quelle)</a> · Deutsch</dd>
+<dt>Quelle (Markdown)</dt><dd><a href="sovereign-by-design-v0.2.0.de.md">sovereign-by-design-v0.2.0.de.md</a></dd>
+<dt>Lizenz</dt><dd>CC-BY-4.0</dd>
+<dt>Repository</dt><dd><a href="https://github.com/SEBK4C/Strategy-for-City-GovTech">github.com/SEBK4C/Strategy-for-City-GovTech</a></dd>
+</dl>
+</div>
+
+<div class="abstract">
+<p><strong>Zusammenfassung.</strong> Kommunalverwaltungen sind die bürgernächste Schicht der demokratischen Verwaltung und stehen vor einer akuten strukturellen Spannung: Die digitalen Werkzeuge, auf die sie angewiesen sind, werden zunehmend proprietär und anbietergekoppelt. Dieses Papier präsentiert eine umfassende Strategie für die Implementierung eines modernen Open-Source-Technologiestapels in der Kommunalverwaltung. Auf Grundlage des Schweizer EMBAG-Gesetzes (2024), der deutschen OZG-2.0-Reform, des EU-Interoperabilitätsgesetzes (2024), des EU-Datenverwaltungsgesetzes (2022) sowie Fallstudien aus Barcelona, Helsinki, Schleswig-Holstein und der Schweizer Bundesverwaltung leiten wir einen 36-monatigen Implementierungsfahrplan mit phasengesteuerten Checklisten, einem Beschaffungsrahmen, einer TCO-Methodik und einem KPI-Rahmen ab. Wir kommen zu dem Schluss, dass Open-Source-Kommunaltechnologiestapel technisch ausgereift, regulatorisch begünstigt und wirtschaftlich überlegen sind, wenn die Gesamtkosten korrekt modelliert werden.</p>
+<p><strong>Schlüsselwörter:</strong> digitale Souveränität, Open-Source-Verwaltung, GovTech, kommunale digitale Transformation, Interoperabilität, OZG, EMBAG, Sovereign Cloud Stack, E-Government, EU-Datengesetz, GovStack</p>
+</div>
+
+<h2>1. Einleitung</h2>
+<p>Die digitale Transformation der Kommunalverwaltung ist keine Option mehr. Ein anderer Weg ist nachgewiesen: Die Schweizer EMBAG-Gesetzgebung [1], Deutschlands OpenDesk [42], der Sovereign Cloud Stack [3], Schleswig-Holsteins 25.000-Arbeitsplatz-Migration [47] und die EU-Rechtsvorschriften [6, 48] belegen gemeinsam, dass eine souveräne digitale Kommunalverwaltung möglich ist.</p>
+
+<h2>2. Methodik</h2>
+<p>Systematische Literaturrecherche (2010–2026); vergleichende Politikanalyse; Technologiebewertungsmatrix (7 Kriterien, max. 35 Punkte); Power-Interest-Stakeholder-Analyse; fünf Fallstudien.</p>
+
+<h2>3. Literaturübersicht</h2>
+<h3>3.1 Theoretische Grundlagen</h3>
+<p>Vier E-Government-Generationen [30]: Digitalisierung (1995–2005) [29]; Online-Dienste (2005–2012) [7]; Open Data/Partizipation (2012–2020) [8]; Plattform-Government und Souveränität (2020–heute) [45]. GovStack (ITU/DIAL) operationalisiert die vierte Generation durch modulare Bausteine [50].</p>
+
+<h3>3.2 Digitale Souveränität</h3>
+<p>SCS (OpenStack + Kubernetes + Ceph): konkreteste Realisierung in Cloud-Infrastruktur [3, 11]. EMBAG (in Kraft 01.01.2024): fortschrittlichstes Open-Source-Gesetz weltweit [1].</p>
+
+<h3>3.3 Deutsches OZG-Ökosystem</h3>
+<p>OZG 2.0: Once Only, EfA, BundID, FITKO [9, 10]. Schleswig-Holstein: 25.000 Arbeitsplätze → LibreOffice, Nextcloud, Thunderbird [47]. ZenDiS: OpenDesk für 10.000+ Bundesbeamte [49].</p>
+
+<h3>3.4 Schweizer Dienste</h3>
+<p>eCH-Standards [51]; E-ID-Gesetz 2023 [52]; opendata.swiss [44]; GEVER [43].</p>
+
+<h3>3.6 EU-Datenverwaltungsgesetz und Datengesetz</h3>
+<p>DGA (EU 2022/868): nicht-exklusive Datenweitergabe [48]. Datengesetz (EU 2023/2854): Cloud-Wechselrechte, Portabilität, Notfallzugang [55].</p>
+
+<h2>4. Technologiestapel-Analyse</h2>
+<h3>4.1–4.13 Komponentenübersicht</h3>
+<table>
+<tr><th>Schicht</th><th>Empfohlene Komponente</th><th>Lizenz</th><th>Punkte</th></tr>
+<tr><td>Identität und Authentifizierung</td><td>Keycloak</td><td>Apache 2.0</td><td>34/35</td></tr>
+<tr><td>Dokumentenmanagement</td><td>Nextcloud + Alfresco Community</td><td>AGPL-3.0 / LGPL-3.0</td><td>34/35</td></tr>
+<tr><td>Workflow-Automatisierung</td><td>Camunda 8 Community / Flowable</td><td>Apache 2.0</td><td>29/35</td></tr>
+<tr><td>Bürgerbeteiligung</td><td>Decidim</td><td>AGPL-3.0</td><td>33/35</td></tr>
+<tr><td>Kommunikation</td><td>Matrix/Element + Jitsi Meet</td><td>Apache 2.0</td><td>32/35</td></tr>
+<tr><td>Open-Data-Veröffentlichung</td><td>CKAN</td><td>AGPL-3.0</td><td>32/35</td></tr>
+<tr><td>Geografische Informationssysteme</td><td>QGIS + GeoServer + OpenStreetMap</td><td>GPL-2.0+ / ODbL</td><td>—</td></tr>
+<tr><td>Website und CMS</td><td>TYPO3 / Drupal</td><td>GPL-2.0</td><td>—</td></tr>
+<tr><td>Cloud-Infrastruktur</td><td>Sovereign Cloud Stack (SCS)</td><td>Apache 2.0</td><td>32/35</td></tr>
+<tr><td>Office-Produktivität</td><td>LibreOffice + Collabora Online</td><td>MPL-2.0</td><td>34/35</td></tr>
+<tr><td>Web-Analyse</td><td>Matomo</td><td>GPL-3.0</td><td>32/35</td></tr>
+<tr><td>DevOps und Code-Hosting</td><td>Forgejo + Woodpecker CI</td><td>MIT / Apache 2.0</td><td>29/35</td></tr>
+<tr><td>Kommunales ERP</td><td>Bestehendes ERP beibehalten (Phase 1–3)</td><td>—</td><td>—</td></tr>
+</table>
+
+<h2>5. Implementierungsfahrplan</h2>
+<h3>Phase 0: Grundlage (Monate 1–3)</h3>
+<ul class="checklist">
+<li>Lenkungsausschuss Digitale Transformation eingerichtet</li>
+<li>Technologieinventur abgeschlossen</li>
+<li>Kostenbasis etabliert</li>
+<li>Stakeholder-Engagementplan verabschiedet</li>
+<li>Vergaberechtliche Überprüfung abgeschlossen</li>
+<li>Absichtserklärung mit kooperativem IT-Anbieter</li>
+<li>DSFA beauftragt</li>
+</ul>
+<table>
+<tr><th>Größe</th><th>Indikatives Budget</th></tr>
+<tr><td>Klein</td><td>20.000–50.000 €</td></tr>
+<tr><td>Mittel</td><td>50.000–150.000 €</td></tr>
+<tr><td>Groß</td><td>150.000–400.000 €</td></tr>
+</table>
+
+<h3>Phase 1: Identität und Infrastruktur (Monate 4–12)</h3>
+<table>
+<tr><th>Größe</th><th>Indikatives Budget</th></tr>
+<tr><td>Klein</td><td>40.000–100.000 €</td></tr>
+<tr><td>Mittel</td><td>100.000–300.000 €</td></tr>
+<tr><td>Groß</td><td>300.000–800.000 €</td></tr>
+</table>
+
+<h3>Phase 2: Dienste und Workflows (Monate 10–18)</h3>
+<table>
+<tr><th>Größe</th><th>Indikatives Budget</th></tr>
+<tr><td>Klein</td><td>60.000–150.000 €</td></tr>
+<tr><td>Mittel</td><td>150.000–400.000 €</td></tr>
+<tr><td>Groß</td><td>400.000–1.000.000 €</td></tr>
+</table>
+
+<h3>5.1 KPI-Rahmen</h3>
+<table>
+<tr><th>Dimension</th><th>KPI</th><th>Ziel (36 Monate)</th></tr>
+<tr><td>Digitale Souveränität</td><td>% IT-Ausgaben für Open-Source</td><td>≥ 70 %</td></tr>
+<tr><td>Digitale Souveränität</td><td>Kritische Einzelanbieter-Abhängigkeiten</td><td>0</td></tr>
+<tr><td>Dienstqualität</td><td>% Dienste online</td><td>≥ 90 %</td></tr>
+<tr><td>Dienstqualität</td><td>Bürger-NPS</td><td>≥ 40</td></tr>
+<tr><td>Kosten</td><td>Jährliche IT-Lizenzkosten pro Mitarbeitendem</td><td>Reduktion ≥ 40 %</td></tr>
+<tr><td>Transparenz</td><td>Veröffentlichte offene Datensätze</td><td>≥ 50</td></tr>
+<tr><td>Beteiligung</td><td>Via Decidim eingebundene Bürger/Jahr</td><td>≥ 5 % der Bevölkerung</td></tr>
+<tr><td>Community</td><td>Open-Source-Beiträge</td><td>≥ 5 pro Jahr</td></tr>
+<tr><td>Sicherheit</td><td>Zeit bis Patchen kritischer CVEs</td><td>≤ 48 Stunden</td></tr>
+</table>
+
+<h2>6. Stakeholder- und Beschaffungsstrategie</h2>
+<h3>Ausschreibungsvorlage (Mindestanforderungen)</h3>
+<pre>1.  LIZENZ: Alle Komponenten unter OSI-genehmigter Open-Source-Lizenz.
+2.  QUELLCODE: Auf openCode.de innerhalb 30 Tagen nach Abnahme.
+3.  DATENPORTABILITÄT: ODF/CSV/JSON/XML/DCAT-AP innerhalb 24 Stunden.
+4.  API: Dokumentierte REST- oder GraphQL-API.
+5.  AUTHENTIFIZIERUNG: Keycloak/OIDC-Integration.
+6.  SICHERHEIT: BSI IT-Grundschutz (DE) / ISDS (CH). Penetrationstest.
+7.  BARRIEREFREIHEIT: WCAG 2.1 AA (BITV 2.0 in Deutschland).
+8.  DATENRESIDENZ: EU/EWR; nicht Nicht-EU-Datenzugriffsrecht.
+9.  INTEROPERABILITÄT: XÖV (DE) / eCH (CH).
+10. AUSSTIEG: Vollständige Datenmigration innerhalb 90 Tagen kostenfrei.</pre>
+
+<h2>7. Risikoanalyse</h2>
+<p><strong>Münchener Warnbeispiel:</strong> LiMux (2003–2017) wurde wegen politischen Führungswechsels, nicht wegen technischer Probleme zurückgekehrt. 14 Jahre Betrieb belegen die technische Machbarkeit [30].</p>
+<p><strong>DSGVO:</strong> Alle Komponenten standardmäßig konform bei Selbsthosting. Google Analytics nach DSK-Leitlinien unzulässig; Matomo ist die konforme Alternative [57].</p>
+
+<h2>8. Schlussfolgerung</h2>
+<p>Fünf Erkenntnisse: (1) Technische Reife. (2) Regulatorisches Mandat. (3) Wirtschaftliche Überlegenheit. (4) Bewiesener Erfolg auf allen Maßstäben. (5) Governance ist die bindende Einschränkung. Drei sofortige Maßnahmen: (1) Resolution verabschieden; (2) Keycloak und Nextcloud starten; (3) govdigital eG beitreten.</p>
+
+<h2>Literatur</h2>
+<p>Vollständige Quellenangaben in: <a href="sovereign-by-design-v0.2.0.de.md">sovereign-by-design-v0.2.0.de.md</a></p>
+<p>[1] EMBAG — <a href="https://www.fedlex.admin.ch/eli/cc/2023/682/de">fedlex.admin.ch</a> · [3] SCS — <a href="https://scs.community/">scs.community</a> · [42] OpenDesk — <a href="https://opendesk.eu/">opendesk.eu</a> · [47] Schleswig-Holstein — <a href="https://www.schleswig-holstein.de/">schleswig-holstein.de</a> · [50] GovStack — <a href="https://www.govstack.global/">govstack.global</a> · [51] eCH — <a href="https://www.ech.ch/">ech.ch</a></p>
+
+<div class="license">
+<p>Veröffentlicht unter <a href="https://creativecommons.org/licenses/by/4.0/deed.de">Creative Commons Namensnennung 4.0 International (CC-BY-4.0)</a>.<br>
+Zitierung: Sebastian Graf, Autonomes Büro für zivile digitale Infrastruktur (<a href="mailto:sebk4c@tuta.com">sebk4c@tuta.com</a>)<br>
+Veröffentlicht: <a href="https://github.com/SEBK4C/Strategy-for-City-GovTech">github.com/SEBK4C/Strategy-for-City-GovTech</a></p>
+</div>
+</body>
+</html>

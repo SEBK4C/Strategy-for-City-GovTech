@@ -4,15 +4,15 @@
 Checks, for each paper under ``Doc/<lang>/``:
   1. Every inline citation ``[N]`` resolves to a numbered entry in that paper's
      ``## References`` / ``## Literaturverzeichnis`` section.
-  2. Every reference number used by the English source of truth exists in the
-     canonical source registry (``Mem/source-registry.md``).
+  2. Every reference number used by the latest English source of truth exists in the
+     current canonical source registry (``Mem/source-registry.md``).
   3. Reports source-registry verification coverage (verified / unverified / archived).
 
 Returns a non-zero exit code if any inline citation is unresolved, so it can gate a
 release in CI.
 
 Usage:
-    python3 Scripts/validate_citations.py
+    uv run python Scripts/validate_citations.py
 """
 from __future__ import annotations
 
@@ -24,11 +24,13 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 DOC_DIR = REPO_ROOT / "Doc"
 REGISTRY = REPO_ROOT / "Mem" / "source-registry.md"
 
-REF_HEADINGS = ("## References", "## Literaturverzeichnis", "## Bibliography")
+REF_HEADINGS = ("## References", "## Literaturverzeichnis", "## Referenzen", "## Bibliography")
 INLINE_RE = re.compile(r"\[(\d+(?:\s*,\s*\d+)*)\]")
 REF_DEF_RE = re.compile(r"^\[(\d+)\]\s", re.MULTILINE)
 REGISTRY_ID_RE = re.compile(r"^###\s*\[(\d+)\]", re.MULTILINE)
 VERIFY_RE = re.compile(r"\*\*Verification status:\*\*\s*(\w+)")
+VERIFY_DE_RE = re.compile(r"\*\*Verifikationsstatus:\*\*\s*(\w+)")
+VERSION_RE = re.compile(r"v(\d+)\.(\d+)\.(\d+)")
 
 
 def split_references(text: str) -> tuple[str, str]:
@@ -54,19 +56,21 @@ def registry_ids_and_coverage() -> tuple[set[int], dict[str, int]]:
     text = REGISTRY.read_text(encoding="utf-8")
     ids = {int(n) for n in REGISTRY_ID_RE.findall(text)}
     coverage: dict[str, int] = {}
-    for status in VERIFY_RE.findall(text):
+    for status in VERIFY_RE.findall(text) + VERIFY_DE_RE.findall(text):
         key = status.lower()
         coverage[key] = coverage.get(key, 0) + 1
     return ids, coverage
 
 
-def validate_paper(path: Path, registry_ids: set[int]) -> list[str]:
+def validate_paper(path: Path, registry_ids: set[int], check_registry: bool) -> list[str]:
     text = path.read_text(encoding="utf-8")
     body, refs = split_references(text)
     problems: list[str] = []
 
     if not refs:
-        problems.append(f"{path.name}: no References section found")
+        used_without_refs = inline_ids(text)
+        if used_without_refs:
+            problems.append(f"{path.name}: no References section found")
         return problems
 
     defined = {int(n) for n in REF_DEF_RE.findall(refs)}
@@ -81,13 +85,29 @@ def validate_paper(path: Path, registry_ids: set[int]) -> list[str]:
         # Not fatal, but worth surfacing.
         problems.append(f"{path.name}: NOTE reference entries never cited inline: {unused}")
 
-    if registry_ids:
+    if check_registry and registry_ids:
         not_in_registry = sorted(defined - registry_ids)
         if not_in_registry:
             problems.append(
                 f"{path.name}: NOTE reference ids absent from source registry: {not_in_registry}"
             )
     return problems
+
+
+def version_key(path: Path) -> tuple[int, int, int]:
+    match = VERSION_RE.search(path.name)
+    if not match:
+        return (0, 0, 0)
+    return tuple(int(part) for part in match.groups())
+
+
+def latest_english_source(papers: list[Path]) -> Path | None:
+    candidates = [
+        paper
+        for paper in papers
+        if paper.parent.name == "en" and paper.name.startswith("sovereign-by-design-v")
+    ]
+    return max(candidates, key=version_key) if candidates else None
 
 
 def main() -> int:
@@ -101,11 +121,12 @@ def main() -> int:
         return 1
 
     registry_ids, coverage = registry_ids_and_coverage()
+    latest_source = latest_english_source(papers)
 
     fatal = False
     print("Citation validation\n" + "=" * 60)
     for paper in papers:
-        problems = validate_paper(paper, registry_ids)
+        problems = validate_paper(paper, registry_ids, check_registry=(paper == latest_source))
         hard = [p for p in problems if "NOTE" not in p]
         if not problems:
             print(f"OK    {paper.relative_to(REPO_ROOT)}")

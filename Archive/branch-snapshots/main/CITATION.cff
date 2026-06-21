@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you reference this strategy, please cite it as below."
+title: "Sovereign by Design: A State-of-the-Art Open-Source Technology Strategy for Municipal Governments"
+abstract: >-
+  Strategy papers for city governments implementing a state-of-the-art, open-source
+  governmental administration technology stack, with a self-improving literature review,
+  an evaluation of Swiss, German, and European sovereign GovTech offerings, a
+  first-principles technology-stack analysis, and a phased implementation roadmap.
+type: report
+authors:
+  - family-names: Graf
+    given-names: Sebastian
+    affiliation: "Autonomous Office of Civil Digital Infrastructure"
+    email: sebk4c@tuta.com
+version: "0.1.0"
+date-released: "2026-06-20"
+license: CC-BY-4.0
+keywords:
+  - digital sovereignty
+  - open source government
+  - GovTech
+  - municipal digital transformation
+  - e-government
+  - EMBAG
+  - OZG
+  - Sovereign Cloud Stack
+repository-code: "https://github.com/SEBK4C/Strategy-for-City-GovTech"

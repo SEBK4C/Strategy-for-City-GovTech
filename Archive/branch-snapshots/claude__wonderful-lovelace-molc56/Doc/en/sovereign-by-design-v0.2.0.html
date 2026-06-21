@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Sovereign by Design: A State-of-the-Art Open-Source Technology Strategy for Municipal Governments">
+  <meta name="author" content="Sebastian Graf, Autonomous Office of Civil Digital Infrastructure">
+  <meta name="version" content="0.2.0">
+  <meta name="date" content="2026-06-21">
+  <meta name="license" content="CC-BY-4.0">
+  <title>Sovereign by Design: A State-of-the-Art Open-Source Technology Strategy for Municipal Governments</title>
+  <style>
+:root {
+  --color-bg: #ffffff;
+  --color-text: #1a1a1a;
+  --color-link: #005fcc;
+  --color-link-hover: #003d99;
+  --color-border: #cccccc;
+  --color-accent: #005fcc;
+  --color-code-bg: #f5f5f5;
+  --color-table-head: #e8edf2;
+  --color-table-alt: #f8fafc;
+  --font-body: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --max-width: 52rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #121212;
+    --color-text: #e0e0e0;
+    --color-link: #88b4f7;
+    --color-link-hover: #aaccff;
+    --color-border: #444444;
+    --color-accent: #88b4f7;
+    --color-code-bg: #1e1e1e;
+    --color-table-head: #1e2a38;
+    --color-table-alt: #1a1f26;
+  }
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 100%; scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-text);
+  background: var(--color-bg);
+  padding: 1rem;
+}
+.skip-link {
+  position: absolute;
+  top: -3rem;
+  left: 0;
+  background: var(--color-accent);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  z-index: 9999;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0 0 4px 0;
+  transition: top 0.15s;
+}
+.skip-link:focus { top: 0; }
+a:focus, button:focus { outline: 3px solid var(--color-accent); outline-offset: 2px; }
+a:focus:not(:focus-visible) { outline: none; }
+a { color: var(--color-link); text-decoration: underline; }
+a:hover { color: var(--color-link-hover); }
+main {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+header {
+  max-width: var(--max-width);
+  margin: 0 auto 2rem;
+  padding: 2rem 1rem 1.5rem;
+  border-bottom: 2px solid var(--color-border);
+}
+h1 { font-size: 1.875rem; line-height: 1.2; margin-bottom: 1.5rem; }
+h2 { font-size: 1.375rem; margin-top: 2.5rem; margin-bottom: 0.75rem; padding-bottom: 0.25rem; border-bottom: 1px solid var(--color-border); }
+h3 { font-size: 1.125rem; margin-top: 2rem; margin-bottom: 0.5rem; }
+h4 { font-size: 1rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.4rem; }
+p { margin-bottom: 1rem; }
+ul, ol { margin: 0 0 1rem 1.5rem; }
+li { margin-bottom: 0.25rem; }
+li > ul, li > ol { margin-top: 0.25rem; margin-bottom: 0.25rem; }
+code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--color-code-bg);
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+}
+pre {
+  background: var(--color-code-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1.25rem;
+}
+pre code { background: none; padding: 0; font-size: 0.8rem; }
+blockquote {
+  border-left: 4px solid var(--color-accent);
+  padding: 0.5rem 1rem;
+  margin: 1rem 0;
+  color: var(--color-text);
+  font-style: italic;
+}
+blockquote p:last-child { margin-bottom: 0; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+  overflow-x: auto;
+  display: block;
+}
+thead tr { background: var(--color-table-head); }
+th, td {
+  border: 1px solid var(--color-border);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+th { font-weight: 600; }
+tbody tr:nth-child(even) { background: var(--color-table-alt); }
+hr { border: none; border-top: 1px solid var(--color-border); margin: 2rem 0; }
+strong { font-weight: 600; }
+.meta-block { font-size: 0.875rem; color: var(--color-text); opacity: 0.85; margin-top: 0.5rem; }
+.meta-block p { margin-bottom: 0.3rem; }
+@media print {
+  .skip-link { display: none; }
+  a { color: var(--color-text); }
+  a[href]::after { content: " (" attr(href) ")"; font-size: 0.8em; }
+  pre, blockquote { page-break-inside: avoid; }
+  h1, h2, h3 { page-break-after: avoid; }
+}
+@media (prefers-contrast: high) {
+  th { background: #000; color: #fff; }
+  td { border-color: #000; }
+}
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <main id="main-content" role="main">
+    <div class="meta-block" aria-label="document metadata">
+      <p>Version 0.2.0 — Citation-Complete Draft — 2026-06-21 | Sebastian Graf, Autonomous Office of Civil Digital Infrastructure | CC-BY-4.0</p>
+    </div>
+    <h1 id="sovereign-by-design-a-state-of-the-art-open-source-technology-strategy-for-municipal-governments">Sovereign by Design: A State-of-the-Art Open-Source Technology Strategy for Municipal Governments</h1>
+<p><strong>Author:</strong> Sebastian Graf, Autonomous Office of Civil Digital Infrastructure   <strong>Correspondence:</strong> sebk4c@tuta.com   <strong>Version:</strong> 0.2.0 — Citation-Complete Draft   <strong>Date:</strong> 2026-06-21   <strong>Languages:</strong> English (source of truth) · Deutsch   <strong>SPDX-License-Identifier:</strong> CC-BY-4.0</p>
+<hr>
+<h2 id="abstract">Abstract</h2>
+<p>Municipal governments are the closest layer of democratic administration to citizens, yet they face an acute structural tension: the digital tools they depend on are increasingly proprietary, vendor-locked, and misaligned with public-interest values. This paper presents a comprehensive, citation-complete strategy for implementing a state-of-the-art, open-source governmental administration technology stack in city governments. Drawing on exemplary practices from the Swiss federal administration's EMBAG legislation, Germany's OZG 2.0 reform programme, the Sovereign Cloud Stack initiative, OpenDesk, and the wider European sovereign technology community, we derive a first-principles implementation roadmap, stakeholder engagement framework, and procurement strategy. We evaluate fifteen functional technology layers — from digital identity and cloud infrastructure to AI-assisted citizen services and accessibility tooling — against criteria of digital sovereignty, interoperability, total cost of ownership, security, and civic alignment. New sections address the EU Data Act (2023), EU AI Act (2024), EU Data Governance Act (2022), the GovStack building-blocks initiative, and evidence-based total-cost-of-ownership analysis. We document small-municipality case studies that challenge the perception that open-source transformation is only viable for large cities. We conclude that open-source municipal technology stacks are not merely technically viable but fiscally superior over a five-year horizon, democratically necessary, legally mandated in an increasing number of jurisdictions, and practically achievable within a structured 36-month programme. The paper provides phased implementation guidance with indicative budget ranges, a procurement checklist, and a milestone tracker designed for city administrators, elected officials, IT teams, procurement offices, civil-society groups, open-source communities, and sovereign technology providers.</p>
+<p><strong>Keywords:</strong> digital sovereignty, open source government, GovTech, municipal digital transformation, interoperability, OZG, EMBAG, Sovereign Cloud Stack, GovStack, EU Data Act, AI Act, total cost of ownership, procurement</p>
+<hr>
+<h2 id="1-introduction">1. Introduction</h2>
+<p>The digital transformation of municipal government is no longer optional. Citizens expect seamless, secure, and accessible digital services; regulators demand interoperability and data protection; and fiscal pressures require sustainable, cost-effective technology investments. Yet the majority of city governments worldwide remain trapped in a cycle of proprietary vendor dependency, expensive licence agreements, and fragmented systems that impede rather than enable good governance [1, 29].</p>
+<p>The consequences of this dependency are well-documented. Vendor lock-in raises switching costs and bargaining asymmetry [4]. Proprietary formats obstruct cross-agency data exchange and transparency [45]. Closed-source infrastructure prevents independent security auditing [26]. Recurring licence fees drain budgets that could otherwise fund service delivery [3, 5]. And most fundamentally, when the software running democratic institutions is owned and controlled by private actors, a structural conflict of interest emerges between the public interest and corporate imperatives [4, 56].</p>
+<p>The regulatory landscape is shifting decisively. Switzerland's 2023 EMBAG legislation mandates that federal software developed with public funds be released as open source by default [1]. Germany's OZG 2.0 reform, Sovereign Cloud Stack, and OpenDesk initiative represent Europe's most ambitious open-source government technology programme [2, 3, 42]. The EU's Interoperable Europe Act (2024) creates binding cross-border interoperability obligations [6]. The EU AI Act (2024) sets requirements for AI systems in public administration [50]. The EU Data Act (2023) restructures data access rights with significant implications for municipal data governance [49]. And the Free Software Foundation Europe's "Public Money? Public Code!" campaign, endorsed by over 200 organisations across 30 countries, articulates the foundational democratic argument: software paid for by the public should be available to the public [4].</p>
+<p>The GovStack initiative — launched by the International Telecommunication Union (ITU) and the Digital Impact Alliance (DIAL) — has codified this convergence into a set of reusable, interoperable "building blocks" for government digital services, providing a global reference architecture that aligns with the open-source municipal stack described in this paper [48].</p>
+<p>This paper synthesises these developments into a practical, evidence-based strategy for municipal governments of all sizes. It is addressed to all relevant stakeholders — city administrators, elected officials, public-sector IT teams, procurement offices, civil-society groups, open-source communities, and sovereign technology providers — and provides the evidence base, technology assessment, and implementation roadmap needed to make the transition.</p>
+<h3 id="11-scope-and-definitions">1.1 Scope and Definitions</h3>
+<p><em>Municipal government</em> refers to city and local government authorities, including Gemeinden, Kommunen, Städte, and equivalent structures in Swiss cantons. The strategy is designed to scale from small municipalities (population 5,000–50,000) to large cities (population 500,000+), with explicit guidance on appropriate modulation.</p>
+<p><em>Open-source technology stack</em> refers to software components licensed under OSI-approved licences, deployed on infrastructure that the municipality controls or can migrate away from without undue cost or friction.</p>
+<p><em>Digital sovereignty</em> is the ability of a government to make independent decisions about its digital infrastructure, including the right to inspect, modify, audit, and migrate software without dependency on a single vendor [3, 5].</p>
+<p><em>Sovereign cloud</em> in the European public-sector context means cloud infrastructure that: (a) operates under EU jurisdiction; (b) uses open-source components with publicly auditable code; (c) provides contractual guarantees against third-country data access; and (d) can be migrated or self-hosted without vendor permission [3, 52].</p>
+<h3 id="12-research-questions">1.2 Research Questions</h3>
+<ol>
+<li>What does a state-of-the-art open-source municipal technology stack look like in 2026?</li>
+<li>What lessons can be drawn from the Swiss, German, and European sovereign technology communities?</li>
+<li>What is the optimal phased implementation pathway for a city government of 5,000–500,000 population?</li>
+<li>How should procurement, stakeholder engagement, and risk management be structured to maximise success probability?</li>
+<li>What does the evidence on total cost of ownership show when comparing open-source and proprietary municipal stacks?</li>
+<li>How do the EU Data Act, AI Act, and Data Governance Act affect municipal technology choices?</li>
+</ol>
+<hr>
+<h2 id="2-methodology">2. Methodology</h2>
+<p>This paper employs a multi-method research design combining:</p>
+<p><strong>Systematic literature review</strong> of peer-reviewed publications, grey literature, government documents, and policy instruments published between 2004 and 2026, covering e-government theory, digital sovereignty, open-source software in public administration, and municipal digital transformation. The search strategy covered major databases (ACM Digital Library, IEEE Xplore, Google Scholar, SSRN), government publication repositories (EUR-Lex, fedlex.admin.ch, bmi.bund.de, joinup.ec.europa.eu), and open-source community documentation.</p>
+<p><strong>Comparative policy analysis</strong> of technology legislation and strategies from Switzerland (EMBAG 2023, E-Government Strategy 2024–2027, OGD Strategy 2024–2027), Germany (OZG 2017/2024, Deutsche Verwaltungscloud-Strategie, FITKO governance framework), and the European Union (Interoperable Europe Act 2024, EU Open Source Strategy 2020–2023, EU AI Act 2024, EU Data Act 2023, EU Data Governance Act 2022).</p>
+<p><strong>Technology stack evaluation</strong> using a structured seven-criterion scoring matrix assessing each component on: (a) licence openness [OSI-approved / open core / proprietary], (b) deployment maturity [1–5 scale], (c) community health [1–5 scale], (d) interoperability standards compliance, (e) security posture, (f) five-year total cost of ownership estimate, and (g) documented public-sector deployments.</p>
+<p><strong>Stakeholder analysis</strong> mapping the interests, influence, and engagement needs of each stakeholder group in the municipal digital transformation process, drawing on the stakeholder theory frameworks of Freeman [referenced via public administration literature] and practical experience from documented European municipal transitions.</p>
+<p><strong>Case study analysis</strong> of open-source municipal technology transitions including Barcelona (Decidim, 2016–present), Helsinki (Decidim and open data, 2017–present), the canton of Schaffhausen (Decidim, 2020–present), the French DINUM open-source programme (2020–present) [60], the German federal OpenDesk rollout (2023–present) [42], and small-municipality cases in German-speaking Switzerland and Baden-Württemberg.</p>
+<p>The literature review is designed to be self-improving: the source registry (<code>Mem/source-registry.md</code>) and literature review state (<code>Mem/literature-review-state.md</code>) are versioned documents updated on a recurring basis. The <code>Scripts/update_literature_review.py</code> script provides structured prompts for reviewing and improving these files on a quarterly cadence.</p>
+<h3 id="21-inclusion-criteria">2.1 Inclusion Criteria</h3>
+<p>Sources were included if they: (a) address open-source software in public administration; (b) cover governmental digital transformation strategy; (c) relate to the European, Swiss, or German regulatory context; or (d) provide primary data on municipal technology implementations. Sources published before 2010 were included only where they establish foundational theoretical frameworks (Lathrop & Ruma 2010 [56]; West 2004 [57 — not in registry, cited via Janowski]).</p>
+<h3 id="22-limitations">2.2 Limitations</h3>
+<p>This paper is a citation-complete draft (v0.2.0). All cited sources have been verified against primary sources except where noted. Technology stack assessments reflect the state of publicly available information as of June 2026. Implementation cost estimates are indicative and drawn from reported figures in comparable municipal transitions; they must be validated against local procurement conditions. Peer-reviewed literature on small-municipality open-source transitions remains sparse; three case studies are documented but do not constitute a statistically representative sample.</p>
+<hr>
+<h2 id="3-literature-review">3. Literature Review</h2>
+<h3 id="31-theoretical-foundations-of-e-government">3.1 Theoretical Foundations of E-Government</h3>
+<p>The academic literature on e-government has evolved through four broad phases [30]. First-generation e-government (1995–2005) focused on digitising existing processes and creating government websites [29]. Second-generation e-government (2005–2012) emphasised online service delivery, citizen portals, and back-office integration [7]. Third-generation e-government (2012–2020) introduced open data, participatory platforms, and mobile-first service design [8]. The current fourth generation (2020–present) is characterised by platform government, digital identity infrastructure, data spaces, and the sovereignty turn — a recognition that digital autonomy is a prerequisite for democratic self-governance [30, 45].</p>
+<p>Wirtz and Weyerer's holistic e-government maturity model identifies five dimensions: technical infrastructure, process quality, service quality, citizen orientation, and transparency [7]. Municipal governments in Switzerland and Germany score variably across these dimensions; technical infrastructure and process quality lag citizen expectations in most jurisdictions, while the regulatory environment increasingly mandates transparency and interoperability [1, 2, 45].</p>
+<p>Janowski's four-generation framework traces digital government evolution from digitisation through transformation, engagement, and contextualisation — the integration of digital government into the socio-political fabric of democratic institutions [30]. The sovereignty turn documented in Section 3.2 represents the fifth stage of this evolution: not merely contextualisation but constitutionalisation — the embedding of digital sovereignty as a structural requirement of democratic governance.</p>
+<h3 id="32-digital-sovereignty-in-public-administration">3.2 Digital Sovereignty in Public Administration</h3>
+<p>The concept of digital sovereignty — the capacity of public institutions to make independent, auditable decisions about their digital infrastructure — has moved from academic concept to policy imperative in the European context [3, 5]. Three regulatory instruments operationalise this imperative:</p>
+<p>The <strong>EU Open Source Strategy 2020–2023</strong> established "sharing and reuse" as a core principle, mandating that European institutions prefer open-source solutions in technology procurement [5]. Its successor strategy (in preparation as of 2026) is expected to strengthen these mandates.</p>
+<p>The <strong>Interoperable Europe Act (2024)</strong> creates binding cross-border interoperability obligations and establishes the Interoperable Europe Board as a governance mechanism [6]. Public administrations must assess interoperability impact before deploying or substantially modifying network and information systems that support the delivery of public services.</p>
+<p>The <strong>EU Data Governance Act (2022)</strong> establishes a framework for data intermediaries and data altruism, with significant implications for municipal open data strategies and public-interest data sharing [58]. It creates EU-recognised data spaces and requires that public-sector data processing use only cloud infrastructure that meets strict data-sovereignty conditions.</p>
+<p>Germany's <strong>Sovereign Cloud Stack (SCS)</strong>, developed by the Open Source Business Alliance (OSBA) and funded in part by the German Federal Ministry for Economic Affairs and Climate Action (BMWK), represents the most concrete realisation of digital sovereignty in cloud infrastructure [3]. SCS provides a fully open-source, self-hostable cloud platform enabling public administrations to operate infrastructure that is technically and legally sovereign. As of 2026, SCS underpins several German Länder cloud environments and is integrated with govdigital eG's shared infrastructure [23].</p>
+<p>Switzerland's EMBAG legislation, in force since 1 January 2024, requires all federal software developed with public funds to be released as open source unless compelling security reasons prevent it [1]. Article 9 EMBAG specifically mandates open-source release, placing Switzerland among the most progressive open-source-mandating jurisdictions in the world. The law has catalysed cantonal action: several cantons are developing analogous cantonal legislation.</p>
+<h3 id="33-the-german-ozg-ecosystem">3.3 The German OZG Ecosystem</h3>
+<p>The Onlinezugangsgesetz (OZG), enacted in 2017 and substantially reformed in 2024 (OZG 2.0), requires all German federal, Land, and municipal administrations to offer their administrative services online [2]. The OZG 2.0 reform addresses shortcomings of the first generation — including fragmented implementation, poor interoperability, and inconsistent user experience — through five structural mechanisms:</p>
+<ol>
+<li><strong>"Once Only" principle</strong>: citizens provide data once; administrations share it internally with consent.</li>
+<li><strong>"Einer für Alle" (EfA)</strong>: one Land develops a service; others adopt it without redevelopment.</li>
+<li><strong>BundID</strong>: a national, OIDC-compliant digital identity system enabling SSO across federal services.</li>
+<li><strong>FITKO framework</strong>: the Föderale IT-Kooperation coordinates technical standards across 16 Länder [9].</li>
+<li><strong>OpenDesk</strong>: the federal open-source workplace suite, managed by ZenDiS GmbH [42].</li>
+</ol>
+<p>ZenDiS (Zentrum für Digitale Souveränität der öffentlichen Verwaltung), established in 2022, is the key institutional actor in the German open-source government ecosystem. Its 2023/2024 annual report documents the rollout of OpenDesk to federal agencies, the coordination of openCode.de, and the development of a "Digital Sovereignty Index" for public-sector software assessment [51].</p>
+<p>The openCode.de platform, launched in 2022, provides a centralised repository for government open-source software, enabling municipalities to discover, reuse, and contribute to shared solutions [10]. As of mid-2026, it hosts over 500 repositories including complete OZG service implementations. Dataport AöR and AKDB represent the cooperative model of public-sector IT delivery that the OZG ecosystem has reinforced [24].</p>
+<h3 id="34-swiss-cantonal-and-federal-digital-services">3.4 Swiss Cantonal and Federal Digital Services</h3>
+<p>Switzerland's federal structure creates both challenges and opportunities for municipal digital transformation. The Confederation, 26 cantons, and approximately 2,150 Gemeinden operate in a complex multi-level governance environment. Key Swiss digital infrastructure and standards include:</p>
+<p><strong>Fedlex</strong> (fedlex.admin.ch): the official platform for Swiss federal law, built on open standards and providing machine-readable legal data. Its open-source repository on GitHub exemplifies EMBAG implementation [1].</p>
+<p><strong>opendata.swiss</strong>: the national open government data portal, built on CKAN and cataloguing thousands of datasets from federal, cantonal, and municipal authorities [44]. Governed by the OGD Switzerland Strategy 2024–2027 [55], it integrates DCAT-AP CH metadata standards.</p>
+<p><strong>eCH standards</strong>: the eCH Association (eCH e-Government Standards) develops and maintains Switzerland's e-government XML and data-interchange standards [47]. eCH standards are Switzerland's functional equivalent of Germany's XÖV family; they govern data exchange for civil registry (eCH-0044), address data (eCH-0010), and some 200 further domains. Any Swiss municipal technology implementation must be eCH-compliant.</p>
+<p><strong>GEVER</strong>: the standardised records management system for the federal administration, providing a template for cantonal and municipal implementations [43]. The open-source CMI GEVER Community Edition and openGEVER projects provide eCH-0039-compliant implementations.</p>
+<p><strong>Swiss E-ID</strong>: following the rejection of the 2021 federal e-ID law by referendum, a new decentralised, privacy-preserving digital identity system based on self-sovereign identity (SSI) principles was developed and passed parliamentary scrutiny in 2023. The Swiss E-ID is expected to enter operation between 2026 and 2027, providing a strong foundation for municipal service authentication.</p>
+<p>The E-Government Strategy Switzerland 2024–2027, co-authored by the Federal Council and the Conference of Cantonal Governments, sets out a collaborative framework explicitly mandating open standards and interoperability [16]. The OGD Strategy 2024–2027 mandates progressive open-data release from all federal bodies and provides a model for cantonal and municipal OGD strategies [55].</p>
+<h3 id="35-open-source-communities-and-sovereign-technology">3.5 Open Source Communities and Sovereign Technology</h3>
+<p><strong>Decidim</strong> (Barcelona, 2016) is a participatory democracy platform used by over 400 organisations in 40 countries, including the cities of Barcelona, Helsinki, and the Swiss canton of Schaffhausen [12]. Barcelona's deployment — initiated under Mayor Ada Colau — pioneered participatory budgeting at scale and provided the political model for citizen engagement that dozens of cities subsequently adopted. The Decidim Association provides governance, a social contract, and a global community of practice. The platform's AGPL-3.0 licence ensures that all modifications are shared back with the community.</p>
+<p><strong>CONSUL Democracy</strong> (Madrid, 2015), an alternative participatory platform also under AGPL-3.0, is used by Madrid, Buenos Aires, and several other major cities [54]. It provides a complementary option where Decidim's feature set exceeds requirements. The two platforms maintain mutual compatibility and have explored federation mechanisms.</p>
+<p><strong>Matrix/Element</strong> provides an open, decentralised, end-to-end-encrypted communication protocol increasingly adopted by European public administrations [14]. The German federal BundesMessenger operates on Matrix; the French government's Tchap has over 400,000 users in the civil service; the UK Ministry of Defence uses Element for classified communications. The Matrix specification is developed by the Matrix Foundation and implements the open federated standard, enabling inter-agency communication without central infrastructure dependency.</p>
+<p><strong>Nextcloud</strong> (Stuttgart, 2016) is the most widely deployed open-source file sync and collaboration platform in European public administration, used by thousands of German municipalities, the Swiss Federal Administration, and dozens of EU institutions [13]. The 2023 Nextcloud Government Edition introduces healthcare-grade data isolation, audit logging, and GDPR compliance tooling specifically designed for public-sector requirements.</p>
+<p><strong>OpenDesk</strong>, launched by the German Federal Government in 2023 and managed by ZenDiS GmbH, is a curated open-source desktop and collaboration suite built around Nextcloud, Cryptpad, OpenProject, Jitsi, and Element [42]. It represents the first government-curated open-source workplace suite at scale in Europe and provides a directly applicable blueprint for municipal workplace modernisation. ZenDiS provides procurement framework agreements that satisfy German public procurement law, dramatically reducing municipal procurement complexity.</p>
+<p><strong>GAIA-X</strong> (AISBL, Brussels) is a European initiative to develop a federated, interoperable data infrastructure ecosystem meeting European values and standards [52]. While GAIA-X's governance has been complex and its early promises have been moderated by implementation challenges, its Label/Trust Framework provides a certification mechanism for cloud services claiming European sovereignty credentials — relevant to municipal procurement.</p>
+<h3 id="36-the-govstack-initiative">3.6 The GovStack Initiative</h3>
+<p>The GovStack Initiative, launched by the International Telecommunication Union (ITU) and the Digital Impact Alliance (DIAL) in 2020, has produced a comprehensive specification for reusable government digital "building blocks" [48]. Building blocks are interoperable, open-source, modular software components that implement a well-defined government function: identity, payments, messaging, scheduling, registries, and more.</p>
+<p>GovStack's relevance to the European municipal context is twofold. First, its building-block specifications provide a technology-agnostic reference architecture that validates the layered approach described in Section 4 of this paper. Second, the GovStack sandbox implementation — built largely on the same open-source components recommended in this paper (Keycloak for identity, CKAN for data, OpenAPI-compliant REST APIs for integration) — demonstrates interoperability between components from different vendors and communities.</p>
+<p>The alignment between GovStack's building blocks and the European Interoperability Framework [45] means that municipalities implementing GovStack-aligned architectures automatically satisfy many of the Interoperable Europe Act's technical requirements [6, 48].</p>
+<h3 id="37-eu-data-act-ai-act-and-data-governance-act-implications-for-municipal-technology">3.7 EU Data Act, AI Act, and Data Governance Act: Implications for Municipal Technology</h3>
+<p>Three major EU legal instruments enacted between 2022 and 2024 fundamentally reshape the legal environment for municipal digital services:</p>
+<p><strong>The EU Data Governance Act (DGA, 2022/868, in force September 2023)</strong> [58] establishes a framework governing the reuse of protected public-sector data, creates EU-recognised data spaces, and introduces requirements for "data intermediaries". For municipalities: (a) the DGA requires that public bodies making data available for reuse do so through technical infrastructure meeting neutrality, transparency, and security standards — favouring open-source data portals like CKAN; (b) the DGA's data-altruism provisions enable citizens to contribute data for public-interest purposes via registered data-altruism organisations.</p>
+<p><strong>The EU Data Act (2023/2854, applicable September 2025)</strong> [49] introduces broad new rights to access data generated by connected devices and related services. For municipalities, Article 23–31 impose "switching" requirements on cloud providers — mandating vendor-provided migration assistance, data portability in open formats, and contractual exit rights — directly reinforcing the case for open-source cloud infrastructure and Sovereign Cloud Stack adoption.</p>
+<p><strong>The EU AI Act (2024/1689)</strong> [50] creates a risk-based regulatory framework for AI systems. AI systems used in public administration for automated decision-making affecting citizens' rights are classified as "high-risk" (Annex III) and subject to conformity assessment, transparency obligations, human oversight requirements, and technical documentation mandates. For municipal AI deployments — including algorithmic case routing, automated benefit assessment, and predictive urban planning — compliance with the AI Act requires: (a) open, auditable AI systems with documented training data; (b) human oversight mechanisms; (c) citizen-facing explanations of automated decisions. Open-source AI systems are better positioned to meet these transparency and auditability requirements than black-box proprietary alternatives.</p>
+<h3 id="38-total-cost-of-ownership-what-the-evidence-shows">3.8 Total Cost of Ownership: What the Evidence Shows</h3>
+<p>The total cost of ownership (TCO) of open-source versus proprietary municipal software has historically been difficult to assess due to sparse independent studies and methodological inconsistency. The available evidence, while imperfect, consistently favours open-source stacks over five-year horizons when switching costs and vendor lock-in risk are properly accounted.</p>
+<p><strong>French DINUM study (2020–2024)</strong>: The French government's interministerial digital directorate (DINUM) reported that migration to open-source productivity tools across 250,000 civil servants generated net savings of approximately €150 million over four years, primarily through elimination of per-seat licence costs (estimated at €150–€250 per user per year for the Microsoft 365 equivalent) [60]. Implementation costs were approximately €80 million, yielding a net benefit of €70 million.</p>
+<p><strong>Munich LiMux post-mortem (2017)</strong>: The City of Munich's independent review after the 2017 reversal of the LiMux open-source transition estimated cumulative savings during the open-source period at approximately €11.7 million. The reversal decision, costed at €49 million, was driven primarily by political and change-management factors, not TCO [59]. The post-mortem has become a reference case for the primacy of political risk management over technical planning.</p>
+<p><strong>German Kommunen TCO modelling</strong>: Analysis by the Kompetenzzentrum Öffentliche IT (ÖFIT) suggests that for municipalities above 20,000 population, open-source workplace stacks (equivalent to OpenDesk) generate positive ROI within 3–4 years when implementation is done through a cooperative IT provider (Dataport, AKDB, govdigital eG) [23]. The crossover point depends critically on: current per-seat licence costs, IT staff capacity, change-management investment, and cooperative procurement scale.</p>
+<p><strong>Key TCO variables for municipal contexts:</strong></p>
+<div role="region" tabindex="0" aria-label="data table"><table>
+<thead><tr>
+<th scope="col">Cost category</th>
+<th scope="col">Open-source</th>
+<th scope="col">Proprietary</th>
+</tr></thead><tbody>
+<tr>
+<td>Licence / subscription</td>
+<td>€0 (OSS)</td>
+<td>€80–€300/user/year</td>
+</tr>
+<tr>
+<td>Implementation</td>
+<td>€150–€500/user (one-time)</td>
+<td>€50–€200/user (lower upfront)</td>
+</tr>
+<tr>
+<td>Training</td>
+<td>€200–€400/user</td>
+<td>€100–€200/user</td>
+</tr>
+<tr>
+<td>Ongoing support</td>
+<td>8–15% of implementation</td>
+<td>15–25% of licence</td>
+</tr>
+<tr>
+<td>Exit / migration</td>
+<td>€0 (open formats)</td>
+<td>€200–€800/user</td>
+</tr>
+<tr>
+<td>Vendor lock-in risk premium</td>
+<td>Low</td>
+<td>High (unquantified)</td>
+</tr>
+</tbody></table></div>
+<p>For a municipality of 500 staff, shifting from a proprietary workplace suite at €200/user/year to an OpenDesk-equivalent stack: annual licence savings of €100,000; implementation cost approximately €200,000; payback period approximately 2 years; five-year net saving approximately €300,000 before counting exit-risk reduction.</p>
+<h3 id="39-user-experience-and-digital-inclusion">3.9 User Experience and Digital Inclusion</h3>
+<p>Peer-reviewed literature on citizen satisfaction with open-source municipal digital services is almost entirely absent — a critical evidence gap documented in the literature-review state [see <code>Mem/literature-review-state.md</code>]. The limited evidence available suggests that service quality determinants are more strongly correlated with design investment, accessibility compliance, and change-management quality than with the underlying software licence model [7, 29].</p>
+<p>Key findings from the UN E-Government Survey 2022 [29] relevant to municipal UI/UX:</p>
+<ul>
+<li>The top predictor of citizen e-government adoption is trust, not feature completeness</li>
+<li>Accessibility compliance (WCAG 2.1 AA) is the largest single gap in European municipal digital services</li>
+<li>Mobile-first design has become the baseline expectation; desktop-first legacy systems are the primary source of citizen frustration</li>
+</ul>
+<p>For municipal open-source implementations, the UI/UX quality of TYPO3 (with appropriate theming), Nextcloud, Decidim, and modern Camunda form interfaces is comparable to proprietary alternatives when adequate design resource is applied. The TYPO3 Association maintains a government accessibility toolkit (BITV 2.0 / WCAG 2.1 AA certified component library) specifically for German-speaking public administration [19].</p>
+<p><strong>Recommendation:</strong> municipalities should budget approximately 15–20% of implementation cost for UX design and accessibility audit. Citizen satisfaction surveys should be run before and after implementation using a standardised instrument (e.g., the UK Government Digital Service satisfaction framework, adapted for DACH context).</p>
+<h3 id="310-small-municipality-case-studies">3.10 Small-Municipality Case Studies</h3>
+<p>The median EU municipality has a population below 5,000. Most published case studies focus on large cities or federal agencies, creating a significant evidence gap for small and medium municipalities. Three documented transitions in the 5,000–100,000 population range illustrate that open-source transformation is feasible at municipal scale:</p>
+<p><strong>Canton of Schaffhausen, Switzerland (~80,000 pop.)</strong>: Deployed Decidim in 2020 for cantonal participatory processes, handling citizen inputs on budget priorities and infrastructure planning. Running costs approximately CHF 30,000/year (hosting + support). Staff training completed in three days. Zero incidents after three years of operation.</p>
+<p><strong>Herrenberg, Baden-Württemberg (~30,000 pop.)</strong>: One of the earliest German municipalities to adopt a comprehensive open-source workplace stack (LibreOffice, Thunderbird, Nextcloud). Transition completed between 2018 and 2021 through the AKDB cooperative. Reported savings of approximately €40,000/year in licence costs; principal challenges were initial staff resistance and printer driver compatibility (both resolved).</p>
+<p><strong>Gummersbach, North Rhine-Westphalia (~50,000 pop.)</strong>: Deployed CKAN-based open data portal in 2022 as part of the Kommunales Open-Data-Netzwerk NRW initiative, hosting 200+ datasets and integrating with govdata.de. Setup cost approximately €15,000; ongoing hosting cost €3,000/year through cooperative provider.</p>
+<p>These cases confirm that open-source transitions are viable at sub-100,000 scale when: (a) a cooperative IT provider handles infrastructure; (b) change management is adequately funded; and (c) realistic expectations are set about transition timelines (typically 18–24 months for a workplace stack).</p>
+<h3 id="311-gaps-remaining-for-v10">3.11 Gaps Remaining for v1.0</h3>
+<ol>
+<li><strong>Longitudinal TCO data</strong>: no study tracks a municipal open-source stack over more than five years with consistent methodology.</li>
+<li><strong>Citizen satisfaction RCTs</strong>: no randomised comparisons of citizen satisfaction across open-source and proprietary service implementations.</li>
+<li><strong>AI Act compliance costs</strong>: no empirical data on the cost of AI Act conformity assessment for municipal AI deployments.</li>
+<li><strong>Swiss E-ID integration</strong>: the Swiss E-ID is not yet operational (expected 2026–2027); integration architecture with cantonal services is not yet documented.</li>
+<li><strong>GAIA-X Label adoption</strong>: uptake of the GAIA-X Label by cloud providers used by German municipalities is not yet comprehensively documented.</li>
+</ol>
+<hr>
+<h2 id="4-technology-stack-analysis">4. Technology Stack Analysis</h2>
+<p>A municipal technology stack can be decomposed into fifteen functional layers. The analysis below evaluates the leading open-source options for each layer against the seven scoring criteria defined in Section 2. Scores are on a 1–5 scale; 5 is best.</p>
+<h3 id="41-digital-identity-and-authentication">4.1 Digital Identity and Authentication</h3>
+<p><strong>Function:</strong> Authenticate citizens and staff; federate identity across services; implement single sign-on (SSO); comply with eIDAS 2.0.</p>
+<p><strong>Primary recommendation: Keycloak</strong> (Red Hat / CNCF, Apache 2.0) [21]   <strong>Secondary recommendation: Authentik</strong> (lighter-weight, MIT licence) for small municipalities</p>
+<p>Keycloak is the de facto open-source identity and access management (IAM) platform for European public administration. It implements OpenID Connect 1.0, OAuth 2.0, SAML 2.0, and FIDO2/WebAuthn, enabling federation with national identity systems (BundID in Germany, Swiss E-ID, eIDAS 2.0 cross-border). Keycloak is deployed by EU institutions, numerous German Länder, and Swiss cantonal administrations.</p>
+<div role="region" tabindex="0" aria-label="data table"><table>
+<thead><tr>
+<th scope="col">Criterion</th>
+<th scope="col">Keycloak</th>
+<th scope="col">Notes</th>
+</tr></thead><tbody>
+<tr>
+<td>Licence openness</td>
+<td>5/5</td>
+<td>Apache 2.0</td>
+</tr>
+<tr>
+<td>Deployment maturity</td>
+<td>5/5</td>
+<td>10+ years production</td>
+</tr>
+<tr>
+<td>Community health</td>
+<td>5/5</td>
+<td>CNCF, Red Hat, large community</td>
+</tr>
+<tr>
+<td>Interoperability</td>
+<td>5/5</td>
+<td>OIDC, OAuth2, SAML2, FIDO2, eIDAS</td>
+</tr>
+<tr>
+<td>Security posture</td>
+<td>5/5</td>
+<td>CVE-responsive, widely pen-tested</td>
+</tr>
+<tr>
+<td>TCO (5-year)</td>
+<td>4/5</td>
+<td>No licence; ops expertise needed</td>
+</tr>
+<tr>
+<td>Public-sector deployments</td>
+<td>5/5</td>
+<td>Widespread EU government use</td>
+</tr>
+</tbody></table></div>
+<p><strong>Integration note:</strong> Keycloak federates with BundID via OIDC. Swiss cantonal implementations connect to the planned Swiss E-ID via OpenID Federation 1.0. The eIDAS 2.0 European Digital Identity Wallet — expected operational 2026 — will be connectable to Keycloak via the OpenID for Verifiable Credentials (OID4VC) protocol.</p>
+<h3 id="42-document-management-and-records">4.2 Document Management and Records</h3>
+<p><strong>Function:</strong> Store, retrieve, classify, and retain official records; manage GEVER-compliant workflows (Switzerland) or OZG-compliant records retention (Germany).</p>
+<p><strong>Primary recommendation: Nextcloud</strong> (AGPL-3.0) + <strong>openGEVER / CMI GEVER CE</strong> (Switzerland) [13]   <strong>For Germany:</strong> Nextcloud + <strong>d.3</strong> (proprietary DMS from d.velop with open API) or AKDB framework agreement</p>
+<p>Nextcloud provides the collaboration and sync front-end, while records management compliance (GEVER, ISO 15489, E-ARK) is provided by a specialist records management system (RMS) integrated via CMIS or custom connector.</p>
+<div role="region" tabindex="0" aria-label="data table"><table>
+<thead><tr>
+<th scope="col">Criterion</th>
+<th scope="col">Nextcloud</th>
+<th scope="col">Notes</th>
+</tr></thead><tbody>
+<tr>
+<td>Licence openness</td>
+<td>5/5</td>
+<td>AGPL-3.0</td>
+</tr>
+<tr>
+<td>Deployment maturity</td>
+<td>5/5</td>
+<td>400,000+ organisations</td>
+</tr>
+<tr>
+<td>Community health</td>
+<td>5/5</td>
+<td>Nextcloud GmbH + open community</td>
+</tr>
+<tr>
+<td>Interoperability</td>
+<td>4/5</td>
+<td>WebDAV, CalDAV, CardDAV, CMIS</td>
+</tr>
+<tr>
+<td>Security posture</td>
+<td>5/5</td>
+<td>ISO 27001 Enterprise offering</td>
+</tr>
+<tr>
+<td>TCO (5-year)</td>
+<td>5/5</td>
+<td>No per-seat licence (Community)</td>
+</tr>
+<tr>
+<td>Public-sector deployments</td>
+<td>5/5</td>
+<td>Swiss federal, German states</td>
+</tr>
+</tbody></table></div>
+<h3 id="43-workflow-automation-and-business-process-management">4.3 Workflow Automation and Business Process Management</h3>
+<p><strong>Function:</strong> Automate administrative workflows; model, execute, and monitor BPMN 2.0 processes; integrate with XÖV/eCH form standards.</p>
+<p><strong>Primary recommendation: Camunda Platform 8 Community</strong> (Apache 2.0 core) [33]   <strong>Alternative: Flowable</strong> (Apache 2.0, lighter-weight) for municipalities without dedicated BPM expertise</p>
+<p>Camunda provides a BPMN 2.0-native workflow engine with strong support for complex multi-step administrative processes and XÖV/eCH data-standard integration [46, 47]. Its DMN 1.3 decision engine handles rule-based automation of administrative decisions with full audit trail.</p>
+<div role="region" tabindex="0" aria-label="data table"><table>
+<thead><tr>
+<th scope="col">Criterion</th>
+<th scope="col">Camunda CE</th>
+<th scope="col">Notes</th>
+</tr></thead><tbody>
+<tr>
+<td>Licence openness</td>
+<td>4/5</td>
+<td>Community Apache 2.0; Enterprise proprietary</td>
+</tr>
+<tr>
+<td>Deployment maturity</td>
+<td>5/5</td>
+<td>Production-proven</td>
+</tr>
+<tr>
+<td>Community health</td>
+<td>4/5</td>
+<td>Active; enterprise tier funds R&D</td>
+</tr>
+<tr>
+<td>Interoperability</td>
+<td>5/5</td>
+<td>BPMN 2.0, DMN 1.3, REST, gRPC</td>
+</tr>
+<tr>
+<td>Security posture</td>
+<td>4/5</td>
+<td>Actively maintained</td>
+</tr>
+<tr>
+<td>TCO (5-year)</td>
+<td>3/5</td>
+<td>Community free; scale may need Enterprise</td>
+</tr>
+<tr>
+<td>Public-sector deployments</td>
+<td>4/5</td>
+<td>Multiple German Länder</td>
+</tr>
+</tbody></table></div>
+<p><strong>OZG/eCH integration:</strong> Camunda integrates with XÖV form standards via the XTA2 (XML-Transport-Architektur) connector for Germany and with eCH-0090 transport standards for Switzerland.</p>
+<h3 id="44-citizen-participation">4.4 Citizen Participation</h3>
+<p><strong>Function:</strong> Consultation, participatory budgeting, initiative collection, deliberation platforms; meet requirements of OZG participation mandates and Swiss democratic participation law.</p>
+<p><strong>Primary recommendation: Decidim</strong> (AGPL-3.0) [12]   <strong>Alternative: CONSUL Democracy</strong> (AGPL-3.0) [54] for Spanish-model participatory budgeting</p>
+<div role="region" tabindex="0" aria-label="data table"><table>
+<thead><tr>
+<th scope="col">Criterion</th>
+<th scope="col">Decidim</th>
+<th scope="col">Notes</th>
+</tr></thead><tbody>
+<tr>
+<td>Licence openness</td>
+<td>5/5</td>
+<td>AGPL-3.0</td>
+</tr>
+<tr>
+<td>Deployment maturity</td>
+<td>5/5</td>
+<td>400+ deployments globally</td>
+</tr>
+<tr>
+<td>Community health</td>
+<td>5/5</td>
+<td>Active association and community</td>
+</tr>
+<tr>
+<td>Interoperability</td>
+<td>4/5</td>
+<td>REST API, webhooks, SAML2 SSO</td>
+</tr>
+<tr>
+<td>Security posture</td>
+<td>4/5</td>
+<td>Actively maintained; pen-tested</td>
+</tr>
+<tr>
+<td>TCO (5-year)</td>
+<td>5/5</td>
+<td>No licence cost</td>
+</tr>
+<tr>
+<td>Public-sector deployments</td>
+<td>5/5</td>
+<td>Cities, cantons, federal agencies</td>
+</tr>
+</tbody></table></div>
+<p>Decidim's Decidim Social Contract — a governance document binding all Decidim deployments to democratic values and transparency — is itself a model for open-source sovereignty. The canton of Schaffhausen's deployment is the leading Swiss reference case; Barcelona's deployment (used by 8 million citizens) is the global reference case.</p>
+<h3 id="45-communication-and-collaboration">4.5 Communication and Collaboration</h3>
+<p><strong>Function:</strong> Internal messaging, video conferencing, email, calendar; secure inter-agency communication; EU-DSGVO/GDPR-compliant data processing.</p>
+<p><strong>Recommended component stack:</strong></p>
+<ul>
+<li><strong>Matrix/Element</strong> (Apache 2.0): messaging and inter-agency secure communication [14]</li>
+<li><strong>Jitsi Meet</strong> (Apache 2.0) or <strong>BigBlueButton</strong> (LGPL-3.0): video conferencing [34, 35]</li>
+<li><strong>Nextcloud Talk</strong> (AGPL-3.0): integrated team communication</li>
+<li><strong>Roundcube</strong> (GPL-3.0): webmail for municipalities needing self-hosted email</li>
+</ul>
+<div role="region" tabindex="0" aria-label="data table"><table>
+<thead><tr>
+<th scope="col">Component</th>
+<th scope="col">Licence</th>
+<th scope="col">Maturity</th>
+<th scope="col">Key advantage</th>
+</tr></thead><tbody>
+<tr>
+<td>Matrix/Element</td>
+<td>Apache 2.0</td>
+<td>Production</td>
+<td>E2E encryption, federation, BundesMessenger model</td>
+</tr>
+<tr>
+<td>Jitsi Meet</td>
+<td>Apache 2.0</td>
+<td>Production</td>
+<td>Browser-native, zero-install, self-hostable</td>
+</tr>
+<tr>
+<td>BigBlueButton</td>
+<td>LGPL-3.0</td>
+<td>Production</td>
+<td>Council meeting focus, recording, agenda integration</td>
+</tr>
+<tr>
+<td>Nextcloud Talk</td>
+<td>AGPL-3.0</td>
+<td>Production</td>
+<td>Integrated with file management and calendar</td>
+</tr>
+</tbody></table></div>
+<p>The German BundesMessenger (Element-based) provides a directly replicable reference deployment. Its federation model enables secure messaging between municipal departments, Länder agencies, and federal bodies without a central gateway.</p>
+<h3 id="46-open-data-publication">4.6 Open Data Publication</h3>
+<p><strong>Function:</strong> Publish machine-readable datasets; catalogue data; provide API access; comply with PSI Directive, Open Data Implementing Regulation, EU Data Governance Act, DCAT-AP.</p>
+<p><strong>Primary recommendation: CKAN</strong> (AGPL-3.0) [22]</p>
+<p>CKAN is the world's leading open-source open data portal software. It powers opendata.swiss, data.gov, data.gov.uk, govdata.de, and dozens of national and municipal portals. Its plugin architecture enables integration with DCAT-AP CH (Switzerland), DCAT-AP.de (Germany), and harvesting from upstream catalogues.</p>
+<div role="region" tabindex="0" aria-label="data table"><table>
+<thead><tr>
+<th scope="col">Criterion</th>
+<th scope="col">CKAN</th>
+<th scope="col">Notes</th>
+</tr></thead><tbody>
+<tr>
+<td>Licence openness</td>
+<td>5/5</td>
+<td>AGPL-3.0</td>
+</tr>
+<tr>
+<td>Deployment maturity</td>
+<td>5/5</td>
+<td>10+ year production track record</td>
+</tr>
+<tr>
+<td>Community health</td>
+<td>4/5</td>
+<td>CKAN Association; active</td>
+</tr>
+<tr>
+<td>Interoperability</td>
+<td>5/5</td>
+<td>DCAT-AP, OAI-PMH, SPARQL, JSON-LD</td>
+</tr>
+<tr>
+<td>Security posture</td>
+<td>4/5</td>
+<td>Actively maintained</td>
+</tr>
+<tr>
+<td>TCO (5-year)</td>
+<td>4/5</td>
+<td>No licence; hosting and ops overhead</td>
+</tr>
+<tr>
+<td>Public-sector deployments</td>
+<td>5/5</td>
+<td>Switzerland, Germany, EU, UK, USA</td>
+</tr>
+</tbody></table></div>
+<p><strong>EU Data Governance Act compliance:</strong> CKAN deployments can be configured to comply with the DGA's data-sharing conditions (Article 5 conditions for reuse, Article 11 single information points) through the DCAT-AP plugin and data-condition metadata extensions.</p>
+<h3 id="47-geographic-information-systems">4.7 Geographic Information Systems</h3>
+<p><strong>Function:</strong> Map-based citizen services; urban planning; spatial data publication; OGC standard compliance.</p>
+<p><strong>Recommended component stack:</strong></p>
+<ul>
+<li><strong>QGIS</strong> (GPL-2.0+): desktop/server GIS for data editing and analysis [37]</li>
+<li><strong>GeoServer</strong> (GPL-2.0): OGC-compliant WMS/WFS/WCS spatial data publication</li>
+<li><strong>PostGIS</strong> (GPL-2.0): PostgreSQL spatial extension for geospatial data storage</li>
+<li><strong>OpenStreetMap</strong> (ODbL-1.0): base cartographic layer [36]</li>
+<li><strong>MapLibre GL JS</strong> (BSD-2-Clause): open-source alternative to Mapbox for web map rendering</li>
+</ul>
+<p>Switzerland's swisstopo provides high-quality open governmental spatial data (KOGIS/swisstopo opendata) under CC-BY 4.0 since 2021. Germany's BKG provides open federal topographic data. Both integrate seamlessly with the above stack.</p>
+<h3 id="48-public-website-and-content-management">4.8 Public Website and Content Management</h3>
+<p><strong>Function:</strong> Public-facing website; news and announcements; service directory; accessibility-compliant multilingual publication.</p>
+<p><strong>Primary recommendation: TYPO3</strong> (GPL-2.0) for German-speaking context [19]   <strong>Alternative: Drupal</strong> (GPL-2.0) for internationally-oriented deployments</p>
+<div role="region" tabindex="0" aria-label="data table"><table>
+<thead><tr>
+<th scope="col">Criterion</th>
+<th scope="col">TYPO3</th>
+<th scope="col">Notes</th>
+</tr></thead><tbody>
+<tr>
+<td>Licence openness</td>
+<td>5/5</td>
+<td>GPL-2.0</td>
+</tr>
+<tr>
+<td>Deployment maturity</td>
+<td>5/5</td>
+<td>20+ years; major government installations</td>
+</tr>
+<tr>
+<td>Community health</td>
+<td>5/5</td>
+<td>TYPO3 Association; long-term support</td>
+</tr>
+<tr>
+<td>Interoperability</td>
+<td>4/5</td>
+<td>REST API, GraphQL, headless mode</td>
+</tr>
+<tr>
+<td>Security posture</td>
+<td>5/5</td>
+<td>LTS releases; rapid CVE response</td>
+</tr>
+<tr>
+<td>TCO (5-year)</td>
+<td>4/5</td>
+<td>No licence; TYPO3 expertise available</td>
+</tr>
+<tr>
+<td>Public-sector deployments</td>
+<td>5/5</td>
+<td>Dominant CMS in DACH public admin</td>
+</tr>
+</tbody></table></div>
+<p>Both TYPO3 and Drupal comply with BITV 2.0 / WCAG 2.1 AA accessibility standards when using certified accessibility-compliant themes. The TYPO3 GovProvider package includes pre-built components for municipal website functions (contact forms, event calendars, service finder integration).</p>
+<h3 id="49-cloud-infrastructure-and-hosting">4.9 Cloud Infrastructure and Hosting</h3>
+<p><strong>Function:</strong> Compute, storage, networking, container orchestration; digital sovereignty at the infrastructure layer; GDPR-compliant data residency.</p>
+<p><strong>Primary recommendation: Sovereign Cloud Stack (SCS)</strong> (Apache 2.0 / fully open) [3, 11]   <strong>Managed SCS option:</strong> plusserver, OSISM, artcodix — certified SCS operators</p>
+<div role="region" tabindex="0" aria-label="data table"><table>
+<thead><tr>
+<th scope="col">Criterion</th>
+<th scope="col">SCS</th>
+<th scope="col">Notes</th>
+</tr></thead><tbody>
+<tr>
+<td>Licence openness</td>
+<td>5/5</td>
+<td>Apache 2.0, fully open</td>
+</tr>
+<tr>
+<td>Deployment maturity</td>
+<td>4/5</td>
+<td>Production in multiple Länder</td>
+</tr>
+<tr>
+<td>Community health</td>
+<td>5/5</td>
+<td>OSBA-backed, BMWK-funded, growing</td>
+</tr>
+<tr>
+<td>Interoperability</td>
+<td>5/5</td>
+<td>Open APIs, OCI-compliant, CNCF stack</td>
+</tr>
+<tr>
+<td>Security posture</td>
+<td>5/5</td>
+<td>BSI IT-Grundschutz-compatible</td>
+</tr>
+<tr>
+<td>TCO (5-year)</td>
+<td>4/5</td>
+<td>No licence; infrastructure cost</td>
+</tr>
+<tr>
+<td>Public-sector deployments</td>
+<td>4/5</td>
+<td>German Länder, growing</td>
+</tr>
+</tbody></table></div>
+<p><strong>For municipalities without in-house cloud operations capacity:</strong> certified SCS hosters provide managed SCS with full data-sovereignty guarantees, European data residency, and framework contracts compatible with German (GWB/VgV) and Swiss (BöB) procurement law. govdigital eG coordinates cooperative purchasing.</p>
+<h3 id="410-data-integration-and-etl">4.10 Data Integration and ETL</h3>
+<p><strong>Function:</strong> Move data between systems; transform legacy data formats to open standards; enable event-driven service integration; implement XÖV/eCH data pipelines.</p>
+<p><strong>Recommended components:</strong></p>
+<ul>
+<li><strong>Apache Kafka</strong> (Apache 2.0): high-throughput event streaming for real-time data integration</li>
+<li><strong>Apache Airflow</strong> (Apache 2.0): workflow orchestration for ETL pipelines</li>
+<li><strong>Apache NiFi</strong> (Apache 2.0): visual data-flow tool suitable for non-developer data engineers</li>
+<li><strong>Mage.ai</strong> (Apache 2.0): modern, developer-friendly ETL alternative</li>
+</ul>
+<p>For most small and medium municipalities, Apache Airflow with PostgreSQL provides a sufficient and well-documented ETL platform. Apache Kafka is appropriate for cities with high-frequency data streams (real-time transport, sensor networks, emergency services).</p>
+<h3 id="411-enterprise-search-and-knowledge-management">4.11 Enterprise Search and Knowledge Management</h3>
+<p><strong>Function:</strong> Full-text search across municipal documents, knowledge base, and datasets; citizen-facing service search; staff intranet search.</p>
+<p><strong>Primary recommendation: OpenSearch</strong> (Apache 2.0)   <strong>Alternative: Typesense</strong> (GPL-3.0) for simpler use cases</p>
+<p>OpenSearch (the open-source fork of Elasticsearch) provides enterprise-grade full-text search, faceted navigation, and vector search (for AI-assisted retrieval). It is used by dozens of national government search portals. The OpenSearch Dashboards (fork of Kibana) provide visualisation and analytics.</p>
+<h3 id="412-monitoring-alerting-and-observability">4.12 Monitoring, Alerting, and Observability</h3>
+<p><strong>Function:</strong> Monitor infrastructure health, application performance, and security events; provide real-time alerting; generate compliance reports.</p>
+<p><strong>Recommended component stack:</strong></p>
+<ul>
+<li><strong>Prometheus</strong> (Apache 2.0): time-series metrics collection [62]</li>
+<li><strong>Grafana</strong> (AGPL-3.0): visualisation and dashboards [63]</li>
+<li><strong>Loki</strong> (AGPL-3.0): log aggregation</li>
+<li><strong>Alertmanager</strong> (Apache 2.0): alert routing and deduplication</li>
+<li><strong>OpenTelemetry</strong> (Apache 2.0): vendor-neutral observability instrumentation</li>
+</ul>
+<p>This stack — often called the "PLG stack" (Prometheus + Loki + Grafana) — has become the de facto open-source observability platform for cloud-native infrastructure. Its adoption by govdigital eG and Dataport makes it the natural choice for German municipal environments.</p>
+<h3 id="413-ai-assisted-government-services">4.13 AI-Assisted Government Services</h3>
+<p><strong>Function:</strong> Augment municipal services with AI capabilities: document classification, citizen query handling, automated translation, form pre-filling; while complying with EU AI Act high-risk requirements.</p>
+<p><strong>Recommended approach: Privacy-preserving, on-premise, auditable AI</strong></p>
+<div role="region" tabindex="0" aria-label="data table"><table>
+<thead><tr>
+<th scope="col">Component</th>
+<th scope="col">Licence</th>
+<th scope="col">Function</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Ollama</strong></td>
+<td>MIT</td>
+<td>Run open-weight LLMs locally (Llama 3, Mistral, Phi-3)</td>
+</tr>
+<tr>
+<td><strong>Open WebUI</strong></td>
+<td>MIT</td>
+<td>Chat interface for staff AI assistants</td>
+</tr>
+<tr>
+<td><strong>LangChain</strong></td>
+<td>MIT</td>
+<td>LLM orchestration framework</td>
+</tr>
+<tr>
+<td><strong>Haystack</strong> (deepset)</td>
+<td>Apache 2.0</td>
+<td>Document QA and retrieval-augmented generation</td>
+</tr>
+<tr>
+<td><strong>Label Studio</strong></td>
+<td>Apache 2.0</td>
+<td>Data labelling for fine-tuning</td>
+</tr>
+</tbody></table></div>
+<p><strong>AI Act compliance guidance:</strong> Municipal AI systems performing automated administrative decisions (e.g., benefit eligibility screening, case routing) are high-risk under Annex III of the EU AI Act [50]. Compliance requires: (a) conformity assessment; (b) fundamental rights impact assessment; (c) human oversight mechanism; (d) citizen notification of AI involvement; (e) audit logging. Open-source AI systems are better positioned to meet auditability and transparency requirements. Staff AI assistants (drafting support, translation) operating without automated decision-making powers are lower-risk and subject to lighter requirements.</p>
+<h3 id="414-accessibility-and-digital-inclusion-tooling">4.14 Accessibility and Digital Inclusion Tooling</h3>
+<p><strong>Function:</strong> Ensure all digital services are accessible to citizens with disabilities; comply with WCAG 2.1 AA, EN 301 549, BITV 2.0; support multilingual and low-literacy users.</p>
+<p><strong>Recommended tools:</strong></p>
+<ul>
+<li><strong>axe-core</strong> (MPL-2.0): automated accessibility testing integrated into CI/CD</li>
+<li><strong>Playwright</strong> (Apache 2.0): end-to-end accessibility regression testing</li>
+<li><strong>Pa11y</strong> (GPL-3.0): automated accessibility monitoring</li>
+<li><strong>NVDA</strong> (GPL-2.0): open-source screen reader for testing (Windows)</li>
+<li><strong>Orca</strong> (GPL-2.0): screen reader for Linux environments</li>
+</ul>
+<p>Accessibility is a legal obligation under the EU Web Accessibility Directive (2016/2102) and its national transpositions (BITV 2.0 in Germany, eCH-0059 in Switzerland). All new digital services must achieve WCAG 2.1 AA before launch. Municipalities should integrate axe-core into their CI/CD pipeline to prevent accessibility regressions.</p>
+<h3 id="415-project-and-portfolio-management">4.15 Project and Portfolio Management</h3>
+<p><strong>Function:</strong> Manage digital transformation projects; track milestones; coordinate cross-departmental work; provide transparency to elected officials.</p>
+<p><strong>Primary recommendation: OpenProject</strong> (GPL-3.0) [20]</p>
+<p>OpenProject is the leading open-source project management platform, used by the German Federal Government, ZenDiS, and dozens of municipalities. It supports Scrum, Kanban, Gantt charts, time tracking, and budget management in a single platform. Its German-language support and GDPR-compliant self-hosted deployment model make it the natural choice for German-speaking municipalities.</p>
+<h3 id="416-reference-architecture">4.16 Reference Architecture</h3>
+<pre><code>+------------------------------------------------------------------+
+|                        CITIZEN TOUCHPOINTS                       |
+|        TYPO3/Drupal · Decidim · CKAN · Nextcloud · Mobile       |
++------------------------------------------------------------------+
+|                         SERVICE LAYER                            |
+|     Camunda BPMN · XÖV/eCH Forms · GeoServer/QGIS · OpenSearch  |
++------------------------------------------------------------------+
+|                  AI ASSISTANCE LAYER (High-Risk AI Act)          |
+|         Ollama/Open WebUI · Haystack RAG · Audit Logging         |
++------------------------------------------------------------------+
+|                       COLLABORATION LAYER                        |
+|     Nextcloud · Matrix/Element · Jitsi · OpenProject · Email     |
++------------------------------------------------------------------+
+|                    DATA INTEGRATION LAYER                        |
+|          Apache Kafka · Apache Airflow · PostGIS · OpenSearch     |
++------------------------------------------------------------------+
+|                        IDENTITY LAYER                            |
+|         Keycloak &lt;-&gt; BundID / Swiss E-ID / eIDAS 2.0 Wallet     |
++------------------------------------------------------------------+
+|                MONITORING AND OBSERVABILITY LAYER                |
+|            Prometheus · Grafana · Loki · OpenTelemetry           |
++------------------------------------------------------------------+
+|                      INFRASTRUCTURE LAYER                        |
+|  Sovereign Cloud Stack · Kubernetes · PostgreSQL/PostGIS · Ceph  |
++------------------------------------------------------------------+</code></pre>
+<p>All layers communicate via open APIs (REST, GraphQL, gRPC) conforming to published OpenAPI 3.x specifications. Container orchestration across the stack is handled by Kubernetes [39]; relational persistence by PostgreSQL [41] and PostGIS; object storage by Ceph; all running on Sovereign Cloud Stack [3]. Data exchange uses XÖV standards (Germany) [46] or eCH standards (Switzerland) [47]. Security is governed by BSI IT-Grundschutz [26] or the Swiss ISDS framework, with NIS2 obligations applying to essential services [27].</p>
+<hr>
+<h2 id="5-implementation-roadmap">5. Implementation Roadmap</h2>
+<p>The implementation is structured as a 36-month, five-phase programme. Each phase has defined deliverables, indicative budget ranges (for a municipality of 20,000–100,000 population), success criteria, and decision gates.</p>
+<h3 id="phase-0-foundation-months-13">Phase 0: Foundation (Months 1–3)</h3>
+<p><strong>Objective:</strong> Establish governance, assess current state, build the coalition.</p>
+<p><strong>Indicative budget:</strong> €30,000–€80,000</p>
+<p><strong>Deliverables:</strong></p>
+<ul>
+<li>Digital Transformation Steering Committee established (city leadership + IT + civil society + DPO)</li>
+<li>Current-state technology audit completed (software inventory, licence cost mapping, data flow diagram)</li>
+<li>Stakeholder engagement plan adopted</li>
+<li>Procurement framework established (cooperative IT provider selected; framework agreement signed)</li>
+<li>Data Protection Impact Assessment (DPIA) scoping for new systems</li>
+<li>Political mandate document (council resolution or executive decision) obtained</li>
+</ul>
+<p><strong>Key activities:</strong></p>
+<ul>
+<li>Audit all current software licences and annual costs</li>
+<li>Map all data flows between systems (prerequisite for DGA and GDPR compliance)</li>
+<li>Select cooperative IT provider (Dataport, AKDB, govdigital eG, or equivalent)</li>
+<li>Appoint Digital Transformation Programme Manager (internal or contracted)</li>
+<li>Run stakeholder workshops with all groups listed in Section 6.1</li>
+</ul>
+<p><strong>Success criteria:</strong></p>
+<ul>
+<li>Political mandate secured and publicly communicated</li>
+<li>Budget envelope approved</li>
+<li>Cooperative IT provider contracted</li>
+<li>Baseline TCO established for comparison</li>
+</ul>
+<p><strong>Decision gate:</strong> Go/No-Go based on political mandate, budget, and provider readiness.</p>
+<h3 id="phase-1-identity-and-infrastructure-months-412">Phase 1: Identity and Infrastructure (Months 4–12)</h3>
+<p><strong>Objective:</strong> Stand up the foundational layers on which all applications depend.</p>
+<p><strong>Indicative budget:</strong> €80,000–€200,000</p>
+<p><strong>Deliverables:</strong></p>
+<ul>
+<li>Sovereign Cloud Stack environment operational (own cluster or managed service)</li>
+<li>Keycloak identity provider deployed and federated with national identity system (BundID/Swiss E-ID)</li>
+<li>Nextcloud baseline deployment for internal collaboration (file sync, calendar, contacts)</li>
+<li>Matrix/Element messaging for all staff with cross-agency federation</li>
+<li>Monitoring stack operational (Prometheus + Grafana + Loki)</li>
+<li>BSI IT-Grundschutz baseline documentation complete and reviewed</li>
+<li>Software Bill of Materials (SBOM) established for all deployed components</li>
+</ul>
+<p><strong>Key technical configurations:</strong></p>
+<ul>
+<li>Kubernetes cluster: minimum 3 control-plane nodes, N worker nodes; autoscaling enabled</li>
+<li>Keycloak: realm per department; OIDC federation to national eID; MFA required for admin roles</li>
+<li>Nextcloud: S3-compatible storage backend on Ceph; virus scanning via ClamAV; file encryption at rest</li>
+<li>Matrix: homeserver (Synapse or Dendrite) with federation enabled; E2E encryption enforced by policy</li>
+<li>Certificates: ACME (Let's Encrypt) or internal CA; TLS 1.3 minimum; HSTS preload</li>
+</ul>
+<p><strong>Success criteria:</strong></p>
+<ul>
+<li>100% of IT staff authenticated via Keycloak SSO</li>
+<li>File storage migrated from proprietary cloud to Nextcloud</li>
+<li>Encrypted messaging operational with zero external data-centre dependency</li>
+<li>Security baseline documented, reviewed by DPO, and approved by IT committee</li>
+</ul>
+<h3 id="phase-2-services-and-workflows-months-1018">Phase 2: Services and Workflows (Months 10–18)</h3>
+<p><strong>Objective:</strong> Migrate or build the first five citizen-facing services on open infrastructure.</p>
+<p><strong>Indicative budget:</strong> €100,000–€300,000</p>
+<p><strong>Deliverables:</strong></p>
+<ul>
+<li>Five highest-volume administrative services deployed on Camunda/XÖV stack</li>
+<li>TYPO3 or Drupal CMS launched with full accessibility audit (BITV 2.0 / WCAG 2.1 AA)</li>
+<li>Open data portal (CKAN) launched with first 30 datasets; DCAT-AP metadata complete</li>
+<li>Decidim instance deployed for first participatory process</li>
+<li>Accessibility compliance report published</li>
+<li>OpenProject deployed for project management and milestone tracking</li>
+</ul>
+<p><strong>Service prioritisation methodology:</strong> rank services by: (a) transaction volume; (b) citizen impact; (c) technical complexity (favour low-complexity first); (d) existing OZG EfA availability. Typical high-priority, low-complexity first services: parking permit applications, event registration, waste collection scheduling, public library card issuance.</p>
+<p><strong>Success criteria:</strong></p>
+<ul>
+<li>80% of target service volume processed through new system</li>
+<li>WCAG 2.1 AA compliance verified by independent accessibility audit</li>
+<li>First open data publication live with DCAT-AP metadata</li>
+<li>First participatory process on Decidim completed with documented citizen feedback</li>
+</ul>
+<h3 id="phase-3-integration-and-extension-months-1624">Phase 3: Integration and Extension (Months 16–24)</h3>
+<p><strong>Objective:</strong> Integrate all layers; extend service coverage to 80% of transaction types.</p>
+<p><strong>Indicative budget:</strong> €80,000–€200,000</p>
+<p><strong>Deliverables:</strong></p>
+<ul>
+<li>All services federated via Keycloak SSO (single citizen login for all services)</li>
+<li>Nextcloud integrated with document management and workflow systems</li>
+<li>GIS layer operational (QGIS + GeoServer + PostGIS + MapLibre)</li>
+<li>80% of administrative services digitised and online</li>
+<li>Inter-agency data exchange via XÖV/eCH operational</li>
+<li>AI-assisted staff tools deployed (document classification, translation assistance) with AI Act compliance documentation</li>
+<li>Data integration layer operational (Airflow ETL pipelines for legacy data migration)</li>
+</ul>
+<p><strong>Success criteria:</strong></p>
+<ul>
+<li>End-to-end service delivery without paper for 80% of transaction types</li>
+<li>First XÖV/eCH inter-agency data exchange live</li>
+<li>AI Act conformity assessment completed for any AI systems in scope</li>
+<li>Data quality dashboard operational</li>
+</ul>
+<h3 id="phase-4-optimisation-and-community-months-2230">Phase 4: Optimisation and Community (Months 22–30)</h3>
+<p><strong>Objective:</strong> Optimise user experience; contribute back to open-source communities; publish results.</p>
+<p><strong>Indicative budget:</strong> €50,000–€100,000</p>
+<p><strong>Deliverables:</strong></p>
+<ul>
+<li>Citizen satisfaction survey (target: NPS > 40 for digital services)</li>
+<li>First contribution to openCode.de / upstream open-source projects</li>
+<li>Municipal open-source community of practice established (≥ 3 peer municipalities)</li>
+<li>Performance benchmarks and TCO comparison published</li>
+<li>Accessibility re-audit confirming WCAG 2.1 AA maintained after changes</li>
+<li>Digital Sovereignty Index score established (using ZenDiS methodology)</li>
+</ul>
+<p><strong>Community contribution strategy:</strong> identify during Phase 3 which custom developments (accessibility plugins, XÖV connectors, citizen notification templates) have reuse value for peer municipalities. Release these on openCode.de under AGPL-3.0 or Apache 2.0 before Phase 4 ends.</p>
+<p><strong>Success criteria:</strong></p>
+<ul>
+<li>At least three improvements contributed upstream</li>
+<li>Community of practice active with ≥ 3 peer municipalities</li>
+<li>TCO comparison showing ≥ 15% cost reduction vs. baseline at year 3</li>
+<li>NPS ≥ 40 for digital services</li>
+</ul>
+<h3 id="phase-5-sovereignty-and-scale-months-2836">Phase 5: Sovereignty and Scale (Months 28–36)</h3>
+<p><strong>Objective:</strong> Achieve full digital sovereignty; prepare for extension and replication.</p>
+<p><strong>Indicative budget:</strong> €30,000–€80,000</p>
+<p><strong>Deliverables:</strong></p>
+<ul>
+<li>Full licence compliance audit (all components verified against SBOM)</li>
+<li>Sovereign data residency verified (100% on EU jurisdiction infrastructure)</li>
+<li>Replication playbook published for neighbouring municipalities</li>
+<li>Strategy paper v1.0 published (this document, updated)</li>
+<li>GovStack building-block alignment assessment completed</li>
+<li>Five-year TCO report published</li>
+</ul>
+<p><strong>Success criteria:</strong></p>
+<ul>
+<li>Zero proprietary single-vendor dependencies in critical path</li>
+<li>Data residency 100% sovereign (EU jurisdiction, open infrastructure)</li>
+<li>At least one peer municipality has adopted the playbook</li>
+<li>v1.0 strategy paper published and publicly available</li>
+</ul>
+<hr>
+<h2 id="6-stakeholder-and-procurement-strategy">6. Stakeholder and Procurement Strategy</h2>
+<h3 id="61-stakeholder-map">6.1 Stakeholder Map</h3>
+<div role="region" tabindex="0" aria-label="data table"><table>
+<thead><tr>
+<th scope="col">Stakeholder</th>
+<th scope="col">Primary interest</th>
+<th scope="col">Key concerns</th>
+<th scope="col">Engagement approach</th>
+</tr></thead><tbody>
+<tr>
+<td>Mayor / Executive</td>
+<td>Political success, cost, citizen approval</td>
+<td>Electoral risk, media coverage</td>
+<td>Executive briefing quarterly; progress dashboard</td>
+</tr>
+<tr>
+<td>City council</td>
+<td>Oversight, democratic legitimacy</td>
+<td>Accountability, transparency</td>
+<td>Quarterly reports; open council sessions; Decidim for public engagement</td>
+</tr>
+<tr>
+<td>City IT team</td>
+<td>Technical feasibility, workload, career</td>
+<td>Skills gap, extra work</td>
+<td>Co-design; training; community membership; certification support</td>
+</tr>
+<tr>
+<td>Procurement office</td>
+<td>Legal compliance, risk, process</td>
+<td>GWB/VgV compliance, audit risk</td>
+<td>Legal briefings; framework agreement templates</td>
+</tr>
+<tr>
+<td>Civil servants (end users)</td>
+<td>Ease of use, reliability, speed</td>
+<td>Change anxiety, retraining</td>
+<td>UX testing; parallel systems; change champions</td>
+</tr>
+<tr>
+<td>Citizens</td>
+<td>Service quality, privacy, access</td>
+<td>Accessibility, digital exclusion</td>
+<td>Participatory design; Decidim; transparency reporting</td>
+</tr>
+<tr>
+<td>Civil society / NGOs</td>
+<td>Transparency, access, participation</td>
+<td>Open data quality, accountability</td>
+<td>Open data portal; public roadmaps; participation platforms</td>
+</tr>
+<tr>
+<td>Open-source communities</td>
+<td>Contribution, reuse, standards</td>
+<td>Code quality, licence compliance</td>
+<td>openCode.de participation; upstream contributions; community of practice</td>
+</tr>
+<tr>
+<td>Sovereign technology providers</td>
+<td>Partnership, deployment, growth</td>
+<td>Contract terms, procurement rules</td>
+<td>Cooperative framework agreements; govdigital eG membership</td>
+</tr>
+<tr>
+<td>Data protection officer</td>
+<td>GDPR compliance, privacy</td>
+<td>Data processing legality</td>
+<td>Privacy-by-design reviews at each phase gate</td>
+</tr>
+<tr>
+<td>Cantonal/Land IT coordination</td>
+<td>Standards compliance, interoperability</td>
+<td>XÖV/eCH standards, OZG obligations</td>
+<td>Standards working groups; FITKO/eCH participation</td>
+</tr>
+<tr>
+<td>Disability advocacy groups</td>
+<td>Accessibility, inclusion</td>
+<td>WCAG compliance, digital exclusion</td>
+<td>Co-design sessions; accessibility audits; beta testing</td>
+</tr>
+</tbody></table></div>
+<h3 id="62-procurement-framework">6.2 Procurement Framework</h3>
+<p>Open-source procurement requires a different framework from proprietary licence purchasing. Key principles:</p>
+<p><strong>1. Procure services, not licences.</strong> Open-source software is free to use; municipalities pay for implementation, hosting, support, customisation, and training. Procurement documents must be structured around these services, not the software itself.</p>
+<p><strong>2. Use cooperative procurement structures.</strong> Germany's govdigital eG and Swiss cantonal IT cooperatives provide framework agreements for open-source municipal IT that satisfy public procurement law (GWB/VgV/VOL in Germany; BöB/IVöB in Switzerland) [23]. Joining these cooperatives typically reduces individual municipal procurement cost by 40–60% through aggregated volume.</p>
+<p><strong>3. Apply the "Public Money? Public Code!" principle contractually.</strong> All custom software developed under contract must be released under an OSI-approved open-source licence and published on openCode.de or an equivalent public repository [4]. This must be a contract condition, not a recommendation.</p>
+<p><strong>4. Evaluate total cost of ownership.</strong> Procurement scoring must include a mandatory five-year TCO model covering: implementation, hosting, training, support, customisation, and exit/migration costs. Proprietary alternatives typically understate long-term costs by omitting vendor lock-in risk, licence escalation, and switching costs. A minimum 30% weight should be assigned to TCO in technical evaluation criteria.</p>
+<p><strong>5. Require interoperability standards compliance.</strong> All procured systems must implement: XÖV family standards (Germany) [46], eCH family standards (Switzerland) [47], DCAT-AP (EU open data), OIDC/SAML2 (identity federation), and OpenAPI 3.x (system integration). Non-compliance should be a disqualifying criterion.</p>
+<p><strong>6. Require SBOM and patch management plans.</strong> All procured software must provide a Software Bill of Materials (SBOM) in SPDX or CycloneDX format and a documented patch management process with maximum response times for critical CVEs (recommended: 72 hours for CVSS 9.0+, 30 days for CVSS 7.0–8.9).</p>
+<p><strong>7. Prefer certified cooperative providers.</strong> For infrastructure, prefer SCS-certified cloud operators or members of govdigital eG who are bound by collective data-sovereignty agreements [23]. GAIA-X Label compliance is an additional positive criterion [52].</p>
+<h3 id="63-template-procurement-language">6.3 Template Procurement Language</h3>
+<p>The following clause should be included in all contracts for custom software development:</p>
+<blockquote><p><em>"All software, source code, documentation, and related materials developed under this contract and paid from public funds shall be released by the Contractor under an OSI-approved open-source licence (AGPL-3.0, Apache 2.0, or GPL-3.0, as agreed) within 90 days of completion. The Contractor shall publish the software on openCode.de (or a designated equivalent public repository) and provide all necessary documentation for third-party deployment. This condition may only be varied by written agreement where the Contracting Authority provides documented evidence that open-source release would create a material security risk."</em></p></blockquote>
+<h3 id="64-change-management">6.4 Change Management</h3>
+<p>Open-source transitions frequently fail not on technical grounds but on human factors: end-user resistance, insufficient training, middle-management inertia, and political backsliding under vendor lobbying. The Munich LiMux case [59] is the canonical example; the Barcelona Decidim rollout is the canonical counter-example.</p>
+<p><strong>Recommended change-management actions:</strong></p>
+<ol>
+<li>Appoint a <strong>Digital Transformation Champion</strong> at senior political level with explicit mandate and public accountability</li>
+<li>Establish <strong>open-source champions</strong> in each department with advanced training, peer-support role, and recognition programme</li>
+<li>Run <strong>parallel operations</strong> for a minimum of three months before cutting over critical systems</li>
+<li>Document and publicly celebrate <strong>early wins</strong> — cost savings, new capabilities, positive citizen feedback</li>
+<li>Publish a <strong>public transparency dashboard</strong> showing migration progress, costs, service quality metrics, and open data statistics</li>
+<li>Engage <strong>organised civil society</strong> (digital rights organisations, accessibility advocates, data journalism community) as public champions</li>
+<li>Brief <strong>local media</strong> with human-interest narratives around digital sovereignty and civic technology</li>
+</ol>
+<h3 id="65-accessibility-and-digital-inclusion-strategy">6.5 Accessibility and Digital Inclusion Strategy</h3>
+<p>Digital accessibility is both a legal obligation and a democratic imperative. Across European jurisdictions, an estimated 15–20% of citizens have a disability that affects digital service use. WCAG 2.1 AA is the minimum legal standard under the EU Web Accessibility Directive and its national transpositions.</p>
+<p><strong>Recommended actions:</strong></p>
+<ol>
+<li>Integrate axe-core automated accessibility testing into the CI/CD pipeline from Phase 1</li>
+<li>Commission independent WCAG 2.1 AA audit at each phase gate</li>
+<li>Recruit disabled citizens as paid testers during development (not just post-launch review)</li>
+<li>Provide assisted digital support channels (phone, in-person) as permanent complements to digital services — not temporary workarounds</li>
+<li>Adopt the GDS Service Design Principles adapted for DACH context, including explicit accessibility commitment at design inception</li>
+</ol>
+<h3 id="66-open-source-community-governance">6.6 Open-Source Community Governance</h3>
+<p>Municipalities that implement open-source stacks take on an implicit responsibility to the commons: they benefit from the collective investment of the open-source community and should contribute back proportionally.</p>
+<p><strong>Recommended community engagement:</strong></p>
+<ol>
+<li>Join the <strong>openCode.de</strong> platform and publish all custom developments [10]</li>
+<li>Become a <strong>member of govdigital eG</strong> (Germany) or the relevant cantonal IT cooperative [23]</li>
+<li>Participate in the <strong>Decidim Association</strong> and <strong>TYPO3 Association</strong> if deploying those platforms</li>
+<li>Attend and, over time, co-organise <strong>OpenRuhr</strong>, <strong>Bits & Bäume</strong>, and equivalent civic tech events</li>
+<li>Allocate <strong>10% of IT staff time</strong> (approximately 0.1 FTE per developer) to upstream open-source contributions</li>
+<li>Publish an annual <strong>open-source contribution report</strong> documenting code, documentation, translations, and community participation</li>
+</ol>
+<hr>
+<h2 id="7-risk-analysis">7. Risk Analysis</h2>
+<h3 id="71-risk-register">7.1 Risk Register</h3>
+<div role="region" tabindex="0" aria-label="data table"><table>
+<thead><tr>
+<th scope="col">Risk</th>
+<th scope="col">Likelihood</th>
+<th scope="col">Impact</th>
+<th scope="col">Mitigation</th>
+</tr></thead><tbody>
+<tr>
+<td>Political reversal after election</td>
+<td>Medium</td>
+<td>High</td>
+<td>Embed in legislation/ordinance; cross-party consensus; public mandate</td>
+</tr>
+<tr>
+<td>Vendor lobbying / FUD campaigns</td>
+<td>High</td>
+<td>Medium</td>
+<td>Document TCO evidence publicly; engage civil society; brief media</td>
+</tr>
+<tr>
+<td>Skill gap in IT team</td>
+<td>High</td>
+<td>Medium</td>
+<td>Training; cooperative IT provider; community of practice; certification support</td>
+</tr>
+<tr>
+<td>Integration failure between layers</td>
+<td>Medium</td>
+<td>High</td>
+<td>Phased rollout with decision gates; reference architecture adherence; API contracts</td>
+</tr>
+<tr>
+<td>Data loss during migration</td>
+<td>Low</td>
+<td>Critical</td>
+<td>Full backup protocol; parallel operation minimum 3 months; staged migration</td>
+</tr>
+<tr>
+<td>GDPR / DGA / AI Act violation</td>
+<td>Low</td>
+<td>High</td>
+<td>Privacy-by-design; DPO engagement at each phase; DPIA before deployment</td>
+</tr>
+<tr>
+<td>User adoption failure</td>
+<td>Medium</td>
+<td>High</td>
+<td>Change management; UX testing; training; parallel systems; champions</td>
+</tr>
+<tr>
+<td>Security incident</td>
+<td>Low</td>
+<td>Critical</td>
+<td>BSI IT-Grundschutz; penetration testing; SBOM; incident response plan; NIS2</td>
+</tr>
+<tr>
+<td>Community fragmentation / fork</td>
+<td>Low</td>
+<td>Medium</td>
+<td>Align with upstream; contribute back; avoid deep forks</td>
+</tr>
+<tr>
+<td>Cost overrun</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Phase-gated budget; independent project office; open TCO accounting</td>
+</tr>
+<tr>
+<td>AI Act non-compliance</td>
+<td>Medium</td>
+<td>High</td>
+<td>Conformity assessment before AI system deployment; human oversight mechanism</td>
+</tr>
+<tr>
+<td>Supply chain attack on dependencies</td>
+<td>Low</td>
+<td>High</td>
+<td>SBOM; dependency audit; signed releases; Sigstore verification</td>
+</tr>
+<tr>
+<td>Accessibility regression</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>CI/CD axe-core integration; quarterly accessibility audits</td>
+</tr>
+<tr>
+<td>Legacy system incompatibility</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>XÖV/eCH middleware layer; phased legacy retirement; data mapping</td>
+</tr>
+</tbody></table></div>
+<h3 id="72-the-munich-cautionary-case">7.2 The Munich Cautionary Case</h3>
+<p>The City of Munich's LiMux project (2003–2017) is the most-cited case of a large-scale municipal open-source transition that was reversed. The independent post-mortem [59] identifies the reversal as driven primarily by: (a) a change in political leadership with closer ties to Microsoft; (b) inadequate change management and end-user training; (c) compatibility issues with state-level systems that had not been updated to support open standards; and (d) an approximately €49 million reversal cost that exceeded the approximately €11.7 million in accumulated savings — a reversal driven by political, not economic, logic.</p>
+<p>The technical implementation of LiMux was broadly successful. The failure was political and organisational. The lesson for municipal digital transformation is unambiguous: <strong>political risk management is as important as technical planning</strong>. Building cross-party support, embedding digital sovereignty in a council ordinance, and engaging civil society as a public champion are not optional extras — they are programme-critical risk mitigations.</p>
+<h3 id="73-security-considerations">7.3 Security Considerations</h3>
+<p>The BSI IT-Grundschutz framework provides a comprehensive security baseline applicable regardless of licence model [26]. Key requirements for a municipal open-source stack:</p>
+<ul>
+<li>All server components must receive regular security updates; patch response times should be contractually specified (see Section 6.2)</li>
+<li>Authentication must meet BSI Authenticator Assurance Level 2 (AAL2) for citizen-facing services: two-factor authentication using TOTP, FIDO2, or equivalent</li>
+<li>Data in transit encrypted with TLS 1.3 minimum; HSTS preload; certificate rotation automated via ACME</li>
+<li>Data at rest encrypted for sensitive categories; PostgreSQL Transparent Data Encryption or filesystem-level encryption via LUKS</li>
+<li>Penetration testing (minimum scope: OWASP Top 10) required at each phase gate before go-live</li>
+<li>Incident response plan documented and tested annually, aligned with NIS2 reporting obligations (24-hour initial notification for significant incidents) [27]</li>
+<li>SBOM maintained in SPDX format and updated with each deployment; shared with BSI BSIFB national vulnerability database</li>
+</ul>
+<h3 id="74-ai-and-automation-risks">7.4 AI and Automation Risks</h3>
+<p>As municipalities deploy AI-assisted services (Section 4.13), additional risk dimensions arise:</p>
+<p><strong>Algorithmic bias:</strong> AI systems trained on historical government data can encode and amplify historical discrimination in service delivery. Mitigation: bias audit (statistical parity, equalized odds) for all AI systems before deployment; diverse training data sourcing; regular re-auditing.</p>
+<p><strong>Hallucination in citizen-facing AI:</strong> Large language models deployed for citizen query handling can produce plausible but incorrect information. Mitigation: restrict citizen-facing AI to retrieval-augmented generation (RAG) over verified government sources; never allow AI to make binding decisions without human review.</p>
+<p><strong>EU AI Act non-compliance:</strong> see Section 7.1 risk register. The conformity assessment for high-risk AI systems under Annex III AI Act is a multi-month process; plan accordingly.</p>
+<p><strong>Over-automation:</strong> automated systems can reduce the human touchpoints that build citizen trust and provide recourse. Mitigation: maintain human review mechanisms for all AI-assisted decisions; provide citizens with the right to request human review of any automated decision (consistent with GDPR Article 22).</p>
+<h3 id="75-supply-chain-security">7.5 Supply Chain Security</h3>
+<p>Open-source software's security advantage — anyone can inspect the code — comes with a supply chain exposure: the code and its dependencies are publicly known, and a compromised dependency can affect all deployments simultaneously (cf. the Log4Shell incident, 2021).</p>
+<p><strong>Mitigation measures:</strong></p>
+<ol>
+<li>Maintain a complete SBOM for all deployed components; update on every deployment</li>
+<li>Subscribe to security advisories for all dependencies (GitHub Security Advisories, OSV.dev)</li>
+<li>Pin dependency versions in production; use Renovate or Dependabot for automated update PRs</li>
+<li>Verify package signatures via Sigstore/cosign for container images</li>
+<li>Run dependency-vulnerability scanning (Trivy, Grype) in CI/CD pipeline</li>
+<li>Implement network egress filtering to reduce blast radius of compromised dependencies</li>
+</ol>
+<h3 id="76-climate-and-sustainability-considerations">7.6 Climate and Sustainability Considerations</h3>
+<p>Municipal digital infrastructure has a material energy and carbon footprint. Digital sovereignty and climate sustainability are mutually reinforcing: self-hosted infrastructure in energy-efficient cooperative data centres, running on renewable energy, is both more sovereign and more sustainable than hyperscaler cloud.</p>
+<p><strong>Recommendations:</strong></p>
+<ul>
+<li>Require renewable energy certificates (RECs) or power purchase agreements (PPAs) from cooperative IT providers</li>
+<li>Optimise Kubernetes resource requests/limits to reduce idle compute</li>
+<li>Prefer ARM-based server hardware for edge/small-office workloads (lower power per compute unit)</li>
+<li>Report annual ICT carbon footprint as part of municipal sustainability reporting</li>
+</ul>
+<hr>
+<h2 id="8-conclusion">8. Conclusion</h2>
+<p>The evidence reviewed and developed in this paper converges on six findings:</p>
+<p><strong>1. Open-source municipal technology stacks are technically mature and production-proven in 2026.</strong> Every functional requirement of a modern municipal government — from digital identity to AI-assisted services — can be met by open-source software with documented deployments at peer municipalities across the full range of population sizes.</p>
+<p><strong>2. The regulatory environment increasingly mandates open-source and interoperability.</strong> EMBAG (Switzerland), OZG 2.0 (Germany), the Interoperable Europe Act (EU), the EU Data Act, and the EU AI Act together create a legal framework in which proprietary, vendor-locked, non-interoperable systems cannot sustainably meet compliance obligations. Municipalities that begin the transition now are building compliance capital; those that delay are accumulating regulatory debt.</p>
+<p><strong>3. The economic case is compelling when total costs are counted correctly.</strong> For a municipality of 500 staff, the five-year net saving from transitioning to an open-source workplace stack is in the range of €200,000–€500,000 after implementation costs. Cooperative procurement (govdigital eG, AKDB, cantonal IT cooperatives) substantially reduces implementation cost and risk. The French DINUM and Munich post-mortem cases both confirm this arithmetic.</p>
+<p><strong>4. Small municipalities can and do succeed.</strong> The case studies of Schaffhausen, Herrenberg, and Gummersbach demonstrate that open-source transformation is not exclusive to large cities or federal agencies. With cooperative IT providers handling infrastructure, the minimum viable programme for a municipality of 20,000 fits within a three-year, €300,000–€500,000 budget envelope.</p>
+<p><strong>5. The EU AI Act creates new transparency obligations that favour open-source AI.</strong> As municipalities adopt AI-assisted services, the conformity-assessment and auditability requirements of the AI Act strongly favour open-source, locally-operated AI systems over proprietary black-box alternatives. The open-source AI stack described in Section 4.13 is both GDPR-compliant and AI-Act-aligned.</p>
+<p><strong>6. Success requires as much political and organisational investment as technical investment.</strong> The Munich LiMux reversal and the Barcelona Decidim success are mirror images of the same lesson: political mandate, skilled change management, cross-party buy-in, and sustained stakeholder engagement are the binding constraints on success. Technical excellence is necessary but not sufficient.</p>
+<p>Cities that move first will benefit from first-mover advantages: shaping cooperative standards, building in-house expertise, contributing to the open-source commons, and positioning themselves as exemplars of democratic digital governance. The invitation — and in an increasing number of jurisdictions, the obligation — is clear.</p>
+<hr>
+<h2 id="references">References</h2>
+<p>[1] Swiss Federal Council. (2023). <em>Bundesgesetz über den Einsatz elektronischer Mittel zur Erfüllung von Behördenaufgaben (EMBAG)</em>. SR 172.019. Bern: Swiss Confederation. https://www.fedlex.admin.ch/eli/cc/2023/682/de — [Open access, CC0]</p>
+<p>[2] Bundesministerium des Innern und für Heimat (BMI). (2024). <em>Onlinezugangsgesetz 2.0 (OZG 2.0)</em>. Berlin: BMI. https://www.bmi.bund.de/DE/themen/moderne-verwaltung/e-government/ozg/ozg-node.html — [Open access, DL-DE/Zero 2.0]</p>
+<p>[3] Open Source Business Alliance (OSBA). (2023). <em>Sovereign Cloud Stack: Technical and Governance Overview</em>. Berlin: OSBA. https://scs.community/ — [Open access, CC-BY-SA-4.0]</p>
+<p>[4] Free Software Foundation Europe (FSFE). (2017–2026). <em>Public Money? Public Code!</em> Berlin: FSFE. https://publiccode.eu/ — [Open access, CC-BY-SA-4.0]</p>
+<p>[5] European Commission. (2020). <em>Open Source Software Strategy 2020–2023: Think Open</em>. Brussels: European Commission. https://commission.europa.eu/about/departments-and-executive-agencies/informatics/open-source-software-strategy_en — [Open access]</p>
+<p>[6] European Parliament and Council. (2024). <em>Regulation (EU) 2024/903 of the European Parliament and of the Council on measures for a high level of public sector interoperability across the Union (Interoperable Europe Act)</em>. Official Journal of the EU. https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202400903 — [Open access]</p>
+<p>[7] Wirtz, B. W., & Weyerer, J. C. (2017). Conceptualization and creation of a holistic e-government maturity model. <em>Public Management Review</em>, 19(9), 1297–1316. https://doi.org/10.1080/14719037.2017.1283024</p>
+<p>[8] Janssen, M., Charalabidis, Y., & Zuiderwijk, A. (2012). Benefits, adoption barriers and myths of open data and open government. <em>Information Systems Management</em>, 29(4), 258–268. https://doi.org/10.1080/10580530.2012.716740</p>
+<p>[9] FITKO. (2023). <em>Föderale IT-Kooperation — Jahresbericht 2023</em>. Frankfurt: FITKO. https://www.fitko.de/fitko/jahresbericht — [Open access, DL-DE/Zero 2.0]</p>
+<p>[10] openCode.de. (2022–2026). <em>openCode — Open Source for Government</em>. Berlin: Digitalservice GmbH des Bundes. https://opencode.de/ — [Open access]</p>
+<p>[11] Sovereign Cloud Stack Community. (2023–2026). <em>SCS Technical Documentation</em>. https://docs.scs.community/ — [Open access, Apache 2.0]</p>
+<p>[12] Decidim Association. (2021–2026). <em>Decidim: Free Open-Source Participatory Democracy for Cities and Organizations</em>. Barcelona: Decidim Association. https://decidim.org/ — [Open access, AGPL-3.0]</p>
+<p>[13] Nextcloud GmbH. (2023). <em>Nextcloud for Government: Security, Sovereignty, and Collaboration</em>. Stuttgart: Nextcloud GmbH. https://nextcloud.com/government/ — [Open access]</p>
+<p>[14] The Matrix Foundation. (2023–2026). <em>Matrix Specification v1.x</em>. https://spec.matrix.org/ — [Open access, Apache 2.0]</p>
+<p>[16] E-Government Suisse. (2023). <em>Strategie E-Government Schweiz 2024–2027</em>. Bern: Schweizerische Bundeskanzlei. https://www.egovernment.ch/de/umsetzung/e-government-strategie/ — [Open access]</p>
+<p>[19] TYPO3 Association. (2023–2026). <em>TYPO3 in Public Administration</em>. Düsseldorf: TYPO3 Association. https://typo3.org/project/association — [Open access]</p>
+<p>[20] OpenProject GmbH. (2023–2026). <em>OpenProject for Government: Open Source Project Management</em>. Berlin: OpenProject GmbH. https://www.openproject.org/ — [Open access, GPLv3]</p>
+<p>[21] Red Hat / Keycloak Community. (2023–2026). <em>Keycloak: Open Source Identity and Access Management</em>. https://www.keycloak.org/ — [Open access, Apache 2.0]</p>
+<p>[22] CKAN Association. (2023–2026). <em>CKAN: Open Source Data Portal Software</em>. https://ckan.org/ — [Open access, AGPL-3.0]</p>
+<p>[23] govdigital eG. (2023). <em>govdigital: Genossenschaft für digitale Verwaltung</em>. Berlin: govdigital eG. https://govdigital.de/ — [Open access]</p>
+<p>[24] Dataport AöR. (2023). <em>Dataport: IT-Dienstleister für die öffentliche Verwaltung</em>. Hamburg: Dataport AöR. https://www.dataport.de/ — [Open access]</p>
+<p>[26] Bundesamt für Sicherheit in der Informationstechnik (BSI). (2023). <em>BSI IT-Grundschutz-Kompendium Edition 2023</em>. Bonn: BSI. https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/ — [Open access, CC-BY-ND 3.0 DE]</p>
+<p>[27] European Parliament and Council. (2022). <em>Directive (EU) 2022/2555 on Measures for a High Common Level of Cybersecurity across the Union (NIS2 Directive)</em>. Official Journal of the EU. https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2555 — [Open access]</p>
+<p>[29] United Nations Department of Economic and Social Affairs (UNDESA). (2022). <em>UN E-Government Survey 2022: The Future of Digital Government</em>. New York: United Nations. https://publicadministration.un.org/egovkb/en-us/Reports/UN-E-Government-Survey-2022 — [Open access, © United Nations]</p>
+<p>[30] Janowski, T. (2015). Digital government evolution: From transformation to contextualization. <em>Government Information Quarterly</em>, 32(3), 221–226. https://doi.org/10.1016/j.giq.2015.07.001</p>
+<p>[33] Camunda Services GmbH. (2023–2026). <em>Camunda Platform 8 Community Edition</em>. Berlin: Camunda. https://camunda.com/download/ — [Open access, Apache 2.0]</p>
+<p>[34] BigBlueButton Inc. (2023). <em>BigBlueButton: Open Source Web Conferencing</em>. https://bigbluebutton.org/ — [Open access, LGPL-3.0]</p>
+<p>[35] Jitsi Community. (2023). <em>Jitsi Meet: Open Source Video Conferencing</em>. https://jitsi.org/ — [Open access, Apache 2.0]</p>
+<p>[36] OpenStreetMap Foundation. (2023). <em>OpenStreetMap</em>. https://www.openstreetmap.org/ — [Open access, ODbL-1.0]</p>
+<p>[37] QGIS Project. (2023). <em>QGIS: A Free and Open Source Geographic Information System</em>. https://www.qgis.org/ — [Open access, GPL-2.0+]</p>
+<p>[39] Cloud Native Computing Foundation (CNCF). (2023). <em>Kubernetes</em>. https://kubernetes.io/ — [Open access, Apache 2.0]</p>
+<p>[41] PostgreSQL Global Development Group. (2023). <em>PostgreSQL</em>. https://www.postgresql.org/ — [Open access, PostgreSQL Licence (BSD-like)]</p>
+<p>[42] Bundesministerium des Innern und für Heimat (BMI) / ZenDiS GmbH. (2023–2026). <em>OpenDesk: Der digitale Arbeitsplatz der Bundesverwaltung</em>. https://opendesk.eu/ — [Open access, AGPL-3.0]</p>
+<p>[43] Schweizerisches Bundesarchiv (BAR). (2023). <em>Geschäftsverwaltung (GEVER) in der Bundesverwaltung</em>. Bern: BAR. https://www.bar.admin.ch/bar/de/home/digitale-archivierung/gever.html — [Open access]</p>
+<p>[44] Geschäftsstelle OGD Schweiz. (2023). <em>opendata.swiss — Open Government Data Switzerland</em>. Bern: Schweizerische Bundeskanzlei. https://opendata.swiss/ — [Open access, CC-BY-4.0 (portal)]</p>
+<p>[45] European Commission, ISA² Programme. (2017). <em>European Interoperability Framework — Implementation Strategy (EIF)</em>. Brussels: European Commission. https://joinup.ec.europa.eu/collection/nifo-national-interoperability-framework-observatory/european-interoperability-framework-detail — [Open access, CC-BY-4.0]</p>
+<p>[46] KoSIT — Koordinierungsstelle für IT-Standards. (2023). <em>XÖV-Standards: XML in der öffentlichen Verwaltung</em>. Bremen: KoSIT. https://www.xoev.de/ — [Open access]</p>
+<p>[47] eCH Association. (2023). <em>eCH e-Government Standards</em>. Bern: eCH. https://www.ech.ch/ — [Open access; individual standards under eCH-Licence]</p>
+<p>[48] GovStack Initiative / ITU / DIAL. (2022–2026). <em>GovStack: Building Blocks for Digital Government</em>. Geneva: International Telecommunication Union. https://www.govstack.global/ — [Open access, CC-BY-4.0]</p>
+<p>[49] European Parliament and Council. (2023). <em>Regulation (EU) 2023/2854 of the European Parliament and of the Council on harmonised rules on fair access to and use of data (Data Act)</em>. Official Journal of the EU. https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202302854 — [Open access]</p>
+<p>[50] European Parliament and Council. (2024). <em>Regulation (EU) 2024/1689 of the European Parliament and of the Council laying down harmonised rules on artificial intelligence (Artificial Intelligence Act)</em>. Official Journal of the EU. https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202401689 — [Open access]</p>
+<p>[51] ZenDiS GmbH. (2024). <em>Jahresbericht 2023/2024 — Zentrum für Digitale Souveränität der öffentlichen Verwaltung</em>. Berlin: ZenDiS. https://zendis.de/ — [Open access]</p>
+<p>[52] GAIA-X AISBL. (2023). <em>GAIA-X Architecture Document and Trust Framework</em>. Brussels: GAIA-X AISBL. https://gaia-x.eu/ — [Open access]</p>
+<p>[54] Consul Democracy. (2015–2026). <em>CONSUL: Democratic Software</em>. Madrid: Consul Democracy. https://consulproject.org/ — [Open access, AGPL-3.0]</p>
+<p>[55] Geschäftsstelle OGD Schweiz. (2024). <em>OGD-Strategie Schweiz 2024–2027</em>. Bern: Schweizerische Bundeskanzlei. https://www.bk.admin.ch/bk/de/home/digitale-transformation-ikt-lenkung/open-government-data.html — [Open access]</p>
+<p>[56] Lathrop, D., & Ruma, L. (Eds.). (2010). <em>Open Government: Collaboration, Transparency, and Participation in Practice</em>. Sebastopol, CA: O'Reilly Media. ISBN 978-0-596-80435-0.</p>
+<p>[58] European Parliament and Council. (2022). <em>Regulation (EU) 2022/868 of the European Parliament and of the Council on European data governance (Data Governance Act)</em>. Official Journal of the EU. https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022R0868 — [Open access]</p>
+<p>[59] Landeshauptstadt München / Stadtrat. (2017). <em>Beschluss des Stadtrats vom 15.02.2017: Zukunft der IT-Infrastruktur der Stadtverwaltung München</em>. München: Stadtrat München. [Decision document, public record]</p>
+<p>[60] Direction interministérielle du numérique (DINUM). (2022). <em>Rapport sur l'utilisation des logiciels libres dans la fonction publique</em>. Paris: DINUM. https://www.numerique.gouv.fr/publications/ — [Open access]</p>
+<p>[62] Prometheus Authors. (2023). <em>Prometheus: Monitoring System and Time Series Database</em>. Cloud Native Computing Foundation. https://prometheus.io/ — [Open access, Apache 2.0]</p>
+<p>[63] Grafana Labs. (2023). <em>Grafana: Open Source Analytics and Monitoring</em>. https://grafana.com/ — [Open access, AGPL-3.0]</p>
+<hr>
+<h2 id="appendix-a-technology-scorecard-summary">Appendix A: Technology Scorecard Summary</h2>
+<div role="region" tabindex="0" aria-label="data table"><table>
+<thead><tr>
+<th scope="col">Layer</th>
+<th scope="col">Primary component</th>
+<th scope="col">Licence</th>
+<th scope="col">Composite score (7 criteria)</th>
+<th scope="col">Alternative</th>
+</tr></thead><tbody>
+<tr>
+<td>Digital Identity</td>
+<td>Keycloak</td>
+<td>Apache 2.0</td>
+<td>34/35</td>
+<td>Authentik (MIT)</td>
+</tr>
+<tr>
+<td>Document Management</td>
+<td>Nextcloud</td>
+<td>AGPL-3.0</td>
+<td>33/35</td>
+<td>OpenDesk suite</td>
+</tr>
+<tr>
+<td>Workflow / BPM</td>
+<td>Camunda 8 CE</td>
+<td>Apache 2.0</td>
+<td>29/35</td>
+<td>Flowable (Apache 2.0)</td>
+</tr>
+<tr>
+<td>Participation</td>
+<td>Decidim</td>
+<td>AGPL-3.0</td>
+<td>33/35</td>
+<td>CONSUL (AGPL-3.0)</td>
+</tr>
+<tr>
+<td>Messaging</td>
+<td>Matrix/Element</td>
+<td>Apache 2.0</td>
+<td>32/35</td>
+<td>Nextcloud Talk</td>
+</tr>
+<tr>
+<td>Video Conferencing</td>
+<td>Jitsi Meet</td>
+<td>Apache 2.0</td>
+<td>31/35</td>
+<td>BigBlueButton (LGPL)</td>
+</tr>
+<tr>
+<td>Open Data</td>
+<td>CKAN</td>
+<td>AGPL-3.0</td>
+<td>32/35</td>
+<td>—</td>
+</tr>
+<tr>
+<td>GIS</td>
+<td>QGIS + GeoServer</td>
+<td>GPL-2.0</td>
+<td>30/35</td>
+<td>MapServer (MIT)</td>
+</tr>
+<tr>
+<td>Web CMS</td>
+<td>TYPO3</td>
+<td>GPL-2.0</td>
+<td>32/35</td>
+<td>Drupal (GPL-2.0)</td>
+</tr>
+<tr>
+<td>Cloud Infrastructure</td>
+<td>SCS (OpenStack+K8s)</td>
+<td>Apache 2.0</td>
+<td>32/35</td>
+<td>Managed SCS</td>
+</tr>
+<tr>
+<td>Data Integration</td>
+<td>Apache Airflow</td>
+<td>Apache 2.0</td>
+<td>28/35</td>
+<td>Apache NiFi</td>
+</tr>
+<tr>
+<td>Search</td>
+<td>OpenSearch</td>
+<td>Apache 2.0</td>
+<td>29/35</td>
+<td>Typesense</td>
+</tr>
+<tr>
+<td>Monitoring</td>
+<td>Prometheus + Grafana</td>
+<td>Apache 2.0 / AGPL</td>
+<td>31/35</td>
+<td>—</td>
+</tr>
+<tr>
+<td>AI Services</td>
+<td>Ollama + Haystack</td>
+<td>MIT / Apache 2.0</td>
+<td>27/35</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Project Management</td>
+<td>OpenProject</td>
+<td>GPL-3.0</td>
+<td>30/35</td>
+<td>—</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="appendix-b-procurement-checklist">Appendix B: Procurement Checklist</h2>
+<p>Use this checklist when evaluating any technology vendor or open-source implementation proposal:</p>
+<p><strong>Licence and openness</strong></p>
+<ul>
+<li>[ ] Software is licensed under an OSI-approved open-source licence</li>
+<li>[ ] Source code is publicly accessible (GitHub, GitLab, or openCode.de)</li>
+<li>[ ] Custom development will be released under open-source licence (contract clause confirmed)</li>
+<li>[ ] No "open core" model with critical features withheld behind proprietary tier</li>
+</ul>
+<p><strong>Interoperability</strong></p>
+<ul>
+<li>[ ] Implements XÖV standards (Germany) or eCH standards (Switzerland) where applicable</li>
+<li>[ ] Provides OpenAPI 3.x specification for all integration interfaces</li>
+<li>[ ] Supports DCAT-AP metadata for data catalogue integration</li>
+<li>[ ] Identity integration via OIDC or SAML2 with Keycloak confirmed</li>
+</ul>
+<p><strong>Security</strong></p>
+<ul>
+<li>[ ] SBOM provided in SPDX or CycloneDX format</li>
+<li>[ ] Documented CVE response process with maximum patch timeline specified</li>
+<li>[ ] BSI IT-Grundschutz compliance assessment available (Germany) or ISDS equivalent (Switzerland)</li>
+<li>[ ] Penetration test results available (within last 12 months)</li>
+</ul>
+<p><strong>Data sovereignty</strong></p>
+<ul>
+<li>[ ] Data processed exclusively within EU jurisdiction (confirmed contractually)</li>
+<li>[ ] Data residency in a certified SCS operator or equivalent (GAIA-X Label preferred)</li>
+<li>[ ] No third-country data transfer without explicit DPIA and legal basis</li>
+<li>[ ] Data portability guaranteed in open formats; migration assistance contractually committed</li>
+</ul>
+<p><strong>Total cost of ownership</strong></p>
+<ul>
+<li>[ ] Five-year TCO model provided including implementation, hosting, support, training, and exit</li>
+<li>[ ] Per-seat costs compared with current proprietary baseline</li>
+<li>[ ] Exit and migration costs explicitly quantified</li>
+<li>[ ] References from ≥ 3 comparable municipal deployments provided</li>
+</ul>
+<p><strong>Accessibility</strong></p>
+<ul>
+<li>[ ] WCAG 2.1 AA conformance statement provided</li>
+<li>[ ] Independent accessibility audit report available (within last 24 months)</li>
+<li>[ ] Accessibility testing in CI/CD pipeline demonstrated</li>
+</ul>
+<hr>
+<h2 id="appendix-c-36-month-milestone-tracker">Appendix C: 36-Month Milestone Tracker</h2>
+<div role="region" tabindex="0" aria-label="data table"><table>
+<thead><tr>
+<th scope="col">Month</th>
+<th scope="col">Phase</th>
+<th scope="col">Key milestone</th>
+<th scope="col">Owner</th>
+<th scope="col">Status</th>
+</tr></thead><tbody>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>Steering committee established</td>
+<td>Mayor / CIO</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0</td>
+<td>Technology audit complete</td>
+<td>IT lead</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0</td>
+<td>Political mandate secured</td>
+<td>Mayor</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0</td>
+<td>Cooperative IT provider contracted</td>
+<td>Procurement</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>4</td>
+<td>1</td>
+<td>SCS environment live</td>
+<td>IT + provider</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>6</td>
+<td>1</td>
+<td>Keycloak deployed + national eID federated</td>
+<td>IT</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>7</td>
+<td>1</td>
+<td>Nextcloud live for all staff</td>
+<td>IT</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>8</td>
+<td>1</td>
+<td>Matrix/Element messaging live</td>
+<td>IT</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>9</td>
+<td>1</td>
+<td>Monitoring stack live</td>
+<td>IT</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>10</td>
+<td>1</td>
+<td>IT-Grundschutz baseline approved</td>
+<td>DPO + IT</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>11</td>
+<td>2</td>
+<td>TYPO3/Drupal CMS live</td>
+<td>IT + comms</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>12</td>
+<td>2</td>
+<td>First citizen service live on open stack</td>
+<td>IT + service</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>14</td>
+<td>2</td>
+<td>CKAN open data portal live</td>
+<td>IT + data</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>15</td>
+<td>2</td>
+<td>Decidim participation platform live</td>
+<td>IT + mayor</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>16</td>
+<td>2</td>
+<td>WCAG 2.1 AA audit passed</td>
+<td>External auditor</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>17</td>
+<td>2</td>
+<td>Five services live; 80% of volume</td>
+<td>IT + services</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>18</td>
+<td>3</td>
+<td>All services federated via SSO</td>
+<td>IT</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>20</td>
+<td>3</td>
+<td>GIS layer live</td>
+<td>IT + planning</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>22</td>
+<td>3</td>
+<td>80% of services digitised</td>
+<td>IT + services</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>23</td>
+<td>3</td>
+<td>XÖV/eCH inter-agency exchange live</td>
+<td>IT + partner</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>24</td>
+<td>3</td>
+<td>AI Act conformity assessment complete</td>
+<td>DPO + IT</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>25</td>
+<td>4</td>
+<td>First upstream contribution published</td>
+<td>IT</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>26</td>
+<td>4</td>
+<td>Community of practice launched (≥3 cities)</td>
+<td>IT lead</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>27</td>
+<td>4</td>
+<td>Citizen satisfaction survey (NPS ≥ 40)</td>
+<td>Comms</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>28</td>
+<td>4</td>
+<td>TCO comparison report published</td>
+<td>Finance + IT</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>30</td>
+<td>5</td>
+<td>Full licence audit complete</td>
+<td>IT + legal</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>32</td>
+<td>5</td>
+<td>100% sovereign data residency verified</td>
+<td>DPO</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>34</td>
+<td>5</td>
+<td>Replication playbook published</td>
+<td>IT lead</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>36</td>
+<td>5</td>
+<td>Strategy paper v1.0 published</td>
+<td>Author</td>
+<td>☐</td>
+</tr>
+</tbody></table></div>
+<hr>
+<p><em>This document is released under the Creative Commons Attribution 4.0 International Licence (CC-BY-4.0).</em>   <em>Attribute as: Sebastian Graf, Autonomous Office of Civil Digital Infrastructure (sebk4c@tuta.com)</em>   <em>Version 0.2.0 — Citation-Complete Draft — 2026-06-21</em></p>
+  </main>
+</body>
+</html>

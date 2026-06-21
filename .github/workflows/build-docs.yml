@@ -10,8 +10,9 @@ on:
     branches: ["**"]
     paths:
       - "Doc/**/*.md"
-      - "Scripts/build_govtech_docs.py"
-      - "requirements.txt"
+      - "Scripts/*.py"
+      - "pyproject.toml"
+      - "uv.lock"
       - ".github/workflows/build-docs.yml"
   create:            # tag creation
   workflow_dispatch:  # manual run from the Actions tab
@@ -26,10 +27,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
         with:
-          python-version: "3.11"
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install 3.12
 
       - name: Install pandoc and WeasyPrint system libraries
         run: |
@@ -39,16 +43,19 @@ jobs:
             libgdk-pixbuf2.0-0 libcairo2 libffi-dev fonts-dejavu
 
       - name: Install Python dependencies
-        run: pip install -r requirements.txt
+        run: uv sync --locked
 
       - name: Validate citations
-        run: python3 Scripts/validate_citations.py
+        run: uv run python Scripts/validate_citations.py
 
       - name: Check EN/DE translation parity
-        run: python3 Scripts/translate_document.py --check
+        run: uv run python Scripts/translate_document.py --check
 
       - name: Build DOCX / PDF / HTML for every language
-        run: python3 Scripts/build_govtech_docs.py
+        run: uv run python Scripts/build_govtech_docs.py
+
+      - name: Smoke-check rendered documents
+        run: uv run python Scripts/smoke_check.py --require-formats docx,html,pdf
 
       - name: List built artefacts
         run: find Doc/build -type f -printf '%s\t%p\n' | sort -k2

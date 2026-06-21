@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Souverän by Design: Open-Source-GovTech-Strategie für Schweizer und deutsche Städte — v0.2.0</title>
+  <meta name="author" content="Sebastian Graf, Autonomous Office of Civil Digital Infrastructure">
+  <meta name="version" content="0.2.0">
+  <meta name="date" content="2026-06-21">
+  <style>
+    :root {
+      --ink: #1a1a2e; --muted: #555; --accent: #2c4a7c;
+      --bg: #fdfdfd; --rule: #dde; --code-bg: #f3f4f8;
+      --max-w: 800px;
+      --font: system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { font-size: 17px; scroll-behavior: smooth; }
+    body { font-family: var(--font); color: var(--ink); background: var(--bg); line-height: 1.72; margin: 0; padding: 2rem 1rem 5rem; }
+    .paper { max-width: var(--max-w); margin: 0 auto; }
+    .paper-header { border-bottom: 3px solid var(--accent); margin-bottom: 2.5rem; padding-bottom: 1.5rem; }
+    .paper-header h1 { font-size: 1.8rem; line-height: 1.25; color: var(--accent); margin: 0 0 0.6rem; }
+    .paper-meta { font-size: 0.82rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 0.35rem 1.2rem; }
+    .badge { display: inline-block; padding: 0.1rem 0.5rem; border-radius: 3px; font-size: 0.75rem; font-weight: 700; background: var(--accent); color: #fff; }
+    .status-badge { background: #2a7c4a; }
+    h2 { font-size: 1.3rem; color: var(--accent); border-bottom: 1px solid var(--rule); padding-bottom: 0.3rem; margin-top: 2.4rem; margin-bottom: 0.7rem; }
+    h3 { font-size: 1.06rem; color: var(--accent); margin-top: 1.8rem; margin-bottom: 0.5rem; }
+    h4 { font-size: 0.96rem; color: var(--ink); font-weight: 700; margin-top: 1.4rem; margin-bottom: 0.4rem; }
+    p { margin: 0 0 0.95rem; }
+    a { color: var(--accent); }
+    ul, ol { padding-left: 1.6rem; margin: 0 0 1rem; }
+    li { margin-bottom: 0.3rem; }
+    table { border-collapse: collapse; width: 100%; margin: 1.2rem 0 1.5rem; font-size: 0.86rem; }
+    th { background: var(--accent); color: #fff; font-weight: 600; text-align: left; padding: 0.5rem 0.7rem; }
+    td { padding: 0.42rem 0.7rem; border-bottom: 1px solid var(--rule); }
+    tr:nth-child(even) td { background: var(--code-bg); }
+    code { font-family: var(--mono); background: var(--code-bg); font-size: 0.84em; padding: 0.1em 0.35em; border-radius: 3px; }
+    blockquote { border-left: 4px solid var(--accent); margin: 1.2rem 0; padding: 0.6rem 1.2rem; background: var(--code-bg); color: var(--muted); font-style: italic; }
+    .abstract { background: var(--code-bg); border-radius: 6px; padding: 1.2rem 1.5rem; margin-bottom: 2rem; }
+    .abstract-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); display: block; margin-bottom: 0.5rem; }
+    .keywords { font-size: 0.82rem; color: var(--muted); margin-top: 0.6rem; }
+    .ref-list { font-size: 0.86rem; }
+    .ref-list li { margin-bottom: 0.55rem; }
+    footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: 0.8rem; color: var(--muted); }
+    @media print { body { font-size: 11pt; padding: 0; } .paper { max-width: 100%; } }
+    @media (max-width: 600px) { html { font-size: 15px; } }
+  </style>
+</head>
+<body>
+<article class="paper">
+  <header class="paper-header">
+    <h1>Souverän by Design: Eine Open-Source-GovTech-Strategie für Schweizer und deutsche Städte</h1>
+    <div class="paper-meta">
+      <span>&#9998; Sebastian Graf &mdash; Autonomous Office of Civil Digital Infrastructure &lt;sebk4c@tuta.com&gt;</span>
+      <span>&#128197; 2026-06-21</span>
+      <span><span class="badge">v0.2.0</span></span>
+      <span><span class="badge status-badge">Zitiervollständiger Entwurf</span></span>
+      <span>&#127760; Deutsch (Übersetzung)</span>
+      <span>&#128196; CC-BY-4.0</span>
+    </div>
+  </header>
+
+  <section class="abstract">
+    <span class="abstract-label">Zusammenfassung</span>
+    <p>Kommunalverwaltungen in der Schweiz und Deutschland befinden sich an einem strukturellen Wendepunkt ihrer digitalen Infrastruktur: Jahrzehnte der Abhängigkeit von Eigenlösungen proprietärer Anbieter haben fragmentierte Systeme, steigende Lizenzkosten, Datenschutzrisiken und eingeschränkte politische Handlungsfreiheit hervorgebracht. Diese Strategie legt einen umfassenden Handlungsrahmen für Stadtverwaltungen vor, die den Wechsel zu einer souveränen, auf Open-Source-Technologie basierenden Infrastruktur vollziehen möchten. Auf Basis schweizerischer Bundesvorgaben (EMBAG SR 172.019, BGElD), deutscher Bundesprogramme (OZG 2.0, OpenDesk/ZenDiS, Sovereign Cloud Stack) und europäischer Regulierungsinstrumente (EU-KI-Gesetz 2024/1689, EU-Datengesetz 2023/2854, NIS2-Richtlinie 2022/2555, Interoperables-Europa-Gesetz 2024/903) werden die politischökonomischen Rahmenbedingungen, die technische Architektur, die Gesamtbetriebskosten-Nachweise und die Implementierungssequenz für einen erfolgreichen Wechsel analysiert. Es wird eine neunschichtige Referenzarchitektur vorgeschlagen, die von der Infrastruktur bis zu bürgerorientierten Beteiligungsplattformen reicht, und ein dreijähriger phasenbasierter Umsetzungsplan detailliert beschrieben. Stakeholder-, Beschaffungs- und Risikorahmen sind für den unmittelbaren operativen Einsatz aufbereitet. Ein neues Kapitel zur Datenverwaltung und zum Datenschutz behandelt die DSGVO-Architektur, die Pflichten aus dem EU-Datengesetz, die Datensässigkeit und die Open-Government-Data-Politik. Gesamtbetriebskosten-Nachweise aus der französischen Gendarmerie (72.000 Arbeitsplätze, rund 40 % Kosteneinsparung) und Vitoria-Gasteiz (über 200.000 Euro Einsparungen) stützen den strategischen Fall. Fallstudien kleiner Kommunen (Schaffhausen CH, Vitoria-Gasteiz ES, Bozen IT, Rennes FR) belegen die Reproduzierbarkeit jenseits von Großstädten. Das Dokument vertritt die These, dass digitale Souveränität kein Luxus, sondern eine Voraussetzung für eine legitime, resiliente und kosteneffiziente öffentliche Verwaltung in den 2020er-Jahren ist.</p>
+    <p class="keywords"><strong>Schlüsselwörter:</strong> Digitale Souveränität, Open-Source-Verwaltung, GovTech, Kommunalverwaltung, EMBAG, OZG 2.0, Sovereign Cloud Stack, OpenDesk, ZenDiS, Keycloak, Nextcloud, Decidim, CONSUL, Matrix, CKAN, EU-KI-Gesetz, EU-Datengesetz, NIS2, BGElD, BundID, Gesamtbetriebskosten, Schweiz, Deutschland</p>
+  </section>
+
+  <h2>1. Einleitung</h2>
+  <p>Die digitale Infrastruktur kommunaler Verwaltungen ist zu einer Frage demokratischer Relevanz geworden. Während Städte früher isolierte Fachanwendungen beschafften, liefern heute einige wenige proprietäre Anbieter integrierte Suiten, die Identität, Dokumente, Kommunikation, Workflows, Kartendienste und Bürgerbeteiligung abdecken. Die daraus resultierende Bindung ist nicht nur technischer Natur: Sie schränkt Vergabeentscheidungen ein, setzt Haushaltsprozesse einseitigen Preisänderungen aus, schafft Datenschutzrisiken und kann die Geschwindigkeit und Richtung der politischen Umsetzung einschränken.</p>
+  <p>Vor diesem Hintergrund schafft eine Konvergenz aus gesetzlichen Vorgaben, technologischer Reife und Haushaltsdruck Bedingungen für einen strukturellen Wandel hin zu einer offenen, souveränen digitalen Infrastruktur in der europäischen öffentlichen Verwaltung. Das Schweizer EMBAG-Gesetz (in Kraft seit Januar 2024) verpflichtet Bundesbehörden zur Veröffentlichung öffentlich finanzierter Software als Open Source [1]. Die deutsche OZG-2.0-Reform [2] schreibt das &bdquo;Once-Only&ldquo;-Prinzip und eine gemeinsame Identitätsinfrastruktur (BundID [57]) vor, während das Bundesministerium des Innern die ZenDiS GmbH [51] fördert, die OpenDesk [42] entwickelt und betreibt. Das EU-Interoperabilitätsgesetz [6], das EU-KI-Gesetz [54] und das EU-Datengesetz [55] schaffen zusätzliche Pflichten und architektonische Anforderungen, die offene Standards strukturell besser erfüllen als proprietäre Systeme.</p>
+
+  <h3>1.1 Geltungsbereich</h3>
+  <p>Der Schwerpunkt liegt auf Kommunen in der Schweiz (Gemeinden, Kantone) und Deutschland (Gemeinden, kreisfreie Städte, Landkreise) mit 10.000 bis 500.000 Einwohnerinnen und Einwohnern. Der Technologie-Stack, die Rechtsanalyse und die Beschaffungshinweise sind auf diesen Bereich ausgerichtet, grundsätzlich aber im gesamten EU/EWR-Raum anwendbar.</p>
+
+  <h3>1.2 Versionierung</h3>
+  <p>Dieses Dokument verwendet semantische Versionierung. v0.1.0 war der erste strukturierte Entwurf (2026-06-20). v0.2.0 (dieses Dokument, 2026-06-21) ist der zitiervollständige Entwurf mit Gesamtbetriebskosten-Nachweisen, EU-Regulierungsanalyse, Fallstudien kleiner Kommunen, einer KI-Dienste-Schicht und einem vollständigen Kapitel zur Datenverwaltung. v1.0.0 wird die erste extern teilbare Version nach Peer-Review und Stakeholderkonsultation sein.</p>
+
+  <h2>2. Methodik</h2>
+  <p>Das Papier synthetisiert primäre Rechtsquellen und Regierungspublikationen mit akademischer Literatur und dokumentierten Einsatzfällen. Der Forschungsprozess umfasste vier Schritte: (1) systematische Erfassung primärer Quellen aus schweizerischen, deutschen und EU-Rechtsrepositorien; (2) strukturierter Review akademischer Literatur zu E-Government-Reifegradmodellen, Open-Data-Adoption und digitaler Souveränität; (3) Analyse von Einsatzfallstudien aus Berichten von Behörden, OSOR-Dokumentationen (EU Open Source Observatory) sowie Anbieter- und Community-Veröffentlichungen; und (4) Stack-Bewertung mit einem neunkriterigen Scoring-Framework, das für alle Technologieschichten einheitlich angewendet wird.</p>
+  <p>Alle Quellen sind im Quellenregister des Projekts (<code>Mem/source-registry.md</code>) mit Originalsprache, Zuständigkeit, herausgebender Organisation, Veröffentlichungsdatum, URL, Lizenz und Verifizierungsstatus dokumentiert. Der Zustand des Literaturreviews wird in <code>Mem/literature-review-state.md</code> mit einem vierteljährlichen Aktualisierungsrhythmus verfolgt.</p>
+
+  <h2>3. Literaturreview</h2>
+
+  <h3>3.1 E-Government-Theorie und Reifegradmodelle</h3>
+  <p>Wirtz und Weyerer [7] schlagen ein ganzheitliches fünfdimensionales Reifegradmodell vor, das technische Infrastruktur, Prozessqualität, Dienstleistungsqualität, Bürgerorientierung und Transparenz umfasst. Janowski [30] beschreibt vier Generationen der Entwicklung digitaler Verwaltung: von der Informationsbereitstellung über Transaktionsservices zur integrierten Verwaltung und kontextualisierten Leistungserbringung. Janssen et al. [8] identifizieren strukturelle Adoptionshindernisse, die gleichermaßen für Open-Source-Stacks gelten. Lathrop und Ruma [56] liefern die philosophische Grundlage für offene Verwaltung als strukturelles Bekenntnis zu Transparenz und Beteiligung.</p>
+
+  <h3>3.2 Schweizerischer Rechts- und Politikrahmen</h3>
+  <p>Das EMBAG (SR 172.019) [1] ist seit Januar 2024 in Kraft und verpflichtet Bundesbehörden, öffentlich finanzierte Software unter Open-Source-Lizenzen zu veröffentlichen. Die eCH-Standards [48] definieren die XML-Interoperabilitätsschicht (eCH-0007 Gemeinderegister, eCH-0010 Adressen, eCH-0011 Personendaten, eCH-0020 Meldungswesen, eCH-0160 Geschäftsverwaltung). Das BGElD [58] &ndash; das neue Schweizer E-ID-Gesetz &ndash; schreibt eine staatlich ausgegebene digitale Identitätswälle auf SSI-Architektur vor, die ab 2026 in Kraft tritt. Kommunen werden verpflichtet sein, BGElD für digitale Dienste zu akzeptieren.</p>
+
+  <h3>3.3 Deutscher Rechts- und Politikrahmen</h3>
+  <p>Das OZG 2.0 [2] führt das &bdquo;Once-Only&ldquo;-Prinzip und den EfA-Ansatz (Einer für Alle) ein. FITKO [9] koordiniert die föderale Interoperabilität. BundID [57] ist das zentrale Bürgerkonto für alle OZG-Dienste. ZenDiS GmbH [51], 2022 vom BMI gegründet, verwaltet OpenDesk [42]: Nextcloud, Cryptpad, OpenProject, Jitsi, Element und Collabora unter AGPL-3.0. govdigital eG [23] bietet Rahmenverträge und eine SCS-basierte Cloud [3], die das öffentliche Vergaberecht erfüllt. BSI IT-Grundschutz [26] stellt die Sicherheitsgrundlinie bereit.</p>
+
+  <h3>3.4 Europäischer Rahmen</h3>
+  <p>Das Interoperables-Europa-Gesetz [6] (Verordnung EU 2024/903) schafft verbindliche grenzenüberschreitende Interoperabilitätspflichten. Der Europäische Interoperabilitätsrahmen [45] liefert die konzeptionelle Architektur. GovStack [49] (ITU/DIAL/GIZ) definiert interoperable Software-Bausteine für die digitale Verwaltung.</p>
+
+  <h3>3.5 Digitale Beteiligungsplattformen</h3>
+  <p>Decidim [12] (AGPL-3.0, Ursprung: Barcelona, 2016) ist in 400+ Städten weltweit im Einsatz. CONSUL Democracy [47] (AGPL-3.0, Ursprung: Madrid, 2015) ist in 300+ Städten in 35 Ländern verbreitet. Beide sind produktionsreif.</p>
+
+  <h3>3.6 Gesamtbetriebskosten-Nachweise</h3>
+  <p>Die französische Gendarmerie nationale [53] migrierte zwischen 2004 und 2014 72.000 Arbeitsplätze von Windows auf Ubuntu Linux mit LibreOffice. Dokumentiertes Ergebnis: rund 40 % Reduktion der Gesamtbetriebskosten im Vergleich zur äquivalenten proprietären Konfiguration. Vitoria-Gasteiz [60] dokumentierte Einsparungen von über 200.000 Euro durch Open-Source-Adoption in Bürosoftware, GIS und Serverinfrastruktur.</p>
+
+  <table>
+    <caption style="text-align:left;font-size:0.85rem;margin-bottom:0.4rem;">Tabelle 1: Indikative 5-Jahres-Gesamtbetriebskosten, 1.000 kommunale Nutzer</caption>
+    <thead><tr><th>Komponente</th><th>Open-Source-Stack (&euro;)</th><th>Proprietäres Äquivalent (&euro;)</th></tr></thead>
+    <tbody>
+      <tr><td>Infrastruktur (Cloud/On-Prem)</td><td>400.000&ndash;800.000</td><td>500.000&ndash;1.000.000</td></tr>
+      <tr><td>Softwarelizenzen</td><td>0&ndash;50.000</td><td>600.000&ndash;1.200.000</td></tr>
+      <tr><td>Implementierung &amp; Integration</td><td>600.000&ndash;1.500.000</td><td>400.000&ndash;800.000</td></tr>
+      <tr><td>Training &amp; Change Management</td><td>200.000&ndash;500.000</td><td>150.000&ndash;350.000</td></tr>
+      <tr><td>Laufender Support &amp; Wartung</td><td>600.000&ndash;1.650.000</td><td>550.000&ndash;2.150.000</td></tr>
+      <tr><td><strong>Gesamt 5 Jahre</strong></td><td><strong>1.800.000&ndash;4.500.000</strong></td><td><strong>2.200.000&ndash;5.500.000</strong></td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.7 EU-Regulierungsrahmen: KI-Gesetz, Datengesetz, NIS2</h3>
+  <p><strong>EU-KI-Gesetz (Verordnung EU 2024/1689) [54]</strong> klassifiziert KI-Systeme in der öffentlichen Verwaltung für Bürgerbewertung, Leistungsanspruchsermittlung und Strafverfolgung als &bdquo;Hochrisiko&ldquo; (Anhang III). Hochrisiko-Systeme erfordern Konformitätsbeurteilungen, menschliche Aufsichtsmechanismen und Datenverwaltungsdokumentation.</p>
+  <p><strong>EU-Datengesetz (Verordnung EU 2023/2854) [55]</strong> schreibt Cloud-Wechselpflichten vor (Art. 23: Portabilität, Portierungsassistenz, Egress-Gebührenobergrenzen) und Interoperabilitätspflichten (Art. 25: offene APIs, gemeinsame Datenformate, offene Standards). Open-Source-Stacks erfüllen diese Anforderungen strukturell.</p>
+  <p><strong>NIS2-Richtlinie (Richtlinie EU 2022/2555) [27]</strong> klassifiziert Kommunen als &bdquo;wesentliche Einrichtungen&ldquo;, die einer 24-Stunden-Meldepflicht bei erheblichen Vorfällen und Mindestanforderungen an Sicherheitsmaßnahmen unterliegen.</p>
+
+  <h3>3.8 Fallstudien kleiner Kommunen</h3>
+  <p><strong>Schaffhausen, Schweiz (~80.000)</strong>: Der Kanton betreibt Decidim für Beteiligungsprozesse einschließlich kantonaler Haushaltskonsultationen. Nextcloud wird für die abteilungsübergreifende Dokumentenbearbeitung eingesetzt.</p>
+  <p><strong>Vitoria-Gasteiz, Spanien (~252.000)</strong>: Die baskische Hauptstadt migrierte Bürosoftware (LibreOffice), GIS (QGIS anstelle von ESRI ArcGIS) und Serverinfrastruktur auf Open Source und dokumentierte Einsparungen von über 200.000 Euro [60].</p>
+  <p><strong>Bozen/Bolzano, Italien (~108.000)</strong>: Die zweisprachige Stadt betreibt einen gemischten Open-Source-Stack mit besonderer Stärke im zweisprachigen Bürgerportal &ndash; relevant für mehrsprachige Schweizer Kommunen.</p>
+  <p><strong>Rennes Métropole, Frankreich (~220.000)</strong>: Rennes betreibt ein CKAN-basiertes Open-Data-Portal (DCAT-AP-konform) und hat Matrix/Element für die kommunale Kommunikation integriert.</p>
+
+  <h2>4. Technologie-Stack-Analyse</h2>
+
+  <h3>4.1 Bewertungsrahmen</h3>
+  <p>Jede Technologieschicht wird nach neun Kriterien bewertet: (1) Reife und Produktionsbereitschaft; (2) Sicherheit; (3) Interoperabilität und Standardkonformität; (4) Souveränität und Anbieterunabhängigkeit; (5) Community und Ökosystem; (6) Gesamtbetriebskosten; (7) Barrierefreiheit (BITV 2.0 / EN 301 549 / WCAG 2.1 AA); (8) Rechtskompatibilität; (9) Verfügbarkeit qualifizierter Support-Anbieter im DACH-Raum.</p>
+
+  <h3>Referenzarchitektur</h3>
+  <table>
+    <thead><tr><th>Schicht</th><th>Komponente</th><th>Lizenz</th><th>Bewertung</th></tr></thead>
+    <tbody>
+      <tr><td>Infrastruktur</td><td>Sovereign Cloud Stack (OpenStack + Kubernetes + Ceph)</td><td>Apache 2.0</td><td>9/10</td></tr>
+      <tr><td>Datenbank</td><td>PostgreSQL</td><td>PostgreSQL</td><td>9/10</td></tr>
+      <tr><td>Identität (IAM)</td><td>Keycloak</td><td>Apache 2.0</td><td>9/10</td></tr>
+      <tr><td>Bürger-Identität</td><td>BundID (DE) / BGElD (CH) Integration</td><td>&mdash;</td><td>8/10</td></tr>
+      <tr><td>Dokumente &amp; Zusammenarbeit</td><td>Nextcloud + Collabora Online</td><td>AGPL-3.0</td><td>9/10</td></tr>
+      <tr><td>Kommunikation</td><td>Matrix / Element</td><td>Apache 2.0</td><td>8/10</td></tr>
+      <tr><td>Workflows</td><td>Camunda 8 CE</td><td>Apache 2.0</td><td>8/10</td></tr>
+      <tr><td>CMS / Web</td><td>TYPO3 / Drupal</td><td>GPL-2.0</td><td>8/10</td></tr>
+      <tr><td>Beteiligung</td><td>Decidim / CONSUL</td><td>AGPL-3.0</td><td>9/10</td></tr>
+      <tr><td>Open Data</td><td>CKAN</td><td>AGPL-3.0</td><td>9/10</td></tr>
+      <tr><td>GIS</td><td>QGIS + GeoServer + OSM</td><td>GPL + ODbL</td><td>8/10</td></tr>
+      <tr><td>KI-Dienste</td><td>Ollama + Nextcloud KI-Assistent</td><td>MIT / AGPL-3.0</td><td>7/10</td></tr>
+      <tr><td>Sicherheitsgrundlinie</td><td>BSI IT-Grundschutz</td><td>CC-BY-ND</td><td>&mdash;</td></tr>
+      <tr><td>Interoperabilität</td><td>eCH (CH) / XÖV-KoSIT (DE)</td><td>Open Access</td><td>&mdash;</td></tr>
+    </tbody>
+  </table>
+
+  <h2>5. Umsetzungsfahrplan</h2>
+
+  <h3>5.1 Bereitschaftsbeurteilung</h3>
+  <p>Vor dem Commit auf einen Migrationsplan sollten Kommunen eine strukturierte Bereitschaftsbeurteilung durchführen: Anwendungsinventar und Abhängigkeitskartierung, Datenklassifizierungsprüfung, Netzwerk- und Infrastrukturkapazitätsbeurteilung, Kompetenzbasislinie der Mitarbeitenden, Vergaberechtprüfung und Prüfung der politischen und Führungsausrichtung. Die Beurteilung dauert typischerweise 4&ndash;8 Wochen.</p>
+
+  <h3>5.2 Phase 1: Grundlage (Monate 1&ndash;6)</h3>
+  <p>Bereitstellung der SCS-basierten Infrastruktur. Einrichtung von Keycloak als zentralem Identity Provider. Bereitstellung von Nextcloud mit Collabora. Einrichtung der BSI-IT-Grundschutz-Sicherheitssteuerungen. Pilotbetrieb in einer Pilotabteilung.</p>
+
+  <h3>5.3 Phase 2: Diensterweiterung (Monate 7&ndash;18)</h3>
+  <p>Ausweitung von Keycloak auf alle internen Dienste. Bereitstellung von Camunda für die Top-5-Verwaltungsworkflows. Matrix/Element als offizielle Kommunikationsplattform. TYPO3/Drupal als CMS. Beginn der CKAN-Bereitstellung. QGIS-Einführung. Beginn der BundID/BGElD-Integration. Mitarbeiterschulungsprogramm.</p>
+
+  <h3>5.4 Phase 3: Bürgerdienste (Monate 19&ndash;30)</h3>
+  <p>Start der Decidim- oder CONSUL-Beteiligungsplattform. Abschluss des CKAN-Open-Data-Portals. Migration aller verbleibenden Bürgerdienste. eCH/XÖV-Integration. Start des Ollama-KI-Assistenten nach EU-KI-Gesetz-Konformitätsprüfung. Abschluss der NIS2-Verfahren.</p>
+
+  <h3>5.5 Phase 4: Konsolidierung und Export (Monate 31&ndash;36)</h3>
+  <p>Abschaltung der letzten proprietären Lizenzen. Dokumentation der 3-Jahres-Gesamtbetriebskosten. Veröffentlichung von Konfigurationen auf openCode.de. Community-Beiträge. OSOR-Fallstudie einreichen.</p>
+
+  <h3>5.6 Governance-Struktur</h3>
+  <p>Einrichtung eines Digitaltransformations-Lenkungsausschusses mit Vertretern aus: gewählten Ratsmitgliedern, Verwaltungsführung, IT-Abteilung, Rechts-/Datenschutzbeauftragten, Finanzierung/Beschaffung, Abteilungsleitungen und einem Bürgeradvisory. Monatliche Sitzungen in Phase 1&ndash;2, vierteljährlich danach.</p>
+
+  <h2>6. Stakeholder- und Beschaffungsstrategie</h2>
+
+  <h3>6.1 Stakeholder-Karte</h3>
+  <p>Primäre Stakeholder: Gemeinderat, Stadtverwaltung, IT-Abteilung, Vergabestelle, Datenschutzbeauftragte(r), Bürgerinnen und Bürger, Open-Source-Anbieter, kantonale/Länder-IT-Agenturen, FITKO/eCH/BSI.</p>
+
+  <h3>6.2 Beschaffungsrechtlicher Rahmen</h3>
+  <p>Schweizer Kommunen handeln unter BoeB und kantonalem Beschaffungsrecht; deutsche Kommunen unter VOL/VOB und GWB. Open-Source-Beschaffung ist mit diesen Rahmen vollständig vereinbar: Der Auftrag gilt für Implementierungsdienstleistungen, Support und Anpassungen &ndash; nicht für Softwarelizenzen. Rahmenverträge über govdigital eG (DE) oder kantonale IT-Kooperativen (CH) bieten den schnellsten Beschaffungsweg.</p>
+
+  <h3>6.3 Anbieter-Ökosystem</h3>
+  <p>Der DACH-Raum verfügt über ein reifes Open-Source-Integratoren-Ökosystem: Infrastrukturanbieter (govdigital-eG-Mitglieder, Dataport AöR [24]), Nextcloud-Unternehmenspartner, Keycloak/IAM-Spezialisten, Decidim/CONSUL-Bereitsteller und QGIS-Dienstleister.</p>
+
+  <h2>7. Datenverwaltung und Datenschutz</h2>
+
+  <h3>7.1 Rechtsrahmen</h3>
+  <p>Die kommunale Datenverarbeitung unterliegt in Deutschland der DSGVO (Verordnung EU 2016/679) und in der Schweiz dem revidierten nDSG (in Kraft seit September 2023). Open-Source-Stacks bieten strukturelle Vorteile für die DSGVO/nDSG-Konformität: Datenverarbeitungsstandorte sind vertraglich und technisch überprüfbar, Datenformate sind prüfbar.</p>
+
+  <h3>7.2 DSGVO-Architektur für den Open-Source-Stack</h3>
+  <p>Die Kommune agiert als Verantwortliche für alle personenbezogenen Daten im Stack. Keycloak dient als zentrales Identitäts- und Einwilligungsverwaltungssystem. Nextcloud wird mit Ende-zu-Ende-Verschlüsselung für sensible Dokumentenkategorien konfiguriert. Matrix/Element mit verifizierter E2E-Verschlüsselung für personenbezogene Kommunikation. Alle Auftragsverarbeiter unterliegen DSGVO-Art.-28-Verträgen.</p>
+
+  <h3>7.3 Datensässigkeit</h3>
+  <p>Schweizer Kommunen müssen sicherstellen, dass personenbezogene Daten in der Schweiz oder in Ländern mit adäquatem Schutzniveau verbleiben (nDSG Art. 16&ndash;17). Deutsche Kommunen müssen die Datenspeicherung innerhalb der EU/des EWR sicherstellen. SCS-basierte Infrastruktur in govdigital-eG- und Kantonsrechenzentren erfüllt beide Anforderungen strukturell.</p>
+
+  <h3>7.4 Open-Government-Data-Politik</h3>
+  <p>Kommunale OGD-Politik sollte dem Fünf-Sterne-Open-Data-Modell folgen, mit CC-BY-4.0 oder CC0 als Standardlizenzierung. CKAN-Metadaten müssen DCAT-AP.ch (Schweiz) oder DCAT-AP.de (Deutschland) entsprechen und von opendata.swiss bzw. GovData aggregiert werden.</p>
+
+  <h2>8. Risikoanalyse</h2>
+
+  <h3>8.1 Politisches Kontinuitätsrisiko</h3>
+  <p><strong>Risiko:</strong> Führungswechsel führt zur Umkehr der Open-Source-Verpflichtungen (Präzedenzfall Münchner LiMux).<br>
+  <strong>Maßnahme:</strong> Verpflichtungen in mehrjährigen Verträgen verankern; parteiübergreifenden Lenkungsausschuss einrichten; Migrationsfortschritt auf openCode.de öffentlich dokumentieren.</p>
+
+  <h3>8.2 Technische Integrationskomplexität</h3>
+  <p><strong>Risiko:</strong> Alt-System-Integration dauert länger und kostet mehr als geplant.<br>
+  <strong>Maßnahme:</strong> Investition in die Bereitschaftsbeurteilung; Parallelbetriebs-Perioden für kritische Systeme; 20&ndash;30 % Integrationskosten-Puffer einplanen.</p>
+
+  <h3>8.3 Kompetenzlücke</h3>
+  <p><strong>Risiko:</strong> Interne IT fehlen die Fähigkeiten zum Betrieb des Open-Source-Stacks.<br>
+  <strong>Maßnahme:</strong> In Schulungen investieren (15.000&ndash;30.000 Euro pro Senior-Techniker); Managed-Service-Angebote von govdigital eG nutzen; Open-Source-Spezialisten einstellen oder weiterqualifizieren.</p>
+
+  <h3>8.4 Sicherheitsschwachstellen in Upstream-Komponenten</h3>
+  <p><strong>Risiko:</strong> Kritische CVEs in Open-Source-Komponenten erfordern schnelles Patching.<br>
+  <strong>Maßnahme:</strong> Sicherheitsbenachrichtigungen für alle Stack-Komponenten abonnieren; Patching-SLA festlegen (kritisch: 24h, hoch: 72h, mittel: 2 Wochen); NIS2-CSIRT-Meldeverfahren einrichten.</p>
+
+  <h2>9. Schlussfolgerung</h2>
+  <p>Digitale Souveränität ist für Schweizer und deutsche Kommunen jeder Größe erreichbar. Die Technologie ist reif, der Rechtsrahmen ist unterstützend, und die Kostenbelege sind positiv: Open-Source-Kommunalstacks erzielen im großen Maßstab Gesamtbetriebskosten-Vorteile von 20&ndash;40 % gegenüber proprietären Äquivalenten und bieten gleichzeitig strukturelle Compliance-Vorteile im Rahmen der DSGVO, des EU-KI-Gesetzes, des EU-Datengesetzes und von NIS2.</p>
+  <p>Die Voraussetzungen für den Erfolg sind politisches Engagement, das über Wahlzyklen hinaus Bestand hat, ausreichende Investitionen in das Change Management, Beschaffungsstrukturen, die gemeinsame Dienste durch govdigital eG und kantonale Kooperativen nutzen, und Upstream-Beitragsstrategien, die langfristige Wartungskosten reduzieren.</p>
+  <p>Das Papier wird vierteljährlich aktualisiert. Kommunen, Forschende und Praktikerinnen und Praktiker sind eingeladen, Zitate, Fallstudien und Korrekturen über das Projekt-Repository einzubringen.</p>
+
+  <h2>Literaturverzeichnis</h2>
+  <ol class="ref-list">
+    <li>[1] Schweizerischer Bundesrat. <em>Bundesgesetz über den Einsatz elektronischer Mittel zur Erfüllung von Behördenaufgaben (EMBAG)</em>, SR 172.019. 2023. <a href="https://www.fedlex.admin.ch/eli/cc/2023/682/de">fedlex.admin.ch</a>.</li>
+    <li>[2] BMI. <em>Onlinezugangsgesetz 2.0 (OZG 2.0)</em>. 2024. <a href="https://www.bmi.bund.de/">bmi.bund.de</a>.</li>
+    <li>[3] OSBA. <em>Sovereign Cloud Stack</em>. 2023. <a href="https://scs.community/">scs.community</a>. Apache 2.0.</li>
+    <li>[6] Europäisches Parlament und Rat. <em>Verordnung (EU) 2024/903 &mdash; Interoperables-Europa-Gesetz</em>. CELEX: 32024R0903.</li>
+    <li>[7] Wirtz, B.W. &amp; Weyerer, J.C. &bdquo;Conceptualization of a holistic e-government maturity model.&ldquo; <em>Public Management Review</em> 19(9), 2017.</li>
+    <li>[8] Janssen, M. et al. &bdquo;Benefits, Adoption Barriers and Myths of Open Data.&ldquo; <em>ISM</em> 29(4), 2012.</li>
+    <li>[12] Decidim Association. <em>Decidim</em>. 2021. <a href="https://decidim.org/">decidim.org</a>. AGPL-3.0.</li>
+    <li>[21] Red Hat. <em>Keycloak</em>. 2023. <a href="https://www.keycloak.org/">keycloak.org</a>. Apache 2.0.</li>
+    <li>[23] govdigital eG. <em>Genossenschaft für digitale Verwaltung</em>. 2023. <a href="https://govdigital.de/">govdigital.de</a>.</li>
+    <li>[26] BSI. <em>IT-Grundschutz-Kompendium 2023</em>. <a href="https://www.bsi.bund.de/">bsi.bund.de</a>.</li>
+    <li>[27] Europäisches Parlament und Rat. <em>Richtlinie (EU) 2022/2555 &mdash; NIS2</em>. CELEX: 32022L2555.</li>
+    <li>[42] BMI / ZenDiS GmbH. <em>OpenDesk</em>. 2023. <a href="https://opendesk.eu/">opendesk.eu</a>. AGPL-3.0.</li>
+    <li>[45] Europäische Kommission. <em>Europäischer Interoperabilitätsrahmen (EIF)</em>. 2017. CC-BY-4.0.</li>
+    <li>[46] KoSIT. <em>XÖV-Standards</em>. 2023. <a href="https://www.xoev.de/">xoev.de</a>.</li>
+    <li>[47] CONSUL Democracy Community. <em>CONSUL Democracy</em>. 2015. <a href="https://consuldemocracy.org/">consuldemocracy.org</a>. AGPL-3.0.</li>
+    <li>[48] eCH. <em>eCH-Standards: Interoperabilität im E-Government</em>. 2023. <a href="https://www.ech.ch/">ech.ch</a>.</li>
+    <li>[49] ITU / DIAL / GIZ. <em>GovStack</em>. 2022. <a href="https://govstack.global/">govstack.global</a>. CC-BY-4.0.</li>
+    <li>[51] ZenDiS GmbH. <em>Digitale Souveränität für die öffentliche Verwaltung</em>. 2023. <a href="https://zendis.de/">zendis.de</a>.</li>
+    <li>[53] Gendarmerie Nationale. <em>Migration Linux &mdash; Überblick</em>. 2014. Via Joinup/OSOR.</li>
+    <li>[54] Europäisches Parlament und Rat. <em>Verordnung (EU) 2024/1689 &mdash; EU-KI-Gesetz</em>. In Kraft 2024-08-01. CELEX: 32024R1689.</li>
+    <li>[55] Europäisches Parlament und Rat. <em>Verordnung (EU) 2023/2854 &mdash; EU-Datengesetz</em>. In Kraft 2024-01-11. CELEX: 32023R2854.</li>
+    <li>[56] Lathrop, D. &amp; Ruma, L. (Hrsg.). <em>Open Government</em>. O&rsquo;Reilly Media, 2010.</li>
+    <li>[57] BMI / FITKO. <em>BundID</em>. 2022. <a href="https://id.bund.de/">id.bund.de</a>.</li>
+    <li>[58] Schweizerischer Bundesrat. <em>Bundesgesetz über den elektronischen Identitätsnachweis (BGElD)</em>. 2023. <a href="https://www.fedlex.admin.ch/eli/fga/2023/2843/de">fedlex.admin.ch</a>.</li>
+    <li>[59] Ollama Inc. <em>Ollama</em>. 2023. <a href="https://ollama.com/">ollama.com</a>. MIT.</li>
+    <li>[60] Ayuntamiento de Vitoria-Gasteiz. <em>Software Libre</em>. 2019. Via OSOR/Joinup.</li>
+    <li>[61] GAIA-X AISBL. <em>GAIA-X: Architektur und technische Spezifikationen</em>. 2020. <a href="https://gaia-x.eu/">gaia-x.eu</a>.</li>
+  </ol>
+
+  <footer>
+    <p>Dieses Dokument steht unter der Lizenz <a href="https://creativecommons.org/licenses/by/4.0/deed.de">CC-BY-4.0</a>. Zitierung: Sebastian Graf, Autonomous Office of Civil Digital Infrastructure &lt;sebk4c@tuta.com&gt;. Version 0.2.0, 2026-06-21. Übersetzung des englischen Originals: <a href="https://github.com/SEBK4C/Strategy-for-City-GovTech">github.com/SEBK4C/Strategy-for-City-GovTech</a>.</p>
+  </footer>
+</article>
+</body>
+</html>

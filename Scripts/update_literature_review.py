@@ -13,7 +13,7 @@ It is read-only: it prints an agenda for a human (or a future agent run) to act 
 at the start of each improvement cycle (suggested cadence: quarterly).
 
 Usage:
-    python3 Scripts/update_literature_review.py
+    uv run python Scripts/update_literature_review.py
 """
 from __future__ import annotations
 
@@ -52,9 +52,17 @@ def extract_section(text: str, heading: str) -> str:
 
 
 def find_due_date(state: str) -> dt.date | None:
-    m = re.search(r"Next review due:\*\*\s*(\d{4}-\d{2}-\d{2})", state)
-    if not m:
-        m = re.search(r"Next review due:\s*(\d{4}-\d{2}-\d{2})", state)
+    patterns = (
+        r"Next review due:\*\*\s*(\d{4}-\d{2}-\d{2})",
+        r"Next review due:\s*(\d{4}-\d{2}-\d{2})",
+        r"Nächste Überprüfung fällig:\*\*\s*(\d{4}-\d{2}-\d{2})",
+        r"Nächste Überprüfung fällig:\s*(\d{4}-\d{2}-\d{2})",
+    )
+    m = None
+    for pattern in patterns:
+        m = re.search(pattern, state)
+        if m:
+            break
     if m:
         try:
             return dt.date.fromisoformat(m.group(1))
@@ -72,7 +80,7 @@ def unverified_sources(registry: str) -> list[str]:
             current_id = m.group(1).strip()
         # Match a real status line ("**Verification status:** unverified"), not the
         # template placeholder ("[unverified | verified | archived]").
-        if re.search(r"Verification status:\*\*\s*unverified\b", line) and current_id:
+        if re.search(r"(Verification status|Verifikationsstatus):\*\*\s*unverified\b", line) and current_id:
             out.append(current_id)
     return out
 
@@ -83,6 +91,14 @@ def checkbox_items(block: str) -> list[str]:
 
 def bullet_items(block: str) -> list[str]:
     return [ln.strip() for ln in block.splitlines() if ln.strip().startswith(("- ", "* "))]
+
+
+def first_section(text: str, headings: tuple[str, ...]) -> str:
+    for heading in headings:
+        section = extract_section(text, heading)
+        if section:
+            return section
+    return ""
 
 
 def main() -> int:
@@ -107,18 +123,18 @@ def main() -> int:
         print("\n[ ] No 'Next review due' date found in literature-review-state.md.")
 
     pending = unverified_sources(registry)
-    print("\n--- Sources pending verification (target: 0 for v0.2.0) ---")
+    print("\n--- Sources pending verification (target: 0 for release candidates) ---")
     if pending:
         for s in pending:
             print(f"  - {s}")
     else:
         print("  none — all registry sources verified or archived.")
 
-    crit = extract_section(state, "## Critical gaps")
+    crit = first_section(state, ("## Critical gaps", "## Kritische Lücken"))
     print("\n--- Critical gaps to close ---")
     print("  " + (crit.replace("\n", "\n  ") if crit else "(none recorded)"))
 
-    notyet = extract_section(state, "### Not yet covered")
+    notyet = first_section(state, ("### Not yet covered", "### Noch nicht abgedeckt"))
     print("\n--- Topics not yet covered ---")
     items = bullet_items(notyet)
     for it in items[:20]:
@@ -126,7 +142,7 @@ def main() -> int:
     if not items:
         print("  (none recorded)")
 
-    leads = extract_section(notes, "### Leads to follow up")
+    leads = first_section(notes, ("### Leads to follow up", "## Open Questions (v0.3.0 status)"))
     print("\n--- Open leads (from research-notes.md) ---")
     todo = checkbox_items(leads)
     for it in todo:
@@ -134,7 +150,14 @@ def main() -> int:
     if not todo:
         print("  (none recorded)")
 
-    checklist = extract_section(state, "## Quarterly review checklist")
+    checklist = first_section(
+        state,
+        (
+            "## Quarterly review checklist",
+            "## Quartalsprüfung-Checkliste",
+            "## Quartalspruf-Checkliste",
+        ),
+    )
     print("\n--- Quarterly review checklist ---")
     cl = checkbox_items(checklist)
     for it in cl:
@@ -145,7 +168,7 @@ def main() -> int:
     print("\n" + "=" * 70)
     print("  Next steps: research the items above, update Mem/source-registry.md and")
     print("  Mem/literature-review-state.md, then revise Doc/ papers and bump the version.")
-    print("  Finish by running: python3 Scripts/validate_citations.py")
+    print("  Finish by running: uv run python Scripts/validate_citations.py")
     print("=" * 70)
     return 0
 

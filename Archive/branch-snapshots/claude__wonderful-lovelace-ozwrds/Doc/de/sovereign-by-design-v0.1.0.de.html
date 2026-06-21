@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Souverän von Grund auf: Eine State-of-the-Art Open-Source-Technologiestrategie für kommunale Verwaltungen</title>
+<style>body{max-width:50rem;margin:2rem auto;font-family:Georgia,serif;line-height:1.5;padding:0 1rem}table{border-collapse:collapse}td,th{border:1px solid #ccc;padding:.3rem .6rem}code,pre{font-family:ui-monospace,monospace}pre{background:#f6f8fa;padding:1rem;overflow:auto}</style>
+</head>
+<body>
+<h1 id="souveran-von-grund-auf">Souverän von Grund auf: Eine State-of-the-Art Open-Source-Technologiestrategie für kommunale Verwaltungen</h1>
+<p><strong>Autor:</strong> Sebastian Graf, Autonomes Büro für Kommunale Digitale Infrastruktur
+<strong>Korrespondenz:</strong> sebk4c@tuta.com
+<strong>Version:</strong> 0.1.0 — Übersetzung: Erster Strukturierter Entwurf
+<strong>Datum:</strong> 2026-06-20
+<strong>Sprachen:</strong> Deutsch (Übersetzung) · English (Quelle)
+<strong>SPDX-License-Identifier:</strong> CC-BY-4.0</p>
+<blockquote>
+<p><em>Dieses Dokument ist eine vollständige Übersetzung des englischen Originals <code>en/sovereign-by-design-v0.1.0.md</code> (Quelldokument der Wahrheit). Strukturelle Änderungen werden zuerst im Quelldokument vorgenommen.</em></p>
+</blockquote>
+<hr />
+<h2 id="zusammenfassung">Zusammenfassung</h2>
+<p>Kommunale Verwaltungen sind die bürgernächste Ebene demokratischer Administration, stehen jedoch vor einem strukturellen Dilemma: Die digitalen Werkzeuge, auf die sie angewiesen sind, sind zunehmend proprietär, herstellergebunden und nicht im Einklang mit öffentlichen Interessen. Diese Arbeit legt eine umfassende Strategie für die Implementierung eines modernen, quelloffenen Verwaltungstechnologie-Stacks in Städten und Gemeinden vor. Auf der Grundlage vorbildlicher Praxis der Schweizer Bundesverwaltung (EMBAG-Gesetzgebung), des deutschen OZG-Reformprogramms und der Sovereign-Cloud-Stack-Initiative sowie der breiteren europäischen Souveränitätstechnologie-Gemeinschaft werden ein Implementierungsfahrplan, ein Stakeholder-Engagement-Rahmen und eine Beschaffungsstrategie von ersten Grundsätzen her erarbeitet.</p>
+<p>Die Analyse umfasst die zentralen Technologiekomponenten — Identitätsmanagement, Dokumentenmanagement, Workflow-Automatisierung, Bürgerbeteiligung, sichere Kommunikation, Open-Data-Veröffentlichung und Cloud-Infrastruktur — bewertet nach den Kriterien digitale Souveränität, Interoperabilität, Gesamtbetriebskosten und demokratische Eignung. Die Arbeit kommt zu dem Schluss, dass Open-Source-Technologiestacks für Kommunen nicht nur technisch realisierbar, sondern fiskalisch überlegen, demokratisch notwendig und in einer wachsenden Zahl von Jurisdiktionen gesetzlich vorgeschrieben sind. Der Fahrplan umfasst 36 Monate mit konkreter Beschaffungsanleitung für Stadtverantwortliche, gewählte Mandatsträger, IT-Teams, Zivilgesellschaft und Technologieanbieter.</p>
+<p><strong>Schlüsselwörter:</strong> Digitale Souveränität, Open-Source-Verwaltung, GovTech, kommunale Digitaltransformation, Interoperabilität, OZG, EMBAG, Sovereign Cloud Stack, E-Government, Civic Technology</p>
+<hr />
+<h2 id="1-einleitung">1. Einleitung</h2>
+<p>Die digitale Transformation kommunaler Verwaltungen ist keine Frage des Ob, sondern des Wie. Bürgerinnen und Bürger erwarten nahtlose, sichere und barrierefreie digitale Dienste; der Gesetzgeber fordert Interoperabilität und Datenschutz; Haushaltszwänge verlangen nachhaltige, kosteneffiziente Technologieinvestitionen. Dennoch sind die meisten Städte und Gemeinden weltweit in einem Kreislauf proprietärer Herstellerabhängigkeit gefangen: teure Lizenzverträge, fragmentierte Systeme und proprietäre Formate, die gute Verwaltungsarbeit eher behindern als ermöglichen [1, 29].</p>
+<p>Die Folgen dieser Abhängigkeit sind gut belegt: Herstellerbindung erhöht Wechselkosten und verschiebt Verhandlungsmacht zugunsten privater Anbieter [4]; proprietäre Formate behindern den behördenübergreifenden Datenaustausch und die Transparenz [45]; geschlossene Software verhindert unabhängige Sicherheitsprüfungen [26]; und wiederkehrende Lizenzgebühren belasten Haushalte, die besser für die Daseinsvorsorge eingesetzt werden könnten [3, 5]. Am grundlegendsten: Wenn die Software demokratischer Institutionen im Besitz privater Akteure und durch diese kontrolliert wird, entsteht ein struktureller Interessenkonflikt zwischen öffentlichem Wohl und unternehmerischen Imperativen [4].</p>
+<p>Ein anderer Weg ist möglich und erprobt. Das Schweizer EMBAG (Bundesgesetz über den Einsatz elektronischer Mittel zur Erfüllung von Behördenaufgaben, 2023) schreibt vor, dass mit öffentlichen Mitteln entwickelte Bundessoftware grundsätzlich als Open Source veröffentlicht wird [1]. Das deutsche OZG-Reformprogramm, der Sovereign Cloud Stack und die OpenDesk-Initiative stellen das ambitionierteste Open-Source-GovTech-Programm Europas dar [2, 3, 42]. Die Kampagne „Public Money? Public Code!“ der Free Software Foundation Europe, mittlerweile von über 200 Organisationen in 30 Ländern unterstützt, benennt das demokratische Prinzip: Software, die mit öffentlichen Mitteln bezahlt wurde, soll der Öffentlichkeit zur Verfügung stehen [4].</p>
+<h3 id="11">1.1 Begriffserklärungen und Abgrenzungen</h3>
+<p><em>Kommunale Verwaltung</em> bezeichnet Städte und Gemeinden einschließlich Schweizer Gemeinden, deutscher Kommunen und vergleichbarer Strukturen. Die Strategie ist für Gemeinden von 5.000 bis über 500.000 Einwohnerinnen und Einwohnern ausgelegt.</p>
+<p><em>Open-Source-Technologiestack</em> bezeichnet Softwarekomponenten, die unter OSI-anerkannten Lizenzen lizenziert sind und auf Infrastruktur betrieben werden, die die Kommune kontrolliert oder ohne unzumutbaren Aufwand wechseln kann.</p>
+<p><em>Digitale Souveränität</em> ist die Fähigkeit einer Behörde, unabhängige Entscheidungen über ihre digitale Infrastruktur zu treffen — einschließlich des Rechts, Software zu inspizieren, zu modifizieren, zu prüfen und zu migrieren, ohne Abhängigkeit von einem einzigen Anbieter [3].</p>
+<h3 id="12">1.2 Forschungsfragen</h3>
+<ol>
+<li>Wie sieht ein moderner Open-Source-Kommunal-Technologiestack im Jahr 2026 aus?</li>
+<li>Was lässt sich aus der schweizerischen, deutschen und europäischen Souveränitätstechnologie-Gemeinschaft lernen?</li>
+<li>Was ist der optimale Phasenimplementierungsweg für eine Stadt mit 50.000–500.000 Einwohnerinnen und Einwohnern?</li>
+<li>Wie sollten Beschaffung, Stakeholder-Engagement und Risikomanagement strukturiert werden, um die Erfolgschancen zu maximieren?</li>
+</ol>
+<hr />
+<h2 id="2-methodik">2. Methodik</h2>
+<p>Diese Arbeit verwendet einen Mehr-Methoden-Forschungsansatz: eine <strong>systematische Literaturrecherche</strong> (2010–2026); eine <strong>vergleichende Politikanalyse</strong> der Technologiegesetze und -strategien aus der Schweiz, Deutschland und der EU; eine <strong>Technologiestack-Bewertung</strong> anhand einer Scoring-Matrix (Lizenzoffenheit, Einsatzreife, Community, Interoperabilität, Sicherheit, Gesamtbetriebskosten, Verwaltungsimplementierungen); und eine <strong>Stakeholder-Analyse</strong>.</p>
+<p>Die Literaturrecherche ist als selbstverbesserndes System konzipiert: Quellenverzeichnis (<code>Mem/source-registry.md</code>) und Literaturrecherche-Status (<code>Mem/literature-review-state.md</code>) werden versioniert und regelmäßig aktualisiert; <code>Scripts/update_literature_review.py</code> liefert die vierteljährliche Agenda.</p>
+<p><strong>Einschränkungen:</strong> Dieses Dokument ist ein erster strukturierter Entwurf (v0.1.0); einige Zitate bedürfen der Verifizierung gegen Primärquellen (im Quellenverzeichnis vermerkt).</p>
+<hr />
+<h2 id="3-literaturubersicht">3. Literaturübersicht</h2>
+<p>Die akademische Literatur zum E-Government hat sich durch vier Phasen entwickelt [30]: Digitalisierung bestehender Prozesse (1995–2005) [29]; Online-Dienstleistungserbringung und Bürgerportale (2005–2012) [7]; Open Data und partizipative Plattformen (2012–2020) [8]; und die aktuelle vierte Generation (2020–heute) mit Plattform-Regierung, digitaler Identitätsinfrastruktur und der Souveränitätswende [45]. Das Reifegradmodell von Wirtz und Weyerer benennt fünf Dimensionen [7].</p>
+<p>Zur <strong>digitalen Souveränität</strong>: Die EU-Open-Source-Strategie 2020–2023 etablierte „Teilung und Wiederverwendung“ [5]; der Interoperable-Europe-Act 2024 schafft bindende Verpflichtungen [6]; der Sovereign Cloud Stack (OSBA, BMWK-gefördert) realisiert digitale Souveränität in der Cloud [3, 23]; und das EMBAG (in Kraft seit 1. Januar 2024) verlangt Open-Source-Veröffentlichung öffentlich finanzierter Bundessoftware [1].</p>
+<p>Das deutsche <strong>OZG-Ökosystem</strong> (OZG 2017, OZG 2.0 2024) verpflichtet alle Verwaltungsebenen, Leistungen online anzubieten [2], gestützt auf das „Once Only“-Prinzip, den EfA-Ansatz, BundID und FITKO [9, 10] sowie openCode.de [10] und genossenschaftliche IT-Dienstleister (Dataport, AKDB) [24]. Schweizer Schlüsselinfrastrukturen umfassen Fedlex [1], opendata.swiss [44], GEVER [43] und die Schweizer eID; die E-Government-Strategie Schweiz 2024–2027 schreibt offene Standards vor [16]. Zentrale souveräne Technologien sind Decidim [12], Matrix/Element [14], Nextcloud [13] und OpenDesk [42].</p>
+<p><strong>Forschungslücken:</strong> belastbare unabhängige Gesamtkostenstudien, Längsschnittdaten abgeschlossener Transitionen, Kleingemeinden-Perspektiven und Nutzerzufriedenheitsforschung fehlen weitgehend (siehe <code>Mem/literature-review-state.md</code>).</p>
+<hr />
+<h2 id="4-technologiestack-analyse">4. Technologiestack-Analyse</h2>
+<p>Ein kommunaler Technologiestack lässt sich in neun Funktionsschichten unterteilen. Empfohlene Komponenten: <strong>Keycloak</strong> für Identität/Authentifizierung (BundID/eID-Verbund) [21]; <strong>Nextcloud</strong> + <strong>OpenProject</strong> für Dokumenten-/Aktenverwaltung [13, 20]; <strong>Camunda Platform 8 Community</strong> für Workflows (XÖV-Integration) [33, 46]; <strong>Decidim</strong> für Bürgerbeteiligung [12]; <strong>Matrix/Element</strong>, <strong>Jitsi Meet</strong>/<strong>BigBlueButton</strong> und <strong>Nextcloud Talk</strong> für Kommunikation [14, 34, 35]; <strong>CKAN</strong> für Open Data [22]; <strong>QGIS</strong>/<strong>GeoServer</strong>/<strong>OpenStreetMap</strong> für GIS [37, 36]; <strong>TYPO3</strong>/<strong>Drupal</strong> für das CMS [19]; und der <strong>Sovereign Cloud Stack</strong> für die Infrastruktur [3, 11].</p>
+<h3 id="410-referenzarchitektur">4.10 Referenzarchitektur</h3>
+<pre><code>+-------------------------------------------------------------+
+|                   BÜRGERSCHNITTSTELLEN                      |
+|         TYPO3/Drupal . Decidim . CKAN . Nextcloud          |
++-------------------------------------------------------------+
+|                     DIENSTE-SCHICHT                        |
+|     Camunda Workflows . XÖV-Formulare . GeoServer . QGIS   |
++-------------------------------------------------------------+
+|                  KOLLABORATIONS-SCHICHT                    |
+|     Nextcloud . Matrix/Element . Jitsi . OpenProject       |
++-------------------------------------------------------------+
+|                   IDENTITÄTS-SCHICHT                       |
+|            Keycloak &lt;-&gt; BundID / Schweizer eID             |
++-------------------------------------------------------------+
+|                  INFRASTRUKTUR-SCHICHT                     |
+|   Sovereign Cloud Stack . Kubernetes . PostgreSQL . Ceph   |
++-------------------------------------------------------------+
+</code></pre>
+<p>Alle Schichten kommunizieren über offene APIs. Die Container-Orchestrierung im gesamten Stack übernimmt Kubernetes [39], die relationale Datenhaltung PostgreSQL [41] — beide laufen auf dem Sovereign Cloud Stack. Datenaustausch erfolgt über XÖV-Standards (Deutschland) [46] oder eCH-Standards (Schweiz). Sicherheit richtet sich nach BSI IT-Grundschutz [26] oder dem Schweizer ISDS-Framework.</p>
+<hr />
+<h2 id="5-implementierungsfahrplan">5. Implementierungsfahrplan</h2>
+<p>Der Plan umfasst 36 Monate in fünf Phasen: <strong>Phase 0 — Grundlegung</strong> (Monate 1–3): Governance, Ist-Analyse, Koalition, Beschaffungsrahmen, politisches Mandat (Budget indikativ 200.000–500.000 €). <strong>Phase 1 — Identität und Infrastruktur</strong> (4–12): SCS, Keycloak-Verbund, Nextcloud, Matrix/Element, BSI-IT-Grundschutz-Basis. <strong>Phase 2 — Dienste und Workflows</strong> (10–18): fünf meistgenutzte Leistungen auf Camunda/XÖV, CMS-Migration, CKAN, erste Decidim-Beteiligung. <strong>Phase 3 — Integration und Erweiterung</strong> (16–24): SSO-Verbund, GIS, 80 % digitalisiert, XÖV/eCH-Datenaustausch. <strong>Phase 4 — Optimierung und Gemeinschaft</strong> (22–30): Nutzerzufriedenheit (NPS > 40), Upstream-Beiträge, Community of Practice, TCO-Bericht. <strong>Phase 5 — Souveränität und Skalierung</strong> (28–36): Lizenzaudit, verifizierte Datensouveränität, Replikations-Playbook, Strategiepapier v1.0.</p>
+<hr />
+<h2 id="6-stakeholder-und-beschaffungsstrategie">6. Stakeholder- und Beschaffungsstrategie</h2>
+<p>Die Stakeholder-Übersicht ordnet jeder Gruppe (Exekutive, Gemeinderat, IT-Team, Vergabeamt, Mitarbeitende, Bürgerschaft, Zivilgesellschaft, Open-Source-Gemeinschaften, Technologieanbieter, Datenschutzbeauftragte) Hauptinteresse und Einbindungsansatz zu. Der Beschaffungsrahmen folgt sechs Grundsätzen: (1) Dienste statt Lizenzen beschaffen; (2) genossenschaftliche Strukturen nutzen, die das Vergaberecht (GWB; BöB) erfüllen [23]; (3) das „Public Money? Public Code!“-Prinzip als Vertragsbedingung [4]; (4) 5-Jahres-Gesamtbetriebskosten bewerten; (5) Interoperabilitätsstandards fordern — XÖV, eCH, DCAT-AP [46]; (6) zertifizierte genossenschaftliche Anbieter bevorzugen [23]. Das Veränderungsmanagement betont einen Digital-Transformations-Champion, Open-Source-Botschafter, Parallelbetrieb, frühe Erfolge und ein öffentliches Transparenz-Dashboard.</p>
+<hr />
+<h2 id="7-risikoanalyse">7. Risikoanalyse</h2>
+<p>Das Risikoregister bewertet u. a. politischen Rückzug nach Wahlen, Anbieter-Lobbying, Qualifikationslücken, Integrationsfehler, Datenverlust, DSGVO-Verstöße, Benutzerakzeptanz, Sicherheitsvorfälle und Kostenabweichungen mit zugehörigen Gegenmaßnahmen. Das <strong>Münchener LiMux-Beispiel</strong> (2003–2017) zeigt, dass die Umkehrung primär politisch bedingt war — nicht technisch [30]. Die Sicherheitsanforderungen folgen dem BSI IT-Grundschutz [26]: Patch-Management, AAL2-Authentifizierung, Verschlüsselung in Transit/at Rest, Penetrationstests, NIS2-konformer Incident-Response-Plan [27] und ein gepflegtes SBOM.</p>
+<hr />
+<h2 id="8-schlussfolgerung">8. Schlussfolgerung</h2>
+<p>Vier Befunde: (1) Open-Source-Kommunaltechnologie-Stacks sind technisch ausgereift und produktionserprobt; (2) das regulatorische Umfeld (EMBAG, OZG 2.0, Interoperable-Europe-Act) schreibt zunehmend Open Source und Interoperabilität vor — frühzeitig Handelnde bauen Compliance-Kapital auf; (3) die wirtschaftliche Begründung ist bei korrekter Gesamtkostenrechnung überzeugend; (4) Erfolg erfordert ebenso viel politische und organisatorische wie technische Investition. Städte, die als Erste handeln, gestalten Standards, bauen Kompetenz auf und tragen zu den Open-Source-Gemeingütern bei. Die Einladung ist offen.</p>
+<hr />
+<h2 id="literaturverzeichnis">Literaturverzeichnis</h2>
+<p>Das vollständige Literaturverzeichnis mit Lizenz-/Nachnutzungsstatus jeder Quelle wird in der Markdown-Quelle dieses Dokuments (<code>Doc/de/sovereign-by-design-v0.1.0.de.md</code>) und im kanonischen Quellenverzeichnis (<code>Mem/source-registry.md</code>) geführt.</p>
+<hr />
+<p><em>Dieses Dokument wird unter der Creative Commons Attribution 4.0 International Licence (CC-BY-4.0) veröffentlicht. Namensnennung: Sebastian Graf, Autonomes Büro für Kommunale Digitale Infrastruktur (sebk4c@tuta.com). Dieses HTML ist eine generierte Darstellung; die Markdown-Datei ist die Quelle der Wahrheit.</em></p>
+</body>
+</html>

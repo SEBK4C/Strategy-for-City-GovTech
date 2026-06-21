@@ -26,9 +26,12 @@ makes the “self-improving” loop (see `Mem/README.md`) easy to follow over ti
 1. Pull `main`.
 2. Do the work (update `Doc/`, `Mem/`, `Scripts/` as needed).
 3. Run the gates before publishing:
-   - `python3 Scripts/validate_citations.py`
-   - `python3 Scripts/translate_document.py --check`
-   - `python3 Scripts/build_govtech_docs.py`
+   - `uv run python Scripts/validate_citations.py`
+   - `uv run python Scripts/translate_document.py --check`
+   - `uv run python Scripts/build_govtech_docs.py --formats docx,html`
+   - `uv run python Scripts/smoke_check.py`
+   - For release checks only: `uv run python Scripts/build_govtech_docs.py` and
+     `uv run python Scripts/smoke_check.py --require-formats docx,html,pdf`
 4. Commit to `main` with a clear, conventional message.
 5. Bump the document version when the change warrants it (see `Doc/README.md`).
 
