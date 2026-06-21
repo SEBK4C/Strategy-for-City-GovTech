@@ -1,201 +1,342 @@
 #!/usr/bin/env python3
-"""Build GovTech strategy documents from Markdown into DOCX, PDF, and HTML.
+"""
+build_govtech_docs.py
 
-The Markdown files under ``Doc/<lang>/`` are the source of truth. This script renders
-each into the three published formats and writes them to ``Doc/build/<lang>/``.
+Builds all strategy paper outputs from Markdown source files.
 
-Rendering strategy (in order of preference):
-  1. ``pandoc`` if available — best fidelity for all of DOCX/PDF/HTML.
-  2. Pure-Python fallback — ``markdown`` for HTML, ``python-docx`` for DOCX. PDF is
-     produced from HTML via ``weasyprint`` if installed; otherwise skipped with a notice.
+Output formats:
+  - HTML:  generated from Markdown using Python-Markdown + accessible CSS
+  - DOCX:  generated using python-docx (or mammoth if available)
+  - PDF:   generated via weasyprint from HTML (optional)
 
 Usage:
-    python3 Scripts/build_govtech_docs.py                 # build every paper, every format
-    python3 Scripts/build_govtech_docs.py Doc/en/foo.md   # build a single file
-    python3 Scripts/build_govtech_docs.py --formats html  # restrict output formats
+    python3 Scripts/build_govtech_docs.py                # build all v0.2.0 papers
+    python3 Scripts/build_govtech_docs.py --paper Doc/en/sovereign-by-design-v0.2.0.md
+    python3 Scripts/build_govtech_docs.py --format html  # only HTML
+    python3 Scripts/build_govtech_docs.py --format docx  # only DOCX
 
-Exit code is non-zero if any requested build fails.
+Dependencies:
+    pip install markdown python-docx weasyprint
 """
-from __future__ import annotations
 
-import argparse
-import os
 import re
-import shutil
-import subprocess
 import sys
+import argparse
 from pathlib import Path
+from datetime import datetime
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
-DOC_DIR = REPO_ROOT / "Doc"
-BUILD_DIR = DOC_DIR / "build"
-ALL_FORMATS = ("docx", "pdf", "html")
+# --- constants ---
+
+PAPERS = [
+    Path("Doc/en/sovereign-by-design-v0.2.0.md"),
+    Path("Doc/de/sovereign-by-design-v0.2.0.de.md"),
+]
+
+CSS = """
+/* Accessible, print-ready stylesheet for GovTech Strategy Papers */
+:root {
+    --primary: #1a3a5c;
+    --accent: #0066cc;
+    --bg: #ffffff;
+    --text: #1a1a1a;
+    --border: #dee2e6;
+    --code-bg: #f4f6f8;
+    --max-width: 860px;
+}
+
+body {
+    font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--text);
+    background: var(--bg);
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+}
+
+h1 { font-size: 2rem; color: var(--primary); margin-top: 2rem; border-bottom: 3px solid var(--primary); padding-bottom: 0.5rem; }
+h2 { font-size: 1.45rem; color: var(--primary); margin-top: 2.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.25rem; }
+h3 { font-size: 1.2rem; color: var(--primary); margin-top: 1.75rem; }
+h4 { font-size: 1.05rem; color: var(--primary); margin-top: 1.5rem; }
+
+a { color: var(--accent); text-decoration: underline; }
+a:hover, a:focus { color: #004499; outline: 2px solid var(--accent); outline-offset: 2px; }
+
+table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: 0.95rem; }
+th { background: var(--primary); color: #fff; padding: 0.6rem 0.8rem; text-align: left; }
+td { padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--border); }
+tr:nth-child(even) { background: #f8f9fa; }
+
+pre, code { font-family: 'JetBrains Mono', 'Cascadia Code', 'Courier New', monospace; font-size: 0.875rem; }
+pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 4px;
+      padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; }
+code { background: var(--code-bg); padding: 0.15em 0.35em; border-radius: 3px; }
+
+blockquote { border-left: 4px solid var(--accent); margin: 1.5rem 0; padding: 0.75rem 1.25rem;
+             background: #eef4ff; color: #234; border-radius: 0 4px 4px 0; }
+
+hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+ul, ol { padding-left: 1.75rem; }
+li { margin-bottom: 0.35rem; }
+
+.metadata { background: #f8f9fa; border: 1px solid var(--border); border-radius: 6px;
+            padding: 1rem 1.25rem; margin-bottom: 2rem; font-size: 0.9rem; }
+.metadata p { margin: 0.2rem 0; }
+
+@media print {
+    body { max-width: 100%; padding: 1rem; font-size: 0.95rem; }
+    a { color: var(--text); text-decoration: none; }
+    a[href]::after { content: " (" attr(href) ")"; font-size: 0.8em; color: #555; }
+    pre { page-break-inside: avoid; }
+    h1, h2, h3 { page-break-after: avoid; }
+}
+
+/* Focus accessibility */
+*:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* Skip link */
+.skip-link { position: absolute; top: -100px; left: 0; background: var(--accent); color: #fff;
+             padding: 0.5rem 1rem; z-index: 1000; text-decoration: none; border-radius: 0 0 4px 0; }
+.skip-link:focus { top: 0; }
+"""
 
 
-def find_markdown_sources() -> list[Path]:
-    """Return every language-versioned Markdown source under Doc/<lang>/."""
-    sources: list[Path] = []
-    for lang_dir in sorted(DOC_DIR.iterdir()):
-        if not lang_dir.is_dir() or lang_dir.name == "build":
-            continue
-        sources.extend(sorted(lang_dir.glob("*.md")))
-    return sources
+def load_markdown(path: Path) -> tuple[dict, str]:
+    """Load Markdown file; separate YAML front-matter from body."""
+    text = path.read_text(encoding="utf-8")
+    meta = {}
+    body = text
 
-
-def strip_front_matter(text: str) -> tuple[dict, str]:
-    """Split YAML front-matter (between leading ``---`` fences) from the body."""
-    meta: dict[str, str] = {}
     if text.startswith("---"):
         end = text.find("\n---", 3)
         if end != -1:
-            raw = text[3:end].strip()
-            body = text[end + 4 :].lstrip("\n")
-            for line in raw.splitlines():
-                m = re.match(r"^([A-Za-z0-9_-]+):\s*(.*)$", line)
-                if m:
-                    meta[m.group(1)] = m.group(2).strip().strip('"')
-            return meta, body
-    return meta, text
+            frontmatter = text[3:end]
+            body = text[end + 4:].lstrip()
+            for line in frontmatter.splitlines():
+                if ":" in line:
+                    key, _, val = line.partition(":")
+                    meta[key.strip()] = val.strip().strip('"')
+
+    return meta, body
 
 
-def have(tool: str) -> bool:
-    return shutil.which(tool) is not None
-
-
-def out_path(src: Path, fmt: str) -> Path:
-    rel = src.relative_to(DOC_DIR)
-    target = BUILD_DIR / rel.parent / f"{src.stem}.{fmt}"
-    target.parent.mkdir(parents=True, exist_ok=True)
-    return target
-
-
-def build_with_pandoc(src: Path, fmt: str) -> bool:
-    target = out_path(src, fmt)
-    cmd = ["pandoc", str(src), "-o", str(target), "--standalone"]
-    if fmt == "pdf":
-        # Prefer weasyprint as the PDF engine (no LaTeX dependency).
-        if have("weasyprint"):
-            cmd += ["--pdf-engine=weasyprint"]
+def markdown_to_html(body: str, meta: dict, css: str) -> str:
+    """Convert Markdown body to a complete, accessible HTML5 document."""
     try:
-        subprocess.run(cmd, check=True, capture_output=True, text=True)
-        print(f"  [pandoc] {target.relative_to(REPO_ROOT)}")
-        return True
-    except subprocess.CalledProcessError as exc:
-        print(f"  [pandoc] FAILED {fmt} for {src.name}: {exc.stderr.strip()[:200]}")
-        return False
-
-
-def build_html_py(src: Path) -> bool:
-    try:
-        import markdown  # type: ignore
+        import markdown
+        content_html = markdown.markdown(
+            body,
+            extensions=["tables", "fenced_code", "toc", "attr_list"],
+        )
     except ImportError:
-        print("  [py] skip HTML: `markdown` not installed")
-        return False
-    meta, body = strip_front_matter(src.read_text(encoding="utf-8"))
-    html_body = markdown.markdown(body, extensions=["tables", "fenced_code", "toc"])
-    title = meta.get("title", src.stem)
-    doc = (
-        "<!DOCTYPE html>\n<html lang=\"%s\">\n<head>\n<meta charset=\"utf-8\">\n"
-        "<title>%s</title>\n<style>body{max-width:50rem;margin:2rem auto;"
-        "font-family:Georgia,serif;line-height:1.5;padding:0 1rem}"
-        "table{border-collapse:collapse}td,th{border:1px solid #ccc;padding:.3rem .6rem}"
-        "code,pre{font-family:ui-monospace,monospace}pre{background:#f6f8fa;padding:1rem;"
-        "overflow:auto}</style>\n</head>\n<body>\n%s\n</body>\n</html>\n"
-    ) % (meta.get("language", "en"), title, html_body)
-    target = out_path(src, "html")
-    target.write_text(doc, encoding="utf-8")
-    print(f"  [py] {target.relative_to(REPO_ROOT)}")
-    return True
+        # Fallback: minimal regex-based conversion
+        content_html = _minimal_md_to_html(body)
+
+    title = meta.get("title", "GovTech Strategy Paper")
+    author = meta.get("author", "Sebastian Graf")
+    version = meta.get("version", "")
+    date = meta.get("date", "")
+    lang = meta.get("language", "en")
+
+    return f"""<!DOCTYPE html>
+<html lang="{lang}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="{author}">
+    <meta name="description" content="{title} — Version {version}">
+    <title>{title} v{version}</title>
+    <style>{css}</style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div class="metadata" role="banner">
+        <p><strong>{title}</strong></p>
+        <p>Author: {author} &mdash; Version {version} &mdash; {date}</p>
+        <p>Licence: CC-BY-4.0 | Correspondence: sebk4c@tuta.com</p>
+    </div>
+    <main id="main-content">
+{content_html}
+    </main>
+    <footer role="contentinfo">
+        <hr>
+        <p style="font-size:0.875rem;color:#555;">
+            Generated {datetime.now().strftime('%Y-%m-%d')} by build_govtech_docs.py.
+            Source: <a href="https://github.com/SEBK4C/Strategy-for-City-GovTech">github.com/SEBK4C/Strategy-for-City-GovTech</a>.
+            Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a>.
+        </p>
+    </footer>
+</body>
+</html>
+"""
 
 
-def build_docx_py(src: Path) -> bool:
+def _minimal_md_to_html(md: str) -> str:
+    """Minimal Markdown-to-HTML (fallback when python-markdown not installed)."""
+    html = md
+    # Headings
+    html = re.sub(r"^##### (.+)$", r"<h5>\1</h5>", html, flags=re.MULTILINE)
+    html = re.sub(r"^#### (.+)$", r"<h4>\1</h4>", html, flags=re.MULTILINE)
+    html = re.sub(r"^### (.+)$", r"<h3>\1</h3>", html, flags=re.MULTILINE)
+    html = re.sub(r"^## (.+)$", r"<h2>\1</h2>", html, flags=re.MULTILINE)
+    html = re.sub(r"^# (.+)$", r"<h1>\1</h1>", html, flags=re.MULTILINE)
+    # Bold / italic
+    html = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", html)
+    html = re.sub(r"\*(.+?)\*", r"<em>\1</em>", html)
+    # Inline code
+    html = re.sub(r"`(.+?)`", r"<code>\1</code>", html)
+    # Links
+    html = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', html)
+    # HR
+    html = re.sub(r"^---$", "<hr>", html, flags=re.MULTILINE)
+    # Paragraphs (wrap non-tagged lines)
+    lines = html.split("\n")
+    result = []
+    for line in lines:
+        stripped = line.strip()
+        if stripped and not stripped.startswith("<"):
+            result.append(f"<p>{stripped}</p>")
+        else:
+            result.append(line)
+    return "\n".join(result)
+
+
+def build_html(paper_path: Path, output_path: Path = None) -> Path:
+    """Build HTML from a Markdown paper."""
+    meta, body = load_markdown(paper_path)
+    html = markdown_to_html(body, meta, CSS)
+
+    if output_path is None:
+        output_path = paper_path.with_suffix(".html")
+
+    output_path.write_text(html, encoding="utf-8")
+    print(f"[HTML] Written: {output_path}")
+    return output_path
+
+
+def build_docx(paper_path: Path, output_path: Path = None) -> Path:
+    """Build DOCX from a Markdown paper using python-docx."""
     try:
-        import docx  # type: ignore
-        from docx.shared import Pt
+        from docx import Document
+        from docx.shared import Pt, RGBColor, Inches
+        from docx.enum.text import WD_ALIGN_PARAGRAPH
     except ImportError:
-        print("  [py] skip DOCX: `python-docx` not installed")
-        return False
-    meta, body = strip_front_matter(src.read_text(encoding="utf-8"))
-    document = docx.Document()
-    style = document.styles["Normal"]
-    style.font.name = "Calibri"
-    style.font.size = Pt(11)
+        print("[DOCX] python-docx not installed. Run: pip install python-docx")
+        print("[DOCX] Skipping DOCX generation.")
+        return None
+
+    if output_path is None:
+        output_path = paper_path.with_suffix(".docx")
+
+    meta, body = load_markdown(paper_path)
+    doc = Document()
+
+    # Set document properties
+    core_props = doc.core_properties
+    core_props.author = meta.get("author", "Sebastian Graf")
+    core_props.title = meta.get("title", "GovTech Strategy")
+    core_props.version = meta.get("version", "0.2.0")
+    core_props.language = meta.get("language", "en")
+
+    # Style defaults
+    style = doc.styles["Normal"]
+    font = style.font
+    font.name = "Calibri"
+    font.size = Pt(11)
+
+    # Process Markdown lines
     for line in body.splitlines():
-        if line.startswith("#"):
-            level = len(line) - len(line.lstrip("#"))
-            document.add_heading(line.lstrip("#").strip(), level=min(level, 9))
-        elif line.strip().startswith(("- ", "* ")):
-            document.add_paragraph(line.strip()[2:], style="List Bullet")
-        elif line.strip():
-            document.add_paragraph(line)
-    target = out_path(src, "docx")
-    document.save(str(target))
-    print(f"  [py] {target.relative_to(REPO_ROOT)}")
-    return True
-
-
-def build_pdf_py(src: Path) -> bool:
-    if not have("weasyprint") and "weasyprint" not in sys.modules:
-        try:
-            import weasyprint  # noqa: F401  type: ignore
-        except ImportError:
-            print("  [py] skip PDF: install weasyprint or pandoc to render PDF")
-            return False
-    # Ensure an HTML exists, then convert.
-    html_target = out_path(src, "html")
-    if not html_target.exists() and not build_html_py(src):
-        return False
-    try:
-        import weasyprint  # type: ignore
-        weasyprint.HTML(filename=str(html_target)).write_pdf(str(out_path(src, "pdf")))
-        print(f"  [py] {out_path(src, 'pdf').relative_to(REPO_ROOT)}")
-        return True
-    except Exception as exc:  # pragma: no cover - environment dependent
-        print(f"  [py] PDF failed for {src.name}: {exc}")
-        return False
-
-
-def build_one(src: Path, formats: tuple[str, ...]) -> bool:
-    print(f"Building {src.relative_to(REPO_ROOT)}")
-    ok = True
-    use_pandoc = have("pandoc")
-    for fmt in formats:
-        if use_pandoc and build_with_pandoc(src, fmt):
+        stripped = line.strip()
+        if not stripped:
+            doc.add_paragraph()
             continue
-        if fmt == "html":
-            ok &= build_html_py(src)
-        elif fmt == "docx":
-            ok &= build_docx_py(src)
-        elif fmt == "pdf":
-            ok &= build_pdf_py(src)
-    return ok
+        if stripped.startswith("# ") and not stripped.startswith("## "):
+            p = doc.add_heading(stripped[2:], level=1)
+        elif stripped.startswith("## "):
+            doc.add_heading(stripped[3:], level=2)
+        elif stripped.startswith("### "):
+            doc.add_heading(stripped[4:], level=3)
+        elif stripped.startswith("#### "):
+            doc.add_heading(stripped[5:], level=4)
+        elif stripped.startswith("- ") or stripped.startswith("* "):
+            doc.add_paragraph(stripped[2:], style="List Bullet")
+        elif re.match(r"^\d+\. ", stripped):
+            text = re.sub(r"^\d+\. ", "", stripped)
+            doc.add_paragraph(text, style="List Number")
+        elif stripped.startswith("|"): 
+            # Simple table row — add as paragraph (full table parsing is complex)
+            doc.add_paragraph(stripped, style="Normal")
+        elif stripped == "---":
+            doc.add_paragraph("―" * 60, style="Normal")
+        else:
+            # Strip bold/italic markers for docx body text
+            clean = re.sub(r"\*\*(.+?)\*\*", r"\1", stripped)
+            clean = re.sub(r"\*(.+?)\*", r"\1", clean)
+            clean = re.sub(r"`(.+?)`", r"\1", clean)
+            doc.add_paragraph(clean)
+
+    doc.save(str(output_path))
+    print(f"[DOCX] Written: {output_path}")
+    return output_path
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("sources", nargs="*", help="Specific Markdown files (default: all).")
+def build_pdf(html_path: Path, output_path: Path = None) -> Path:
+    """Build PDF from HTML using weasyprint."""
+    try:
+        from weasyprint import HTML as WeasyprintHTML
+    except ImportError:
+        print("[PDF] weasyprint not installed. Run: pip install weasyprint")
+        print("[PDF] Skipping PDF generation.")
+        return None
+
+    if output_path is None:
+        output_path = html_path.with_suffix(".pdf")
+
+    WeasyprintHTML(filename=str(html_path)).write_pdf(str(output_path))
+    print(f"[PDF] Written: {output_path}")
+    return output_path
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Build GovTech strategy paper outputs.")
     parser.add_argument(
-        "--formats", default=",".join(ALL_FORMATS),
-        help="Comma-separated subset of: docx,pdf,html",
+        "--paper",
+        type=Path,
+        default=None,
+        help="Path to a specific Markdown paper to build.",
+    )
+    parser.add_argument(
+        "--format",
+        choices=["html", "docx", "pdf", "all"],
+        default="all",
+        help="Output format (default: all).",
     )
     args = parser.parse_args()
 
-    formats = tuple(f.strip() for f in args.formats.split(",") if f.strip() in ALL_FORMATS)
-    sources = [Path(s).resolve() for s in args.sources] if args.sources else find_markdown_sources()
-    if not sources:
-        print("No Markdown sources found under Doc/<lang>/.")
-        return 1
+    papers = [args.paper] if args.paper else PAPERS
+    papers = [p for p in papers if p.exists()]
 
-    BUILD_DIR.mkdir(parents=True, exist_ok=True)
-    if not have("pandoc"):
-        print("note: pandoc not found — using pure-Python fallbacks where possible.\n")
+    if not papers:
+        print("No papers found. Check --paper path or run from repo root.")
+        sys.exit(1)
 
-    all_ok = True
-    for src in sources:
-        all_ok &= build_one(src, formats)
-    print("\nDone." if all_ok else "\nDone with some skipped/failed formats (see above).")
-    return 0 if all_ok else 2
+    for paper in papers:
+        print(f"\nBuilding: {paper}")
+        html_path = None
+
+        if args.format in ("html", "all"):
+            html_path = build_html(paper)
+
+        if args.format in ("docx", "all"):
+            build_docx(paper)
+
+        if args.format in ("pdf", "all") and html_path:
+            build_pdf(html_path)
+
+    print("\nBuild complete.")
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    main()

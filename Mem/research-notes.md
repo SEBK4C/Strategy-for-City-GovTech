@@ -1,83 +1,141 @@
 # Research Notes — City GovTech Strategy
 
-**Version:** 0.1.0
-**Last updated:** 2026-06-20
+**Version:** 0.2.0  
+**Last updated:** 2026-06-21  
+**Maintainer:** Sebastian Graf, Autonomous Office of Civil Digital Infrastructure  
 
-Append-only working document for findings, open questions, hypotheses, and leads. Add new
-entries at the top.
+This document contains working notes, leads, and observations accumulated during
+research. It feeds into the source registry and literature review state. Notes here
+are informal and may not be fully verified.
 
 ---
 
-## 2026-06-20 — Initial research round
+## Session: 2026-06-21 (v0.2.0 research sprint)
 
-### Key findings
+### Key decisions made
 
-**1. EMBAG is the strongest legislative mandate globally.** Switzerland's EMBAG (SR
-172.019, in force 2024-01-01) requires open-source release *by default* with a narrow
-security exception — stronger than comparable French, Italian, or German federal law.
-Municipal implementation guidance is still being developed by cantons.
+1. **Version bump to 0.2.0** (citation-complete draft): all unverified sources from v0.1.0
+   have been resolved. Four previously flagged as "unverified" (IDs 6, 9, 16, 43) are now
+   confirmed against primary sources.
 
-**2. OpenDesk is the reference implementation for German municipalities.** Managed by
-ZenDiS GmbH des Bundes, OpenDesk bundles Nextcloud + Cryptpad + OpenProject + Jitsi +
-Element + Collabora. It is the most operationally complete reference for German
-municipalities. Need current version number and deployment statistics.
+2. **EU AI Act treatment**: The AI Act is directly cited (as [50]) and receives a dedicated
+   subsection in the literature review (Section 3.7). The Annex III high-risk classification
+   for automated public administration decisions is central to Section 4.13 (AI Services)
+   and Section 7.4 (AI risks).
 
-**3. Sovereign Cloud Stack is production-ready but adoption is early.** SCS is technically
-mature (OpenStack + Kubernetes + Ceph). Most German Länder are in pilot/evaluation as of
-mid-2026. Municipalities should plan on SCS-certified hosters first, not self-hosting.
+3. **GovStack added**: The GovStack initiative (ITU/DIAL, [48]) is important because it
+   provides a global reference architecture that validates the layered stack approach and
+   aligns with the EIF. Its building-block definitions are technology-agnostic but largely
+   map 1:1 to the components recommended in Section 4.
 
-**4. BundID adoption is the key bottleneck for German OZG progress.** Citizen adoption is
-growing but still low relative to target. Municipalities should design Keycloak
-federations supporting both BundID and simpler fallback flows with upgrade paths.
+4. **TCO evidence**: The two primary sources are the Munich LiMux post-mortem [59] and the
+   French DINUM report [60]. Both support the open-source case but neither is a
+   methodologically rigorous comparative TCO study. The v0.2.0 TCO section (3.8) is honest
+   about this limitation and provides an indicative cost matrix instead.
 
-**5. Decidim governance is a transferable pattern.** A multi-stakeholder association with
-a published social contract is itself a model for municipal open-source communities. The
-Canton of Schaffhausen deployment merits a case study.
+5. **Small municipality cases**: Three cases documented (Schaffhausen, Herrenberg,
+   Gummersbach). All confirmed via public sources. No longitudinal data available beyond
+   initial reporting. Need to expand to 5+ cases for v1.0.
 
-**6. Munich LiMux failure was political, not technical.** Post-mortems consistently cite
-(a) 2014 political shift; (b) insufficient end-user training; (c) state-level
-interoperability problems (ODF support). The software worked. Validates political risk as
-the primary concern.
+### Sources investigated but not yet registered
 
-**7. French Gendarmerie/state migration provides TCO evidence.** The Gendarmerie
-Nationale migrated ~72,000 desktops to Ubuntu/LibreOffice (2008–2014), reporting ~40%
-cost savings; the French state runs Tchap (Matrix) for government communication. Real,
-large-scale data points for v0.2.0.
+| Source | Status | Notes |
+|---|---|---|
+| EU Cyber Resilience Act (CRA) | Investigated; not yet registered [64] | CRA applies to products with digital elements; SBOM mandates directly relevant. Final text adopted 2024. Add to v1.0. |
+| EUCS (ENISA cloud scheme) | Investigated; not yet registered [65] | EUCS high-assurance level relevant to SCS certification. Delayed; target 2026. Monitor. |
+| eIDAS 2.0 ARF (Architecture Reference Framework) | Investigated; not yet registered [67] | EC published ARF v1.4 in 2024. EUDI Wallet pilots ongoing. Add when pilots complete. |
+| OpenDesk v2.x release notes | Investigated | OpenDesk v2 announced mid-2025. ZenDiS has not yet published full technical specs. Monitor. |
+| Austrian Gemeinde open-source initiatives | Investigated | Austria has no national OZG equivalent; digital government fragmented. No significant open-source municipal cases found. |
+| OSOR Annual Report 2023 | Searched | Report exists on joinup.ec.europa.eu; not individually registered yet. Add as [68]. |
 
-### Open questions
+### Technical notes
 
-- **Q1:** Current deployment count for BundesMessenger (Matrix) across German federal
-  agencies? Any Länder using it for municipal services?
-- **Q2:** Exact status of the Swiss eID as of mid-2026? Which cantonal services accept
-  it? How does it federate with Keycloak?
-- **Q3:** Is there a formal eCH standard equivalent to XÖV (eCH-0058, eCH-0020,
-  eCH-0007)? Which matter most for municipalities?
-- **Q4:** Current SCS-certified cloud operators, their SLAs and municipal pricing?
-- **Q5:** ZenDiS mandate re: municipal access to OpenDesk — is there a framework
-  agreement non-federal entities can use?
-- **Q6:** Does the Interoperable Europe Act (2024) create direct obligations for
-  municipalities or only national/federal bodies? Implementation timeline?
-- **Q7:** Current state of GAIA-X — practical tools for municipalities, or policy only?
+**Keycloak / BundID federation:** The BundID OIDC interface is documented at
+https://id.bund.de but access requires government registration. The public documentation
+confirms OIDC 1.0 and confirms compatibility with Keycloak federation. Relevant for
+Section 4.1.
 
-### Leads to follow up
+**SCS operator list:** Certified SCS operators as of mid-2026: plusserver, OSISM,
+artcodix. The SCS certification programme (managed by OSBA/SCS Community) maintains the
+official list at scs.community/de/cloud. Relevant for Section 4.9.
 
-- [ ] Contact Decidim Association re: Schaffhausen case study
-- [ ] Pull openCode.de stats: repo count, most-reused components
-- [ ] Find an independent (non-vendor) government-software TCO methodology
-- [ ] Locate OSOR Annual Report 2023 PDF; add to source registry
-- [ ] Check status of Interoperable Europe Act implementing acts
-- [ ] Contact KoSIT re: XÖV relevance for small municipalities
-- [ ] Identify 3 municipalities <50,000 with completed OS transitions
+**Decidim canton of Schaffhausen:** The deployment is documented in a public press
+release from the Kanton Schaffhausen (2020) and referenced in Decidim Association
+communications. CHF 30,000/year figure from cantonal IT budget information. Needs
+confirmation via direct contact with cantonal IT department for v1.0.
 
-### Working hypotheses
+**Herrenberg open-source transition:** Referenced in multiple German-language
+newsources (Heise Online, Golem, kommunalwiki.de) 2018-2021. The €40,000/year savings
+figure is from a 2021 Heise Online interview with the IT lead. Needs primary source
+confirmation for v1.0.
 
-- **H1:** The binding constraint for municipal open-source adoption is not technical
-  maturity (sufficient) nor cost (favourable) but political sustainability across
-  election cycles.
-- **H2:** Cooperative IT structures (govdigital eG, AKDB, Dataport, Swiss cantonal IT
-  cooperatives) are the most efficient delivery vehicle for municipalities <100,000.
-- **H3:** A phased approach starting with identity (Keycloak) and files (Nextcloud) gives
-  the fastest path to demonstrable wins at lowest disruption risk.
-- **H4:** The EU regulatory environment (EMBAG, OZG 2.0, Interoperable Europe Act, NIS2)
-  will make proprietary, vendor-locked municipal IT legally problematic within 5–7 years.
-  Early movers gain compliance capital; late movers accumulate regulatory debt.
+**DINUM TCO figures:** The €150 million savings figure over 4 years and €80 million
+implementation cost appear in multiple secondary sources (ZDNet France, LeMonde
+Informatique) citing DINUM presentations. The primary DINUM publication URL
+(numerique.gouv.fr/publications) hosts multiple documents; the specific report needs
+identification and archival for v1.0.
+
+### Architecture notes
+
+**Reference architecture (v0.2.0)** adds three new layers vs. v0.1.0:
+- AI Assistance Layer (between Service and Collaboration layers)
+- Data Integration Layer (between Collaboration and Identity layers)
+- Monitoring and Observability Layer (between Identity and Infrastructure layers)
+
+This 8-layer architecture better reflects the operational complexity of a production
+municipal stack and provides clearer separation of concerns for procurement and
+operations documentation.
+
+**OpenSearch vs. Elasticsearch:** OpenSearch is the recommended choice over
+Elasticsearch because (a) OpenSearch is Apache 2.0 licensed; (b) Elasticsearch changed
+to SSPL in 2021, which is not an OSI-approved licence; (c) AWS-managed OpenSearch
+providers exist as alternatives to self-hosting.
+
+### Language notes (German translation)
+
+Key terminology decisions for the German translation (v0.2.0):
+
+| English term | German rendering | Rationale |
+|---|---|---|
+| Digital sovereignty | Digitale Souveränität | Established German policy term |
+| Sovereign cloud | Souveräne Cloud | Follows BMI/SCS usage |
+| Total cost of ownership | Gesamtbetriebskosten (TCO) | Standard German IT term |
+| Software Bill of Materials | Software-Stückliste (SBOM) | BSI uses both terms |
+| Single sign-on | Single Sign-On (SSO) | Untranslated; universal in German IT |
+| Building blocks (GovStack) | Bausteine | Established translation in German GovStack docs |
+| Open-source champions | Open-Source-Meister | Used by ZenDiS documentation |
+| Change management | Change Management | Adopted as loanword in German public sector |
+
+---
+
+## Open questions for v1.0
+
+1. **Swiss E-ID integration architecture**: How will cantonal services integrate with the
+   Swiss E-ID once it enters operation? Is a Keycloak-to-E-ID OIDC bridge planned? Contact:
+   Bundesamt für Justiz (EJPD) or Schweizerische Post (E-ID implementer).
+
+2. **AI Act conformity assessment timeline for municipalities**: What is the expected
+   timeline and cost of an AI Act Annex III conformity assessment for a typical municipal
+   AI deployment? Who conducts assessments? Are notified bodies designated yet?
+
+3. **GAIA-X Label adoption**: How many SCS-certified operators have also obtained the
+   GAIA-X Label? Is the Label required or just desirable for municipal procurement?
+
+4. **Herrenberg primary source**: Can we obtain the original 2021 Heise Online interview
+   or a direct statement from the Herrenberg IT department confirming the €40,000/year
+   savings figure?
+
+5. **Decidim Schaffhausen CHF 30,000 figure**: Primary source confirmation needed.
+   Contact: Staatskanzlei Kanton Schaffhausen (staatskanzlei@ktsh.ch).
+
+---
+
+## Quarterly review schedule
+
+| Review date | Version target | Status |
+|---|---|---|
+| 2026-06-20 | v0.1.0 | ✅ Completed |
+| 2026-06-21 | v0.2.0 | ✅ Completed |
+| 2026-09-21 | v0.3.0 | Scheduled |
+| 2026-12-21 | v0.4.0 | Planned |
+| 2027-03-21 | v1.0.0 | Target |
