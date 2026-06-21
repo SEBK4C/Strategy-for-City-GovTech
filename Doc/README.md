@@ -12,11 +12,11 @@ truth**; DOCX, PDF, and HTML are generated from them by `Scripts/build_govtech_d
 ```
 Doc/
 ├─ en/                 English (single source of truth)
-│  ├─ sovereign-by-design-v0.1.0.md     # source of truth
-│  └─ sovereign-by-design-v0.1.0.html   # committed HTML rendering
+│  ├─ sovereign-by-design-v0.1.0.md     # v0.1.0 — first structured draft
+│  ├─ sovereign-by-design-v0.2.0.md     # v0.2.0 — citation-complete draft (current)
 ├─ de/                 Deutsch (full translation)
 │  ├─ sovereign-by-design-v0.1.0.de.md
-│  └─ sovereign-by-design-v0.1.0.de.html
+│  ├─ sovereign-by-design-v0.2.0.de.md  # v0.2.0 — current
 └─ build/              DOCX + PDF + HTML, regenerated locally (git-ignored)
 ```
 
@@ -24,8 +24,10 @@ Doc/
 
 | Title | Version | Markdown | HTML | DOCX | PDF |
 |---|---|---|---|---|---|
-| Sovereign by Design (EN) | v0.1.0 | [md](en/sovereign-by-design-v0.1.0.md) | [html](en/sovereign-by-design-v0.1.0.html) | build / CI | build / CI |
-| Sovereign by Design (DE) | v0.1.0 | [md](de/sovereign-by-design-v0.1.0.de.md) | [html](de/sovereign-by-design-v0.1.0.de.html) | build / CI | build / CI |
+| Sovereign by Design (EN) | **v0.2.0** | [md](en/sovereign-by-design-v0.2.0.md) | build / CI | build / CI | build / CI |
+| Sovereign by Design (DE) | **v0.2.0** | [md](de/sovereign-by-design-v0.2.0.de.md) | build / CI | build / CI | build / CI |
+| Sovereign by Design (EN) | v0.1.0 | [md](en/sovereign-by-design-v0.1.0.md) | — | — | — |
+| Sovereign by Design (DE) | v0.1.0 | [md](de/sovereign-by-design-v0.1.0.de.md) | — | — | — |
 
 ### Where each format lives
 

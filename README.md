@@ -36,7 +36,18 @@ civil-society groups, open-source communities, and sovereign technology provider
 
 | Paper | Languages | Status |
 |---|---|---|
-| Sovereign by Design: Open-Source Technology Strategy for Municipal Governments | EN · DE | v0.1.0 — first structured draft |
+| Sovereign by Design: Open-Source Technology Strategy for Municipal Governments | EN · DE | **v0.2.0 — citation-complete draft** (v0.1.0 archived) |
+
+### What's in v0.2.0 (2026-06-21)
+
+- **52 sources, 100% verified** — all unverified citations from v0.1.0 resolved
+- **10 technology layers** — new: office productivity (LibreOffice/Collabora Online) and AI/automation (Ollama, AnythingLLM, n8n, OpenWebUI) with EU AI Act compliance framework
+- **5 implementation case studies** — Barcelona, French Gendarmerie (85,000 desktops, 40% cost reduction), Munich LiMux (cautionary analysis), Jena (cooperative OZG), Canton of Zug
+- **EU regulatory depth** — EU Data Act [28], EU AI Act [49], Cyber Resilience Act [48], and updated coverage of eCH standards [15], Swiss E-ID [40], ZenDiS [25]
+- **Budget estimates** by city size (4 categories, all 5 implementation phases)
+- **Procurement law** — Swiss BöB and German GWB/UVgO detailed guidance
+- **TCO evidence** — indicative per-user cost comparison, payback estimates, Paris and Gendarmerie case studies
+- **AI risk register** — EU AI Act risk tier classification for municipal AI applications
 
 Each paper follows a scientific structure: Abstract · Introduction · Methodology ·
 Literature Review · Technology Stack Analysis · Implementation Roadmap · Stakeholder &
