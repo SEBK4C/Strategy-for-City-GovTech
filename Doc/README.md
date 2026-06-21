@@ -12,11 +12,11 @@ truth**; DOCX, PDF, and HTML are generated from them by `Scripts/build_govtech_d
 ```
 Doc/
 ├─ en/                 English (single source of truth)
-│  ├─ sovereign-by-design-v0.1.0.md     # source of truth
-│  └─ sovereign-by-design-v0.1.0.html   # committed HTML rendering
+│  ├─ sovereign-by-design-v0.2.0.md     # source of truth
+│  └─ sovereign-by-design-v0.2.0.html   # committed HTML rendering
 ├─ de/                 Deutsch (full translation)
-│  ├─ sovereign-by-design-v0.1.0.de.md
-│  └─ sovereign-by-design-v0.1.0.de.html
+│  ├─ sovereign-by-design-v0.2.0.de.md
+│  └─ sovereign-by-design-v0.2.0.de.html
 └─ build/              DOCX + PDF + HTML, regenerated locally (git-ignored)
 ```
 
@@ -24,8 +24,8 @@ Doc/
 
 | Title | Version | Markdown | HTML | DOCX | PDF |
 |---|---|---|---|---|---|
-| Sovereign by Design (EN) | v0.1.0 | [md](en/sovereign-by-design-v0.1.0.md) | [html](en/sovereign-by-design-v0.1.0.html) | build / CI | build / CI |
-| Sovereign by Design (DE) | v0.1.0 | [md](de/sovereign-by-design-v0.1.0.de.md) | [html](de/sovereign-by-design-v0.1.0.de.html) | build / CI | build / CI |
+| Sovereign by Design (EN) | v0.2.0 | [md](en/sovereign-by-design-v0.2.0.md) | [html](en/sovereign-by-design-v0.2.0.html) | build / CI | build / CI |
+| Sovereign by Design (DE) | v0.2.0 | [md](de/sovereign-by-design-v0.2.0.de.md) | [html](de/sovereign-by-design-v0.2.0.de.html) | build / CI | build / CI |
 
 ### Where each format lives
 
@@ -61,7 +61,7 @@ prior releases remain immutable and citable.
 ```bash
 pip install -r requirements.txt
 python3 Scripts/build_govtech_docs.py                    # build everything
-python3 Scripts/build_govtech_docs.py Doc/en/sovereign-by-design-v0.1.0.md   # one file
+python3 Scripts/build_govtech_docs.py Doc/en/sovereign-by-design-v0.2.0.md   # one file
 ```
 
 The script prefers `pandoc` (highest fidelity for all four formats) and falls back to
@@ -74,11 +74,12 @@ The English version under `en/` is the single source of truth. To add a language
 1. `python3 Scripts/translate_document.py --scaffold <lang>` creates a skeleton copy.
 2. Translate the prose; keep all headings, section numbers, tables, and `[N]` citation
    markers intact.
-3. Register the language in `Scripts/translate_document.py` (`LANGUAGES`).
+3. Register the language in `Scripts/translate_document.py` (`LANGUAGES` dict at the top).
 4. `python3 Scripts/translate_document.py --check` verifies structural parity with the
    English source.
 
-Structural changes are made to the **English source first**, then propagated.
+Structural changes are always made to the **English source first**, then propagated to
+translations. The `--check` command will flag any headings that drift out of sync.
 
 ## Licence
 
