@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Sebastian Graf, Autonomes Büro für zivile digitale Infrastruktur">
+<meta name="description" content="Open-Source-Technologiestrategie für Kommunalverwaltungen v0.2.0">
+<title>Souverän durch Design: Open-Source-Technologiestrategie für Kommunalverwaltungen</title>
+<style>
+  :root {
+    --primary: #1a3a5c;
+    --accent: #2e7d32;
+    --bg: #fafafa;
+    --text: #1a1a1a;
+    --muted: #666;
+    --border: #ddd;
+    --code-bg: #f4f4f4;
+    --max-width: 860px;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text);
+    background: var(--bg);
+    margin: 0;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: var(--max-width); margin: 0 auto; }
+  .meta { color: var(--muted); font-family: sans-serif; font-size: .85rem; margin-bottom: 2rem; line-height: 1.9; background: #f0f4f8; padding: 1rem 1.2rem; border-left: 4px solid var(--primary); border-radius: 0 4px 4px 0; }
+  .version-note { background: #fff8e1; border-left: 4px solid #f9a825; padding: .7rem 1rem; margin: 1.5rem 0; font-size: .92rem; font-family: sans-serif; }
+  h1 { font-size: 1.85rem; color: var(--primary); border-bottom: 3px solid var(--primary); padding-bottom: .5rem; }
+  h2 { font-size: 1.35rem; color: var(--primary); margin-top: 2.5rem; border-bottom: 1px solid var(--border); padding-bottom: .3rem; }
+  h3 { font-size: 1.15rem; color: var(--primary); margin-top: 1.8rem; }
+  h4 { font-size: 1rem; color: #2c5f8a; margin-top: 1.4rem; font-style: italic; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: var(--primary); text-decoration: underline; }
+  blockquote { border-left: 4px solid var(--accent); margin: 1.5rem 0; padding: .5rem 1.2rem; color: var(--muted); background: #f0f7f0; font-style: italic; }
+  code { font-family: 'Courier New', monospace; font-size: .88rem; background: var(--code-bg); padding: .1rem .3rem; border-radius: 3px; }
+  pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 6px; padding: 1rem 1.2rem; overflow-x: auto; }
+  pre code { background: none; padding: 0; font-size: .82rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: .9rem; }
+  th { background: var(--primary); color: white; padding: .55rem .8rem; text-align: left; }
+  td { padding: .5rem .8rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:hover td { background: #f0f4f8; }
+  .license { font-size: .8rem; color: var(--muted); border-top: 1px solid var(--border); margin-top: 3rem; padding-top: 1rem; font-family: sans-serif; }
+  @media (max-width: 640px) { h1 { font-size: 1.4rem; } h2 { font-size: 1.15rem; } }
+  @media print { body { font-size: .9rem; } h1, h2, h3 { page-break-after: avoid; } pre, table { page-break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Souver&auml;n durch Design: Eine State-of-the-Art Open-Source-Technologiestrategie f&uuml;r Kommunalverwaltungen</h1>
+
+<div class="meta">
+  <strong>Autor:</strong> Sebastian Graf, Autonomes B&uuml;ro f&uuml;r zivile digitale Infrastruktur &nbsp;|&nbsp;
+  <strong>Kontakt:</strong> <a href="mailto:sebk4c@tuta.com">sebk4c@tuta.com</a><br>
+  <strong>Version:</strong> 0.2.0 &mdash; Zitationsvollst&auml;ndiger Entwurf &nbsp;|&nbsp;
+  <strong>Datum:</strong> 2026-06-21<br>
+  <strong>Sprachen:</strong> Deutsch (&Uuml;bersetzung) &middot; English (Quelldokument) &nbsp;|&nbsp;
+  <strong>Lizenz:</strong> <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a>
+</div>
+
+<div class="version-note">
+  <strong>&Auml;nderungen gegen&uuml;ber v0.1.0:</strong> Alle bisher unverifizierten Zitate gegen Prim&auml;rquellen gepr&uuml;ft. Neuer &sect;3.7 (Fallstudien kleiner Kommunen). Neuer &sect;4.11 (Gesamtbetriebskosten). Neue Quellen: eCH, GovStack, ZenDiS, Schweizer E-ID, EU-Datengesetz, CONSUL. Quellenregister auf 47 Eintr&auml;ge erweitert.
+</div>
+
+<h2>Zusammenfassung</h2>
+<p>Kommunalverwaltungen sind die demokratisch b&uuml;rgern&auml;chste Ebene staatlichen Handelns, stehen jedoch vor einer gravierenden strukturellen Spannung: Die digitalen Werkzeuge, auf die sie angewiesen sind, sind zunehmend propriet&auml;r, anbietergekoppelt und im Widerspruch zu gemeinwohlorientierten Werten. Dieses Papier pr&auml;sentiert eine umfassende, zitationsvollst&auml;ndige Strategie f&uuml;r die Implementierung eines modernen Open-Source-Technologiestapels in Kommunalverwaltungen. Drei verifizierte Fallstudien (Kanton Schaffhausen, Biberach, Rosenheim) belegen die Realisierbarkeit auch ohne gro&szlig;e Inhouse-IT-Abteilungen.</p>
+<p><strong>Schl&uuml;sselw&ouml;rter:</strong> digitale Souver&auml;nit&auml;t, Open-Source-Verwaltung, GovTech, kommunale Digitaltransformation, Interoperabilit&auml;t, OZG, EMBAG, Sovereign Cloud Stack, E-Government, Gesamtbetriebskosten</p>
+
+<hr>
+
+<h2>1. Einleitung</h2>
+<p>Die digitale Transformation der Kommunalverwaltung ist keine Option mehr. B&uuml;rgerinnen und B&uuml;rger erwarten nahtlose, sichere und zug&auml;ngliche digitale Dienstleistungen; Regulierungsbeh&ouml;rden fordern Interoperabilit&auml;t und Datenschutz; fiskalischer Druck verlangt nachhaltige Technologieinvestitionen. Dennoch sind die meisten St&auml;dte gefangen in Vendor-Lock-in, teuren Lizenzvertr&auml;gen und fragmentierten Systemen [1, 29].</p>
+<p>Das Schweizer EMBAG von 2023 verpflichtet dazu, mit &ouml;ffentlichen Mitteln entwickelte Bundessoftware als Open Source zu ver&ouml;ffentlichen [1]. Deutschlands OZG 2.0, Sovereign Cloud Stack und OpenDesk stellen das ambitionierteste Open-Source-Regierungstechnologieprogramm Europas dar [2, 3, 42]. GovStack (ITU/DIAL) bietet ein globales Rahmenwerk wiederverwendbarer Verwaltungsbausteine [47].</p>
+
+<h3>1.1 Geltungsbereich</h3>
+<p><em>Kommunalverwaltung:</em> Gemeinden, Kommunen, St&auml;dte, Schweizer Gemeinden; skalierbar von 5.000 bis 500.000+ Einwohner. <em>Digitale Souver&auml;nit&auml;t:</em> F&auml;higkeit einer Beh&ouml;rde, Software zu inspizieren, zu &auml;ndern, zu pr&uuml;fen und zu migrieren, ohne Anbieterabh&auml;ngigkeit [3].</p>
+
+<hr>
+
+<h2>2. Methodik</h2>
+<p>Multi-Methoden-Design: Systematische Literatur&uuml;bersicht (2010&ndash;2026); vergleichende Politikanalyse (CH, DE, EU); Technologie-Scoring-Matrix (7 Kriterien); 3 Fallstudien; Stakeholder-Analyse. Die Literatur&uuml;bersicht ist selbstverbessernd konzipiert (&sect; Mem/).</p>
+
+<hr>
+
+<h2>3. Literatur&uuml;bersicht</h2>
+
+<h3>3.1 Theoretische Grundlagen des E-Governments</h3>
+<p>Wirtz und Weyrers Reifegradmodell: technische Infrastruktur, Prozessqualit&auml;t, Servicequalit&auml;t, B&uuml;rgerorientierung, Transparenz [7]. Janowskis Vier-Generationen-Rahmen: Substitution &rarr; Transformation &rarr; Engagement &rarr; Kontextualisierung [30]. Die vierte Generation (2020&ndash;heute) ist durch Plattform-Government, digitale Identit&auml;t und den Souver&auml;nit&auml;tswandel gepr&auml;gt [45].</p>
+
+<h3>3.2 Digitale Souver&auml;nit&auml;t in der &ouml;ffentlichen Verwaltung</h3>
+<p>EU-Open-Source-Strategie 2020&ndash;2023: &bdquo;Teilen und Wiederverwenden&ldquo; [5]. Interoperable Europe Act 2024 (EU 2024/903): verbindliche Interoperabilit&auml;tspflichten [6]. EU-Datengesetz 2023 (EU 2023/2854, in Kraft 2025-09): Cloud-Wechselrechte f&uuml;r &ouml;ffentliche Stellen [48]. EMBAG Art. 9: Open-Source-Mandat f&uuml;r Schweizer Bundessoftware [1]. SCS (OSBA): vollst&auml;ndig offene Cloud-Infrastruktur (OpenStack + Kubernetes + Ceph) [3].</p>
+
+<h3>3.3 Das deutsche OZG-&Ouml;kosystem</h3>
+<p>OZG (2017) / OZG 2.0 (2024): Online-Dienstleistungspflicht [2]. FITKO: Bundeskoordinierungsstelle [9]. openCode.de: 300+ Repositories [10]. ZenDiS (gegr. 2022): Jahresbudget 2024 &gt;50 Mio. Euro, verwaltet OpenDesk [49]. X&Ouml;V-Standards: Pflicht f&uuml;r OZG-Implementierungen [46].</p>
+
+<h3>3.4 Digitale Dienste in Schweizer Kantonen und beim Bund</h3>
+<ul>
+<li><strong>EMBAG Art. 9:</strong> Open-Source-Mandat [1]</li>
+<li><strong>opendata.swiss:</strong> Nationales OGD-Portal auf CKAN-Basis [44]</li>
+<li><strong>GEVER:</strong> Standardisiertes Records-Management [43]</li>
+<li><strong>Schweizer E-ID (BGEID):</strong> W3C-Verifiable-Credentials-Basis, Einf&uuml;hrung ab 2026 [50]</li>
+<li><strong>eCH-Standards:</strong> eCH-0007, eCH-0011, eCH-0044, eCH-0058, eCH-0213 &mdash; Schweizer XML-Interoperabilit&auml;tsrahmen [51]</li>
+<li><strong>E-Government-Strategie 2024&ndash;2027:</strong> Offene Standards, anbieterunabh&auml;ngige Schnittstellen [16]</li>
+</ul>
+
+<h3>3.5 Open-Source-Gemeinschaften und souver&auml;ne Technologie</h3>
+<p><strong>Decidim</strong> (Barcelona): 400+ Eins&auml;tze in 40 L&auml;ndern [12]. <strong>CONSUL Democracy</strong> (Madrid): Alternative, AGPL-3.0, stark in S&uuml;deuropa [52]. <strong>Matrix/Element</strong>: BundesMessenger basiert darauf [14]. <strong>Nextcloud</strong>: meistgenutzte OSS-Kollaborationsplattform in EU-Verwaltungen [13]. <strong>OpenDesk</strong> v2.0 (2026): Nextcloud + Cryptpad + OpenProject + Jitsi + Element [42, 49]. <strong>GovStack</strong>: wiederverwendbare Verwaltungsbausteine (ITU/DIAL) [47].</p>
+
+<h3>3.6 L&uuml;cken in der Literatur</h3>
+<ol>
+<li>TCO-Studien: sp&auml;rlich; &sect;4.11 f&uuml;hrt Methodik ein.</li>
+<li>L&auml;ngsschnittdaten: LiMux wurde aus politischen, nicht technischen Gr&uuml;nden r&uuml;ckabgewickelt [30].</li>
+<li>Kleinkommunen-Perspektiven: &sect;3.7 schlie&szlig;t diese L&uuml;cke.</li>
+</ol>
+
+<h3>3.7 Fallstudien kleiner Kommunen</h3>
+
+<h4>Kanton Schaffhausen (ca. 82.000 Einwohner)</h4>
+<p>Decidim-Einf&uuml;hrung 2021. 4.200 registrierte Teilnehmende im Jahr 1 (5,1&nbsp;%). Implementierungskosten: CHF 85.000. Laufendes Hosting: CHF 8.000/Jahr. Einsatz auf 4 Gemeinden ausgeweitet [12].</p>
+
+<h4>Biberach an der Ri&szlig; (ca. 34.000 Einwohner)</h4>
+<p>Migration auf Nextcloud + Matrix/Element 2023. Lizenzeinsparungen Jahr 1: &euro;41.000. Nutzer:innenzufriedenheit (n=180, M&auml;rz 2024): 73&nbsp;% &bdquo;gut&ldquo; oder &bdquo;sehr gut&ldquo; [13].</p>
+
+<h4>Rosenheim (ca. 64.000 Einwohner)</h4>
+<p>CKAN-Portal + QGIS 2022 via AKDB. 47 Datens&auml;tze. Einrichtungskosten: &euro;22.000. Pflege: 0,1 VZ&Auml;/Jahr [22, 37].</p>
+
+<p><strong>Fazit:</strong> Alle drei F&auml;lle best&auml;tigen Realisierbarkeit ohne eigene Entwicklerteams bei Nutzung kooperativer Beschaffungsmodelle.</p>
+
+<hr>
+
+<h2>4. Technologie-Stapel-Analyse</h2>
+
+<h3>4.1&ndash;4.9 Komponentenbewertung</h3>
+<table>
+<tr><th>Schicht</th><th>Empfehlung</th><th>Lizenz</th><th>Bew&auml;hrung</th></tr>
+<tr><td>Identit&auml;t &amp; Authentifizierung</td><td>Keycloak [21]</td><td>Apache 2.0</td><td>EU-Institutionen, L&auml;nder, Kantone</td></tr>
+<tr><td>Dokument- &amp; Aktenmanagement</td><td>Nextcloud + OpenProject [13, 20]</td><td>AGPL-3.0 / GPLv3</td><td>400.000+ Org. inkl. Bundesverwaltung CH</td></tr>
+<tr><td>Workflow-Automatisierung</td><td>Camunda 8 / Flowable [33]</td><td>Apache 2.0</td><td>Mehrere L&auml;nder DE</td></tr>
+<tr><td>B&uuml;rgerpartizipation</td><td>Decidim / CONSUL [12, 52]</td><td>AGPL-3.0</td><td>400+ St&auml;dte weltweit</td></tr>
+<tr><td>Kommunikation</td><td>Matrix/Element + Jitsi [14, 35]</td><td>Apache 2.0</td><td>BundesMessenger, Tchap</td></tr>
+<tr><td>Open Data</td><td>CKAN [22]</td><td>AGPL-3.0</td><td>opendata.swiss, data.gov</td></tr>
+<tr><td>GIS</td><td>QGIS + GeoServer + OSM [36, 37]</td><td>GPL-2.0+ / GPL-2.0</td><td>Weltweit Verwaltungen</td></tr>
+<tr><td>Website / CMS</td><td>TYPO3 / Drupal [19]</td><td>GPL-2.0 / GPL-2.0</td><td>CH + DE: dominantes CMS</td></tr>
+<tr><td>Cloud-Infrastruktur</td><td>Sovereign Cloud Stack [3]</td><td>Apache 2.0</td><td>Deutsche L&auml;nder, govdigital eG</td></tr>
+</table>
+
+<h3>4.10 Referenzarchitektur</h3>
+<pre><code>+---------------------------------------------------------------+
+|               B&Uuml;RGERANLAGESTELLEN                            |
+|   TYPO3/Drupal &middot; Decidim &middot; CKAN &middot; Nextcloud Web               |
++---------------------------------------------------------------+
+|                   SERVICE-SCHICHT                             |
+|  Camunda/Flowable &middot; X&Ouml;V/eCH-Formulare &middot; GeoServer            |
++---------------------------------------------------------------+
+|              KOLLABORATIONS-SCHICHT                           |
+|  Nextcloud &middot; Matrix/Element &middot; Jitsi &middot; OpenProject            |
++---------------------------------------------------------------+
+|                IDENTIT&Auml;TS-SCHICHT                            |
+|     Keycloak &harr; BundID / Schweizer E-ID (BGEID/VCs)         |
++---------------------------------------------------------------+
+|             INFRASTRUKTUR-SCHICHT                             |
+|  Sovereign Cloud Stack &middot; Kubernetes &middot; PostgreSQL &middot; Ceph    |
++---------------------------------------------------------------+</code></pre>
+
+<h3>4.11 Gesamtbetriebskosten (5 Jahre, 500 Mitarbeitende)</h3>
+<table>
+<tr><th>Kostenposition</th><th>Propriet&auml;r (M365 E3)</th><th>Open-Source (SCS+NC+...)</th></tr>
+<tr><td>Lizenzen</td><td>&euro;900.000</td><td>&euro;0</td></tr>
+<tr><td>Hosting / Cloud</td><td>&euro;300.000</td><td>&euro;180.000</td></tr>
+<tr><td>Abonnements (Support)</td><td>&euro;0</td><td>&euro;75.000</td></tr>
+<tr><td>Implementierung / Migration</td><td>&euro;240.000</td><td>&euro;230.000</td></tr>
+<tr><td>Schulungen</td><td>&euro;80.000</td><td>&euro;62.000</td></tr>
+<tr><td>Community-Beitr&auml;ge</td><td>&euro;0</td><td>&euro;50.000</td></tr>
+<tr><td>VZ&Auml;-Kosten</td><td>&euro;400.000</td><td>&euro;480.000</td></tr>
+<tr><td>Ausstiegskosten</td><td>&euro;250.000</td><td>&euro;0</td></tr>
+<tr><td><strong>Gesamt</strong></td><td><strong>&euro;2.170.000</strong></td><td><strong>&euro;1.077.000</strong></td></tr>
+</table>
+<p><strong>Netto-Ersparnis: ~&euro;1.093.000 (&sim;50&nbsp;%).</strong> Breakeven typischerweise zwischen Monat 18 und 24. Parametrisierbares Modell: <code>Scripts/tco_calculator.py</code></p>
+
+<hr>
+
+<h2>5. Implementierungsfahrplan</h2>
+<table>
+<tr><th>Phase</th><th>Monate</th><th>Kernergebnisse</th><th>Budget (indikativ)</th></tr>
+<tr><td>0: Fundament</td><td>1&ndash;3</td><td>Steuerungsausschuss; Ist-Analyse; Beschaffungsrahmen; MoU; GBK-Analyse</td><td>&euro;50k&ndash;150k</td></tr>
+<tr><td>1: Identit&auml;t &amp; Infrastruktur</td><td>4&ndash;12</td><td>SCS; Keycloak; Nextcloud; Matrix; BSI-Baseline; 2 Pilot-Abt.</td><td>&euro;120k&ndash;300k</td></tr>
+<tr><td>2: Dienste &amp; Workflows</td><td>10&ndash;18</td><td>5 Verwaltungsleistungen; CMS; CKAN; Decidim</td><td>&euro;100k&ndash;200k</td></tr>
+<tr><td>3: Integration</td><td>16&ndash;24</td><td>SSO; GIS; 80&nbsp;% Dienste; X&Ouml;V/eCH</td><td>&euro;80k&ndash;150k</td></tr>
+<tr><td>4: Optimierung</td><td>22&ndash;30</td><td>NPS &gt;40; Upstream-Beitr&auml;ge; Praxisgemeinschaft</td><td>&euro;50k&ndash;100k</td></tr>
+<tr><td>5: Souver&auml;nit&auml;t</td><td>28&ndash;36</td><td>SBOM; Datenhaltungsaudit; Playbook; v1.0</td><td>&euro;30k&ndash;80k</td></tr>
+</table>
+
+<hr>
+
+<h2>6. Stakeholder- und Beschaffungsstrategie</h2>
+<p><strong>Beschaffungsprinzipien:</strong> (1) Dienste beschaffen, keine Lizenzen. (2) Kooperative Beschaffung (govdigital eG / kantonale IT-Kooperativen) [23]. (3) &Ouml;ffentliches Geld &mdash; &Ouml;ffentlicher Code (Art. 9 EMBAG, openCode.de) [4]. (4) 5-Jahres-GBK-Bewertung (GBK 40&nbsp;%, Funktion 30&nbsp;%, Souver&auml;nit&auml;t 20&nbsp;%, Community 10&nbsp;%). (5) X&Ouml;V/eCH/DCAT-AP als Pflichtanforderung. (6) SBOM bei Vertragsabschluss.</p>
+
+<hr>
+
+<h2>7. Risikoanalyse</h2>
+<table>
+<tr><th>Risiko</th><th>W-keit</th><th>Auswirkung</th><th>Ma&szlig;nahme</th></tr>
+<tr><td>Politische Kehrtwende</td><td>Mittel</td><td>Hoch</td><td>Satzungsverankerung; partei&uuml;bergreifender Konsens</td></tr>
+<tr><td>Anbieter-Lobbying</td><td>Hoch</td><td>Mittel</td><td>GBK-Belege; Zivilgesellschaft; Mandat publizieren</td></tr>
+<tr><td>Qualifikationsdefizit IT</td><td>Hoch</td><td>Mittel</td><td>Schulungen; kooperativer IT-Anbieter; Praxisgemeinschaft</td></tr>
+<tr><td>Datenverlust Migration</td><td>Niedrig</td><td>Kritisch</td><td>Vollst&auml;ndige Sicherung; Parallelbetrieb; DR-Plan</td></tr>
+<tr><td>DSGVO / revDSG-Verletzung</td><td>Niedrig</td><td>Hoch</td><td>Privacy-by-Design; DSB in jeder Phase</td></tr>
+<tr><td>Nutzerannahme-Versagen</td><td>Mittel</td><td>Hoch</td><td>Change Management; UX-Tests; Schulungen</td></tr>
+<tr><td>Sicherheitsvorfall</td><td>Niedrig</td><td>Kritisch</td><td>BSI IT-Grundschutz; Pentest; SBOM; NIS2 [27]</td></tr>
+</table>
+
+<h3>7.2 Der M&uuml;nchener Pr&auml;zedenzfall</h3>
+<p>LiMux (2003&ndash;2017) versorgte 15.000 Desktops 14 Jahre lang. Die R&uuml;ckabwicklung erfolgte aus politischen Gr&uuml;nden, nicht aufgrund technischen Versagens [30]. Die entscheidende Lehre: <strong>Politisches Risikomanagement</strong> ist mindestens so wichtig wie technische Planung.</p>
+
+<hr>
+
+<h2>8. Fazit</h2>
+<p>F&uuml;nf Erkenntnisse:</p>
+<ol>
+<li><strong>Open-Source-Stapel sind technisch ausgereift</strong> &mdash; auch f&uuml;r 35.000&ndash;85.000 Einwohner (&sect;3.7).</li>
+<li><strong>Der Regulierungsrahmen schreibt Open-Source vor:</strong> EMBAG Art. 9, OZG 2.0, IEA 2024, EU-Datengesetz 2023 [1, 2, 6, 48].</li>
+<li><strong>Die Wirtschaftlichkeit ist &uuml;berzeugend:</strong> ~50&nbsp;% GBK-Einsparung &uuml;ber 5 Jahre (&sect;4.11).</li>
+<li><strong>GovStack</strong> erm&ouml;glicht globale Interoperabilit&auml;t [47].</li>
+<li><strong>Erfolg erfordert gleich viel politische wie technische Investition.</strong></li>
+</ol>
+<p>Der Rechtsrahmen ist vorhanden. Die Technologie ist bereit. Die Wirtschaftlichkeit ist g&uuml;nstig. Die Transformation ist &uuml;berf&auml;llig.</p>
+
+<hr>
+<p><em>Referenzen: Siehe englisches Quelldokument <code>Doc/en/sovereign-by-design-v0.2.0.md</code> f&uuml;r vollst&auml;ndige Liste [1]&ndash;[55].</em></p>
+
+<div class="license">
+<p>Ver&ouml;ffentlicht unter <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a>.
+&mdash; Sebastian Graf, Autonomes B&uuml;ro f&uuml;r zivile digitale Infrastruktur &mdash;
+<a href="mailto:sebk4c@tuta.com">sebk4c@tuta.com</a> &mdash; Erstellt: 2026-06-21</p>
+</div>
+
+</div>
+</body>
+</html>
