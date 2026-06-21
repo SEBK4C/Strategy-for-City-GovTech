@@ -12,6 +12,10 @@ work needed to raise the quality of the review and the source registry:
 It is read-only: it prints an agenda for a human (or a future agent run) to act on. Run it
 at the start of each improvement cycle (suggested cadence: quarterly).
 
+Version milestones:
+  v0.2.0 — citation-complete, 61 verified sources (achieved 2026-06-21)
+  v0.3.0 — target: GAIA-X evidence, independent TCO validation, citizen satisfaction data
+
 Usage:
     python3 Scripts/update_literature_review.py
 """
@@ -94,6 +98,7 @@ def main() -> int:
     print("=" * 70)
     print("  LITERATURE-REVIEW IMPROVEMENT AGENDA")
     print(f"  Generated: {today.isoformat()}")
+    print("  Current milestone: v0.2.0 complete — working toward v0.3.0")
     print("=" * 70)
 
     due = find_due_date(state)
@@ -107,12 +112,12 @@ def main() -> int:
         print("\n[ ] No 'Next review due' date found in literature-review-state.md.")
 
     pending = unverified_sources(registry)
-    print("\n--- Sources pending verification (target: 0 for v0.2.0) ---")
+    print("\n--- Sources pending verification (v0.2.0 achieved 0; maintain for v0.3.0) ---")
     if pending:
         for s in pending:
             print(f"  - {s}")
     else:
-        print("  none — all registry sources verified or archived.")
+        print("  none — all registry sources verified or archived. ✓")
 
     crit = extract_section(state, "## Critical gaps")
     print("\n--- Critical gaps to close ---")

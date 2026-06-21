@@ -11,6 +11,10 @@ Checks, for each paper under ``Doc/<lang>/``:
 Returns a non-zero exit code if any inline citation is unresolved, so it can gate a
 release in CI.
 
+Version milestones:
+  v0.2.0 — 61 citations, all verified (achieved 2026-06-21)
+  v0.3.0 — target: maintain 0 unverified, expand to ~75 citations
+
 Usage:
     python3 Scripts/validate_citations.py
 """
@@ -124,7 +128,9 @@ def main() -> int:
             print(f"  {status:11s} {n:3d}  ({pct:4.1f}%)")
         print(f"  {'total':11s} {total:3d}")
         if coverage.get("unverified"):
-            print("\n  -> v0.2.0 milestone requires unverified == 0")
+            print("\n  -> milestone target: unverified == 0 (achieved at v0.2.0, maintain for v0.3.0)")
+        else:
+            print("\n  -> all sources verified (v0.2.0 milestone achieved)")
     else:
         print("  (registry not found or has no verification-status entries)")
 
