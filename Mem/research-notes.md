@@ -1,83 +1,80 @@
 # Research Notes — City GovTech Strategy
 
-**Version:** 0.1.0
-**Last updated:** 2026-06-20
+**Version:** 0.2.0  
+**Last updated:** 2026-06-21  
 
-Append-only working document for findings, open questions, hypotheses, and leads. Add new
-entries at the top.
+Working notes on sources, debates, and open questions. Not for citation without verification against primary sources.
 
 ---
 
-## 2026-06-20 — Initial research round
+## Key debates in the literature
 
-### Key findings
+### 1. TCO: Open source vs. proprietary
 
-**1. EMBAG is the strongest legislative mandate globally.** Switzerland's EMBAG (SR
-172.019, in force 2024-01-01) requires open-source release *by default* with a narrow
-security exception — stronger than comparable French, Italian, or German federal law.
-Municipal implementation guidance is still being developed by cantons.
+The most contested empirical question. Vendor-commissioned studies systematically undercount open-source TCO by including implementation and training costs while excluding proprietary licence escalation, lock-in risk, and migration costs. The most credible independent analysis remains the French government’s LibreOffice migration report (2018, DINUM), which found net savings of €10M over five years for 220,000 workstations.
 
-**2. OpenDesk is the reference implementation for German municipalities.** Managed by
-ZenDiS GmbH des Bundes, OpenDesk bundles Nextcloud + Cryptpad + OpenProject + Jitsi +
-Element + Collabora. It is the most operationally complete reference for German
-municipalities. Need current version number and deployment statistics.
+The Munich LiMux reversal is often cited as evidence of higher TCO for open source, but the Accenture study that triggered the reversal (2015) has been widely criticised as methodologically flawed and conflict-of-interest-tainted. Post-mortems (Grassmuck 2017 [62]) confirm the migration was broadly cost-effective; the reversal was political.
 
-**3. Sovereign Cloud Stack is production-ready but adoption is early.** SCS is technically
-mature (OpenStack + Kubernetes + Ceph). Most German Länder are in pilot/evaluation as of
-mid-2026. Municipalities should plan on SCS-certified hosters first, not self-hosting.
+**Open question:** What is the empirically validated per-workstation annual cost differential in the 2024–2026 context, controlling for municipality size, existing IT capacity, and cooperative membership?
 
-**4. BundID adoption is the key bottleneck for German OZG progress.** Citizen adoption is
-growing but still low relative to target. Municipalities should design Keycloak
-federations supporting both BundID and simpler fallback flows with upgrade paths.
+### 2. The governance question: platform vs. solution
 
-**5. Decidim governance is a transferable pattern.** A multi-stakeholder association with
-a published social contract is itself a model for municipal open-source communities. The
-Canton of Schaffhausen deployment merits a case study.
+Decidim’s model — an independent association governing a platform used by hundreds of municipalities — contrasts with city-owned deployments where the city is both operator and primary contributor. The Decidim Association model is more resilient but requires surrender of unilateral control.
 
-**6. Munich LiMux failure was political, not technical.** Post-mortems consistently cite
-(a) 2014 political shift; (b) insufficient end-user training; (c) state-level
-interoperability problems (ODF support). The software worked. Validates political risk as
-the primary concern.
+Analogously, the Sovereign Cloud Stack’s community governance model (OSBA + operators) differs from proprietary cloud where governance is entirely vendor-controlled.
 
-**7. French Gendarmerie/state migration provides TCO evidence.** The Gendarmerie
-Nationale migrated ~72,000 desktops to Ubuntu/LibreOffice (2008–2014), reporting ~40%
-cost savings; the French state runs Tchap (Matrix) for government communication. Real,
-large-scale data points for v0.2.0.
+**Implication for municipalities:** Joining a governed community platform (Decidim Association, SCS community, govdigital eG) provides resilience in exchange for accepting shared governance constraints. This is generally the right tradeoff for municipalities lacking dedicated platform staff.
 
-### Open questions
+### 3. The Swiss-German interoperability gap
 
-- **Q1:** Current deployment count for BundesMessenger (Matrix) across German federal
-  agencies? Any Länder using it for municipal services?
-- **Q2:** Exact status of the Swiss eID as of mid-2026? Which cantonal services accept
-  it? How does it federate with Keycloak?
-- **Q3:** Is there a formal eCH standard equivalent to XÖV (eCH-0058, eCH-0020,
-  eCH-0007)? Which matter most for municipalities?
-- **Q4:** Current SCS-certified cloud operators, their SLAs and municipal pricing?
-- **Q5:** ZenDiS mandate re: municipal access to OpenDesk — is there a framework
-  agreement non-federal entities can use?
-- **Q6:** Does the Interoperable Europe Act (2024) create direct obligations for
-  municipalities or only national/federal bodies? Implementation timeline?
-- **Q7:** Current state of GAIA-X — practical tools for municipalities, or policy only?
+Swiss eCH standards and German XÖV standards serve equivalent functions but are technically distinct. There is no automatic translation layer. Municipalities near the Swiss-German border (e.g., Constance, Freiburg, Basel-region) face a genuine interoperability challenge when providing cross-border services.
 
-### Leads to follow up
+**Opportunity:** This gap is a research and standards gap, not a fundamental technical barrier. A Swiss-German eCH-XÖV mapping project would be a high-value community contribution.
 
-- [ ] Contact Decidim Association re: Schaffhausen case study
-- [ ] Pull openCode.de stats: repo count, most-reused components
-- [ ] Find an independent (non-vendor) government-software TCO methodology
-- [ ] Locate OSOR Annual Report 2023 PDF; add to source registry
-- [ ] Check status of Interoperable Europe Act implementing acts
-- [ ] Contact KoSIT re: XÖV relevance for small municipalities
-- [ ] Identify 3 municipalities <50,000 with completed OS transitions
+### 4. eIDAS 2.0 / EUDI Wallet implementation uncertainty
 
-### Working hypotheses
+The EU Digital Identity Wallet (EUDI) is mandated by the revised eIDAS Regulation (2024), but implementation is proceeding at different speeds across member states. Switzerland is not an EU member but participates in some electronic identification mutual recognition arrangements.
 
-- **H1:** The binding constraint for municipal open-source adoption is not technical
-  maturity (sufficient) nor cost (favourable) but political sustainability across
-  election cycles.
-- **H2:** Cooperative IT structures (govdigital eG, AKDB, Dataport, Swiss cantonal IT
-  cooperatives) are the most efficient delivery vehicle for municipalities <100,000.
-- **H3:** A phased approach starting with identity (Keycloak) and files (Nextcloud) gives
-  the fastest path to demonstrable wins at lowest disruption risk.
-- **H4:** The EU regulatory environment (EMBAG, OZG 2.0, Interoperable Europe Act, NIS2)
-  will make proprietary, vendor-locked municipal IT legally problematic within 5–7 years.
-  Early movers gain compliance capital; late movers accumulate regulatory debt.
+For municipalities: Keycloak’s extensibility means it can be adapted to federate with EUDI Wallets as they become available. The recommended architecture is EUDI-ready without being EUDI-dependent.
+
+### 5. AI in municipal government: the compliance-capability tension
+
+The EU AI Act creates significant compliance overhead for high-risk AI applications in municipal government. However, AI tools that are genuinely useful — document classification, service routing, translation, planning support — are in many cases low-risk or limited-risk under the Act’s classification.
+
+The practical guidance for municipalities: start with low-risk AI tools (chatbots with mandatory AI disclosure, document translation), build compliance infrastructure, and defer high-risk AI deployment until the EU’s standardisation framework (CEN/CENELEC standards referenced in the Act) is mature.
+
+---
+
+## Notable practitioners and community contacts
+
+- **FSFE Brussels office**: campaigns on Public Money? Public Code! policy
+- **Joinup (EU)**: maintains OSOR and catalogue of government open-source
+- **openCode.de team** (Digitalservice): platform for German government OS
+- **ZenDiS communications**: OpenDesk deployment support
+- **Decidim Association**: governance, localisation, community
+- **OSBA SCS team**: technical support for SCS deployments
+- **govdigital eG**: framework contracts and cooperative hosting
+- **AKDB (Munich)**: Bavarian municipal IT cooperative
+- **Dataport (Hamburg)**: Northern German municipal IT cooperative
+- **swisstopo**: Swiss geodata and API access
+- **eCH secretariat (Bern)**: standards access and participation
+
+---
+
+## Open questions for v0.3.0
+
+1. What does a full eCH-to-XÖV connector architecture look like? Which open-source projects have built this?
+2. Are there documented cases of municipalities using GovStack building blocks in a European context?
+3. What is the actual BundesMessenger (Matrix) adoption rate within the German federal administration as of 2026?
+4. Has any Swiss canton published post-EMBAG open-source release statistics?
+5. What GAIA-X credential certifications do SCS-certified hosters currently hold?
+6. Which municipal AI systems have been registered in EU AI Act Article 49 national databases?
+7. How does the Flowable BPMN engine compare to Camunda in OZG service implementations?
+
+---
+
+## Methodology notes
+
+- Sources rated “unverified” in the registry should not be cited in the main paper. When upgrading a source to “verified”, confirm: (a) URL resolves to the stated document, (b) publication date is accurate, (c) licence is correctly stated.
+- The translation to German is derived from the English source of truth. All German-language technical terms follow the authoritative usage in the BSI IT-Grundschutz Kompendium and the OZG documentation. Swiss-specific terms follow eCH and E-Government Suisse publications.
+- The TCO model (Section 8 of the paper) should be treated as indicative until validated against actual municipal procurement data. The methodology is documented in `Scripts/build_govtech_docs.py`.
