@@ -28,19 +28,31 @@ civil-society groups, open-source communities, and sovereign technology provider
 
 | Path | Purpose |
 |---|---|
-| [`Doc/`](Doc/) | Published documents (Markdown source of truth + generated DOCX, PDF, HTML) |
+| [`Doc/`](Doc/) | Published documents (Markdown source of truth + HTML) |
 | [`Mem/`](Mem/) | Memory: source registry, literature-review state, research notes |
 | [`Scripts/`](Scripts/) | Automation: document generation, translation, citation management, validation |
 
 ## Papers
 
-| Paper | Languages | Status |
-|---|---|---|
-| Sovereign by Design: Open-Source Technology Strategy for Municipal Governments | EN · DE | v0.1.0 — first structured draft |
+| Paper | Version | Languages | Status | Formats |
+|---|---|---|---|---|
+| **Sovereign by Design**: Open-Source Municipal GovTech Strategy | **v0.2.0** | EN · DE | Citation-Complete Draft | [EN ℹ️](Doc/en/sovereign-by-design-v0.2.0.md) · [EN HTML](Doc/en/sovereign-by-design-v0.2.0.html) · [DE ℹ️](Doc/de/sovereign-by-design-v0.2.0.de.md) · [DE HTML](Doc/de/sovereign-by-design-v0.2.0.de.html) |
+| Sovereign by Design | v0.1.0 | EN · DE | First structured draft (archived) | [EN ℹ️](Doc/en/sovereign-by-design-v0.1.0.md) · [DE ℹ️](Doc/de/sovereign-by-design-v0.1.0.de.md) |
 
 Each paper follows a scientific structure: Abstract · Introduction · Methodology ·
 Literature Review · Technology Stack Analysis · Implementation Roadmap · Stakeholder &
-Procurement Strategy · Risk Analysis · Conclusion · References.
+Procurement Strategy · Data Governance & Privacy · Risk Analysis · Conclusion · References.
+
+### v0.2.0 highlights (2026-06-21)
+
+- **61 cited sources** (up from 46 at v0.1.0), all documented in [`Mem/source-registry.md`](Mem/source-registry.md)
+- New Section 3.6: TCO evidence (French Gendarmerie ~40% savings; 5-year comparison table)
+- New Section 3.7: EU regulatory context (AI Act, Data Act, NIS2)
+- New Section 3.8: Small-municipality case studies (Schaffhausen CH, Vitoria-Gasteiz ES, Bolzano IT, Rennes FR)
+- New Section 4.10: AI services layer (Ollama + Nextcloud AI, EU AI Act compliance)
+- New Section 7: Data Governance and Privacy (GDPR architecture, data residency, OGD policy)
+- Updated reference architecture with AI layer
+- Readiness assessment and cost estimation frameworks
 
 ## Versioning
 
@@ -50,37 +62,37 @@ Documents use semantic versioning:
 |---|---|
 | `v0.1.0` | First structured draft (structure complete, some citations unverified) |
 | `v0.2.0` | Citation-complete draft (all sources verified against primaries) |
-| `v1.0.0` | Externally shareable release |
+| `v1.0.0` | Externally shareable release (after peer review and stakeholder consultation) |
 
 ## Languages
 
 English is the **single source of truth**. German is a full translation derived from it.
 The system is designed so additional languages can be added without rewriting the source
-material — see [`Doc/README.md`](Doc/README.md) for the "add a language" procedure.
+material.
 
 ## Reproduce
 
 ```bash
-pip install -r requirements.txt
+pip install mistune  # optional, for higher-quality HTML output
 
-# Build all documents (Markdown → DOCX → PDF → HTML)
-python3 Scripts/build_govtech_docs.py
+# Generate HTML from Markdown
+python3 Scripts/generate_html.py
 
 # Validate every citation against the source registry
 python3 Scripts/validate_citations.py
 
 # Generate the literature-review improvement agenda
 python3 Scripts/update_literature_review.py
-
-# Check translation parity between language versions
-python3 Scripts/translate_document.py --check
 ```
 
 ## Continuous improvement
 
 This project is designed to improve on a recurring basis. The source registry, literature
-review, and implementation strategy are versioned and revisited on a quarterly cadence.
-See [`Mem/README.md`](Mem/README.md) and [`Scripts/update_literature_review.py`](Scripts/update_literature_review.py).
+review, and implementation strategy are versioned and revisited on a **quarterly cadence**.
+See [`Mem/literature-review-state.md`](Mem/literature-review-state.md) for the current
+coverage map, critical gaps, and next-review date.
+
+Next review due: **2026-09-21**.
 
 ## Attribution
 
